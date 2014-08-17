@@ -1,0 +1,9 @@
+#Item Localizations
+item.clockworkphase:bugSwatter.name=Bug Swatter
+item.clockworkphase:brassIngot.name=Brass Ingot
+
+#Block Localizations
+tile.clockworkphase:brassBlock.name=Brass Block
+
+#Creative Tab Localizations
+itemGroup.ClockworkPhase=Clockwork Phase
