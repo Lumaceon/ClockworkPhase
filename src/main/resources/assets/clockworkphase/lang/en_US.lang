@@ -1,9 +1,13 @@
 #Item Localizations
 item.clockworkphase:bugSwatter.name=Bug Swatter
 item.clockworkphase:brassIngot.name=Brass Ingot
+item.clockworkphase:mainspring.name=Mainspring
+item.clockworkphase:hand_crank.name=Hand Crank
+item.clockworkphase:time_energy_device.name=Time Energy Device
 
 #Block Localizations
 tile.clockworkphase:brassBlock.name=Brass Block
+tile.clockworkphase:windingBox.name=Winding Box
 
 #Creative Tab Localizations
 itemGroup.ClockworkPhase=Clockwork Phase
