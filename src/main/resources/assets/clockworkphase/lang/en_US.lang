@@ -8,6 +8,7 @@ item.clockworkphase:time_energy_device.name=Time Energy Device
 #Block Localizations
 tile.clockworkphase:brassBlock.name=Brass Block
 tile.clockworkphase:windingBox.name=Winding Box
+tile.clockworkphase:gearPanel.name=Gear Panel
 
 #Creative Tab Localizations
 itemGroup.ClockworkPhase=Clockwork Phase
