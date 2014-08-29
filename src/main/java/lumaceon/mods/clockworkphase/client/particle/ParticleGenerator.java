@@ -1,26 +1,49 @@
 package lumaceon.mods.clockworkphase.client.particle;
 
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
+import lumaceon.mods.clockworkphase.client.particle.entityfx.EntityGrowthAbsorptionFX;
+import lumaceon.mods.clockworkphase.client.particle.sequence.ParticleSequence;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.particle.EntityFX;
 import net.minecraft.world.World;
 
+import java.util.ArrayList;
+
+@SideOnly(Side.CLIENT)
 public class ParticleGenerator
 {
-    protected Minecraft mc;
-    protected World world;
+    public Minecraft mc;
+    public World world;
+    private ArrayList<ParticleSequence> activeSequences = new ArrayList<ParticleSequence>(100);
 
     public ParticleGenerator(Minecraft minecraft)
     {
         this.mc = minecraft;
     }
 
-    public EntityFX spawnGrowthAbsorptionParticles(double x, double y, double z)
+    public void spawnParticleSequence(ParticleSequence particleSequence)
     {
-        if(canSpawnParticle(x, y, z, 64.0D))
+        activeSequences.add(particleSequence);
+    }
+
+    public void updateParticleSequences()
+    {
+        for(int n = 0; n < activeSequences.size(); n++)
         {
-            EntityFX particle = new EntityGrowthAbsorptionFX(world, x, y, z);
-            mc.effectRenderer.addEffect((EntityFX)particle);
-            return (EntityFX)particle;
+            if(!activeSequences.get(n).updateParticleSequence())
+            {
+                activeSequences.remove(n);
+            }
+        }
+    }
+
+    public EntityFX spawnParticle(EntityFX particle, double cutoff)
+    {
+        if(canSpawnParticle(particle.posX, particle.posY, particle.posZ, cutoff))
+        {
+            mc.effectRenderer.addEffect(particle);
+            return particle;
         }
         else
         {

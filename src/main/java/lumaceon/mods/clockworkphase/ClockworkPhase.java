@@ -7,6 +7,7 @@ import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import lumaceon.mods.clockworkphase.client.particle.ClientTickHandler;
 import lumaceon.mods.clockworkphase.config.ConfigurationHandler;
 import lumaceon.mods.clockworkphase.creativetab.CreativeTabClockworkPhase;
 import lumaceon.mods.clockworkphase.eventhandlers.GrowthHandler;
@@ -14,6 +15,7 @@ import lumaceon.mods.clockworkphase.init.ModBlocks;
 import lumaceon.mods.clockworkphase.init.ModItems;
 import lumaceon.mods.clockworkphase.init.Recipes;
 import lumaceon.mods.clockworkphase.lib.Reference;
+import lumaceon.mods.clockworkphase.network.PacketHandler;
 import lumaceon.mods.clockworkphase.proxy.IProxy;
 import lumaceon.mods.clockworkphase.util.Logger;
 import net.minecraft.creativetab.CreativeTabs;
@@ -51,7 +53,11 @@ public class ClockworkPhase
 
         MinecraftForge.TERRAIN_GEN_BUS.register(new GrowthHandler());
 
+        MinecraftForge.EVENT_BUS.register(new ClientTickHandler());
+
         proxy.initializeParticleGenerator();
+
+        PacketHandler.init();
     }
 
     @Mod.EventHandler
