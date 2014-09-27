@@ -2,19 +2,20 @@ package lumaceon.mods.clockworkphase.client.particle;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
-import lumaceon.mods.clockworkphase.client.particle.entityfx.EntityGrowthAbsorptionFX;
 import lumaceon.mods.clockworkphase.client.particle.sequence.ParticleSequence;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.particle.EntityFX;
 import net.minecraft.world.World;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 @SideOnly(Side.CLIENT)
 public class ParticleGenerator
 {
     public Minecraft mc;
     public World world;
+    public Random random;
     private ArrayList<ParticleSequence> activeSequences = new ArrayList<ParticleSequence>(100);
 
     public ParticleGenerator(Minecraft minecraft)
@@ -31,7 +32,7 @@ public class ParticleGenerator
     {
         for(int n = 0; n < activeSequences.size(); n++)
         {
-            if(!activeSequences.get(n).updateParticleSequence())
+            if(world == null || !activeSequences.get(n).updateParticleSequence())
             {
                 activeSequences.remove(n);
             }
@@ -54,7 +55,7 @@ public class ParticleGenerator
     private boolean canSpawnParticle(double x, double y, double z, double maxDistance)
     {
         //Null checks
-        if(mc != null && Minecraft.getMinecraft().theWorld != null && mc.renderViewEntity != null && mc.effectRenderer != null)
+        if(mc == null || Minecraft.getMinecraft().theWorld == null || mc.renderViewEntity == null || mc.effectRenderer == null)
         {
             return false;
         }

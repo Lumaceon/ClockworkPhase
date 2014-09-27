@@ -6,7 +6,7 @@ import net.minecraft.world.World;
 
 public class PhaseHelper
 {
-    public static Phases getPhaseForWorldTime(World world)
+    public static Phases getPhaseForWorld(World world)
     {
         //phaseTime represents the time within the phase, translating the time of world to the time of phases.
         int phaseTime = (int)(world.getWorldTime() % (GlobalPhaseReference.phaseDuration * Phases.values().length));

@@ -1,20 +1,14 @@
 package lumaceon.mods.clockworkphase.client.particle.entityfx;
 
-import lumaceon.mods.clockworkphase.lib.Reference;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.particle.EntityFX;
-import net.minecraft.client.renderer.Tessellator;
+import lumaceon.mods.clockworkphase.lib.ParticleResourceLocations;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 
-public class EntityGrowthAbsorptionFX extends EntityFX
+public class EntityGrowthAbsorptionFX extends EntityClockworkPhaseFX
 {
     public double[] targetLocation = new double[3];
 
-    public static final ResourceLocation location = new ResourceLocation(Reference.MOD_ID, "textures/particles/growth_absorption.png");
-    public static final ResourceLocation vLocation = new ResourceLocation("textures/particle/particles.png");
-
-    public EntityGrowthAbsorptionFX(World world, double x, double y, double z, double xTarget, double yTarget, double zTarget, float scale, int timer)
+    public EntityGrowthAbsorptionFX(World world, double x, double y, double z, double xTarget, double yTarget, double zTarget)
     {
         super(world, x, y, z);
 
@@ -22,34 +16,13 @@ public class EntityGrowthAbsorptionFX extends EntityFX
         targetLocation[1] = yTarget;
         targetLocation[2] = zTarget;
 
-        this.particleMaxAge = timer + 30;
-        this.particleScale = scale;
+        this.particleMaxAge = 60;
     }
 
     @Override
-    public void renderParticle(Tessellator t, float par2, float par3, float par4, float par5, float par6, float par7)
+    public ResourceLocation getResourceLocation()
     {
-        t.draw();
-        Minecraft.getMinecraft().renderEngine.bindTexture(location);
-
-        float f10 = 0.1F * this.particleScale;
-
-        float f11 = (float)(this.prevPosX + (this.posX - this.prevPosX) * (double)par2 - interpPosX);
-        float f12 = (float)(this.prevPosY + (this.posY - this.prevPosY) * (double)par2 - interpPosY);
-        float f13 = (float)(this.prevPosZ + (this.posZ - this.prevPosZ) * (double)par2 - interpPosZ);
-        float f14 = 1.0F;
-
-        t.startDrawingQuads();
-        t.setColorRGBA_F(this.particleRed * f14, this.particleGreen * f14, this.particleBlue * f14, this.particleAlpha);
-        t.setBrightness(240);
-        t.addVertexWithUV((double)(f11 - par3 * f10 - par6 * f10), (double)(f12 - par4 * f10), (double)(f13 - par5 * f10 - par7 * f10), 1, 1);
-        t.addVertexWithUV((double)(f11 - par3 * f10 + par6 * f10), (double)(f12 + par4 * f10), (double)(f13 - par5 * f10 + par7 * f10), 1, 0);
-        t.addVertexWithUV((double)(f11 + par3 * f10 + par6 * f10), (double)(f12 + par4 * f10), (double)(f13 + par5 * f10 + par7 * f10), 0, 0);
-        t.addVertexWithUV((double)(f11 + par3 * f10 - par6 * f10), (double)(f12 - par4 * f10), (double)(f13 + par5 * f10 - par7 * f10), 0, 1);
-        t.draw();
-
-        Minecraft.getMinecraft().renderEngine.bindTexture(vLocation);
-        t.startDrawingQuads();
+        return ParticleResourceLocations.GROWTH_ABSORPTION;
     }
 
     @Override
@@ -59,9 +32,30 @@ public class EntityGrowthAbsorptionFX extends EntityFX
         this.prevPosY = this.posY;
         this.prevPosZ = this.posZ;
 
+        if(this.particleAge == 0)
+        {
+            this.motionX = this.targetLocation[0] - this.posX;
+            this.motionY = 5.0F;
+            this.motionZ = this.targetLocation[2] - this.posZ;
+        }
+        else if(this.particleAge > 0)
+        {
+            this.motionY *= 0.8;
+        }
+
         if (this.particleAge++ >= this.particleMaxAge)
         {
             this.setDead();
         }
+
+        this.posX += this.motionX/10;
+        this.posY += (this.motionY - 1.0F)/10;
+        this.posZ += this.motionZ/10;
+    }
+
+    @Override
+    public int getBrightnessForRender(float p_70070_1_)
+    {
+        return 255;
     }
 }

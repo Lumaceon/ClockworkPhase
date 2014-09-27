@@ -6,7 +6,6 @@ import cpw.mods.fml.common.network.NetworkRegistry;
 import lumaceon.mods.clockworkphase.init.ModBlocks;
 import lumaceon.mods.clockworkphase.network.MessageGrowthAbsorption;
 import lumaceon.mods.clockworkphase.network.PacketHandler;
-import lumaceon.mods.clockworkphase.util.Logger;
 import net.minecraftforge.event.terraingen.SaplingGrowTreeEvent;
 
 public class GrowthHandler
@@ -35,9 +34,7 @@ public class GrowthHandler
 
         if(isExtractorFound(extractorLocation[0]))
         {
-            PacketHandler.INSTANCE.sendToAllAround(new MessageGrowthAbsorption(event.x, event.y, event.z, extractorLocation[0], extractorLocation[1], extractorLocation[2]), new NetworkRegistry.TargetPoint(event.world.provider.dimensionId, event.x, event.y, event.z, 80));
-
-            Logger.info("Sapling Absorbed");
+            PacketHandler.INSTANCE.sendToAllAround(new MessageGrowthAbsorption(event.x + 0.5, event.y + 0.5, event.z + 0.5, extractorLocation[0], extractorLocation[1], extractorLocation[2]), new NetworkRegistry.TargetPoint(event.world.provider.dimensionId, event.x + 0.5, event.y + 0.5, event.z + 0.5, 80));
             event.setResult(Event.Result.DENY);
         }
     }

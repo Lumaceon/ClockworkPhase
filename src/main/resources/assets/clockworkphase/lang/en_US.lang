@@ -2,13 +2,29 @@
 item.clockworkphase:bugSwatter.name=Bug Swatter
 item.clockworkphase:brassIngot.name=Brass Ingot
 item.clockworkphase:mainspring.name=Mainspring
-item.clockworkphase:hand_crank.name=Hand Crank
-item.clockworkphase:time_energy_device.name=Time Energy Device
+item.clockworkphase:handCrank.name=Hand Crank
+item.clockworkphase:timeSandBucket.name=Time Sand Bucket
+
+item.clockworkphase:hourglass.name=Hourglass
+item.clockworkphase:hourglassLife.name=Hourglass of Life
+item.clockworkphase:hourglassLight.name=Hourglass of Light
+item.clockworkphase:hourglassWater.name=Hourglass of Water
+item.clockworkphase:hourglassEarth.name=Hourglass of Earth
+item.clockworkphase:hourglassAir.name=Hourglass of Air
+item.clockworkphase:hourglassFire.name=Hourglass of Fire
+item.clockworkphase:hourglassDark.name=Hourglass of Darkness
+item.clockworkphase:hourglassDeath.name=Hourglass of Death
+
 
 #Block Localizations
 tile.clockworkphase:brassBlock.name=Brass Block
 tile.clockworkphase:windingBox.name=Winding Box
 tile.clockworkphase:gearPanel.name=Gear Panel
+tile.clockworkphase:growthExtractor.name=Growth Extractor
+tile.clockworkphase:timeSand.name=Time Sand
+tile.clockworkphase:celestialCompass.name=Celestial Compass Core
+tile.clockworkphase:celestialCompassSub.name=Celestial Compass
 
-#Creative Tab Localizations
+
+#General Localizations
 itemGroup.ClockworkPhase=Clockwork Phase

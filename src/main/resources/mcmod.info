@@ -2,8 +2,8 @@
 {
   "modid": "clockworkphase",
   "name": "Clockwork Phase",
-  "description": "Construct gadgets and gizmos to take advantage of the natural phases of the world.",
-  "version": "1.0",
+  "description": "Time for some magic.",
+  "version": "Dev 1.0.0",
   "mcversion": "1.7.10",
   "url": "",
   "updateUrl": "",

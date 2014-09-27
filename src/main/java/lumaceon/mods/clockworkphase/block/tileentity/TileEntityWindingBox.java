@@ -1,6 +1,5 @@
 package lumaceon.mods.clockworkphase.block.tileentity;
 
-import lumaceon.mods.clockworkphase.item.windable.IWindable;
 import net.minecraft.item.ItemStack;
 
 public class TileEntityWindingBox extends TileEntityClockworkPhaseInventory
@@ -19,10 +18,10 @@ public class TileEntityWindingBox extends TileEntityClockworkPhaseInventory
     @Override
     public boolean isItemValidForSlot(int index, ItemStack is)
     {
-        if(is != null && is.getItem() instanceof IWindable)
-        {
-            return true;
-        }
+        //if(is != null && is.getItem() instanceof IWindable)
+        //{
+        //    return true;
+        //}
         return false;
     }
 }

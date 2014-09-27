@@ -1,5 +1,6 @@
 package lumaceon.mods.clockworkphase;
 
+import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.SidedProxy;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
@@ -7,11 +8,15 @@ import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
-import lumaceon.mods.clockworkphase.client.particle.ClientTickHandler;
+import lumaceon.mods.clockworkphase.client.ClientTickHandler;
+import lumaceon.mods.clockworkphase.client.handler.TextureStitchHandler;
 import lumaceon.mods.clockworkphase.config.ConfigurationHandler;
 import lumaceon.mods.clockworkphase.creativetab.CreativeTabClockworkPhase;
+import lumaceon.mods.clockworkphase.eventhandlers.BucketHandler;
+import lumaceon.mods.clockworkphase.eventhandlers.EntityHandler;
 import lumaceon.mods.clockworkphase.eventhandlers.GrowthHandler;
 import lumaceon.mods.clockworkphase.init.ModBlocks;
+import lumaceon.mods.clockworkphase.init.ModFluids;
 import lumaceon.mods.clockworkphase.init.ModItems;
 import lumaceon.mods.clockworkphase.init.Recipes;
 import lumaceon.mods.clockworkphase.lib.Reference;
@@ -20,6 +25,7 @@ import lumaceon.mods.clockworkphase.proxy.IProxy;
 import lumaceon.mods.clockworkphase.util.Logger;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.common.util.ForgeDirection;
 import net.minecraftforge.oredict.OreDictionary;
 
 @Mod(modid = Reference.MOD_ID, name = Reference.MOD_NAME, version = Reference.VERSION)
@@ -39,6 +45,8 @@ public class ClockworkPhase
     {
         ConfigurationHandler.init(event.getSuggestedConfigurationFile());
 
+        ModFluids.init();
+
         ModBlocks.init();
 
         ModItems.init();
@@ -47,13 +55,19 @@ public class ClockworkPhase
     @Mod.EventHandler
     public void initialize(FMLInitializationEvent event)
     {
+        ModFluids.registerBlocks();
+
         ModBlocks.registerTileEntities();
 
         Recipes.init();
 
-        MinecraftForge.TERRAIN_GEN_BUS.register(new GrowthHandler());
+        BucketHandler.INSTANCE.buckets.put(ModBlocks.timeSand, ModItems.timeSandBucket);
 
-        MinecraftForge.EVENT_BUS.register(new ClientTickHandler());
+        MinecraftForge.EVENT_BUS.register(BucketHandler.INSTANCE);
+        MinecraftForge.EVENT_BUS.register(new TextureStitchHandler());
+        MinecraftForge.TERRAIN_GEN_BUS.register(new GrowthHandler());
+        FMLCommonHandler.instance().bus().register(new ClientTickHandler());
+        MinecraftForge.EVENT_BUS.register(new EntityHandler());
 
         proxy.initializeParticleGenerator();
 
