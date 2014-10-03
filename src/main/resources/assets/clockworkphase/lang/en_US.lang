@@ -4,16 +4,18 @@ item.clockworkphase:brassIngot.name=Brass Ingot
 item.clockworkphase:mainspring.name=Mainspring
 item.clockworkphase:handCrank.name=Hand Crank
 item.clockworkphase:timeSandBucket.name=Time Sand Bucket
+item.clockworkphase:blandHourglass.name=Hourglass
+item.clockworkphase:clockwork.name=Clockwork
 
-item.clockworkphase:hourglass.name=Hourglass
-item.clockworkphase:hourglassLife.name=Hourglass of Life
-item.clockworkphase:hourglassLight.name=Hourglass of Light
-item.clockworkphase:hourglassWater.name=Hourglass of Water
-item.clockworkphase:hourglassEarth.name=Hourglass of Earth
-item.clockworkphase:hourglassAir.name=Hourglass of Air
-item.clockworkphase:hourglassFire.name=Hourglass of Fire
-item.clockworkphase:hourglassDark.name=Hourglass of Darkness
-item.clockworkphase:hourglassDeath.name=Hourglass of Death
+item.clockworkphase:hourglass.name=Chronomancer's Hourglass
+item.clockworkphase:hourglassLife.name=Chronomancer's Hourglass of Life
+item.clockworkphase:hourglassLight.name=Chronomancer's Hourglass of Light
+item.clockworkphase:hourglassWater.name=Chronomancer's Hourglass of Water
+item.clockworkphase:hourglassEarth.name=Chronomancer's Hourglass of Earth
+item.clockworkphase:hourglassAir.name=Chronomancer's Hourglass of Air
+item.clockworkphase:hourglassFire.name=Chronomancer's Hourglass of Fire
+item.clockworkphase:hourglassDark.name=Chronomancer's Hourglass of Darkness
+item.clockworkphase:hourglassDeath.name=Chronomancer's Hourglass of Death
 
 
 #Block Localizations
@@ -24,6 +26,7 @@ tile.clockworkphase:growthExtractor.name=Growth Extractor
 tile.clockworkphase:timeSand.name=Time Sand
 tile.clockworkphase:celestialCompass.name=Celestial Compass Core
 tile.clockworkphase:celestialCompassSub.name=Celestial Compass
+tile.clockworkphase:disassembler.name=Disassembler
 
 
 #General Localizations

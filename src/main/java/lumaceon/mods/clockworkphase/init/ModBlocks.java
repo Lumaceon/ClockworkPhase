@@ -18,6 +18,7 @@ public class ModBlocks
     public static Block timeSand;
     public static Block celestialCompass;
     public static Block celestialCompassSub;
+    public static Block disassembler;
 
     public static void init()
     {
@@ -42,6 +43,9 @@ public class ModBlocks
 
         celestialCompassSub = new BlockCelestialCompassSub(Material.iron).setBlockName(Names.CELESTIAL_COMPASS_SUB);
         GameRegistry.registerBlock(celestialCompassSub, Names.CELESTIAL_COMPASS_SUB);
+
+        disassembler = new BlockDisassembler(Material.iron).setBlockName(Names.DISASSEMBLER);
+        GameRegistry.registerBlock(disassembler, Names.DISASSEMBLER);
     }
 
     public static void registerTileEntities()

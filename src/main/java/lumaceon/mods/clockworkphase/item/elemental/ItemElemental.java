@@ -15,6 +15,12 @@ import net.minecraftforge.common.util.ForgeDirection;
 
 public class ItemElemental extends ItemClockworkPhase
 {
+    public ItemElemental()
+    {
+        this.setMaxStackSize(1);
+        this.setNoRepair();
+    }
+
     @Override
     public int getEntityLifespan(ItemStack itemStack, World world)
     {

@@ -2,7 +2,9 @@ package lumaceon.mods.clockworkphase.block;
 
 import lumaceon.mods.clockworkphase.block.tileentity.TileEntityWindingBox;
 import lumaceon.mods.clockworkphase.init.ModItems;
+import lumaceon.mods.clockworkphase.item.ITension;
 import lumaceon.mods.clockworkphase.lib.NBTTags;
+import lumaceon.mods.clockworkphase.util.NBTHelper;
 import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.player.EntityPlayer;
@@ -32,20 +34,18 @@ public class BlockWindingBox extends BlockClockworkPhase implements ITileEntityP
                     return false;
                 }
 
-                NBTTagCompound nbt = is.getTagCompound();
-                if(nbt == null)
+                if(is.getItem() instanceof ITension)
                 {
-                    is.setTagCompound(new NBTTagCompound());
-                    nbt = is.getTagCompound();
+                    if(NBTHelper.hasTag(is, NBTTags.MAX_TENSION))
+                    {
+                        ((ITension) is.getItem()).addTension(is, NBTHelper.getInt(is, NBTTags.MAX_TENSION) / 20);
+                        return true;
+                    }
                 }
-                nbt.setInteger(NBTTags.TENSION_ENERGY, nbt.getInteger(NBTTags.TENSION_ENERGY) + 50);
-                return true;
             }
         }
         return false;
     }
-
-
 
     @Override
     public TileEntity createNewTileEntity(World world, int meta)

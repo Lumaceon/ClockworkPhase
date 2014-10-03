@@ -6,12 +6,13 @@ import lumaceon.mods.clockworkphase.lib.NBTTags;
 import lumaceon.mods.clockworkphase.util.NBTHelper;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
+import net.minecraft.world.World;
 
 import java.util.List;
 
-public class ItemMainspring extends ItemClockworkPhase
+public class ItemClockwork extends ItemClockworkPhase implements IDisassemble
 {
-    public ItemMainspring()
+    public ItemClockwork()
     {
         super();
         this.setMaxStackSize(1);
@@ -22,6 +23,12 @@ public class ItemMainspring extends ItemClockworkPhase
     @SideOnly(Side.CLIENT)
     public void addInformation(ItemStack is, EntityPlayer player, List list, boolean flag)
     {
-        list.add("Tension: " + "\u00a7e" + NBTHelper.getInt(is, NBTTags.TENSION_ENERGY) + "/" + "\u00a7e" +  NBTHelper.getInt(is, NBTTags.MAX_TENSION));
+        list.add("Power multiplier: 1");
+    }
+
+    @Override
+    public void disassemble(World world, double x, double y, double z, ItemStack is)
+    {
+        
     }
 }

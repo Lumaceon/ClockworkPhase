@@ -18,14 +18,13 @@ import lumaceon.mods.clockworkphase.eventhandlers.GrowthHandler;
 import lumaceon.mods.clockworkphase.init.ModBlocks;
 import lumaceon.mods.clockworkphase.init.ModFluids;
 import lumaceon.mods.clockworkphase.init.ModItems;
-import lumaceon.mods.clockworkphase.init.Recipes;
+import lumaceon.mods.clockworkphase.recipe.Recipes;
 import lumaceon.mods.clockworkphase.lib.Reference;
 import lumaceon.mods.clockworkphase.network.PacketHandler;
 import lumaceon.mods.clockworkphase.proxy.IProxy;
 import lumaceon.mods.clockworkphase.util.Logger;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.common.util.ForgeDirection;
 import net.minecraftforge.oredict.OreDictionary;
 
 @Mod(modid = Reference.MOD_ID, name = Reference.MOD_NAME, version = Reference.VERSION)
