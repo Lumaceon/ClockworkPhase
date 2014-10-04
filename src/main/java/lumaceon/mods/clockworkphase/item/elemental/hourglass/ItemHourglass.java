@@ -12,7 +12,9 @@ import lumaceon.mods.clockworkphase.util.NBTHelper;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagList;
 import net.minecraft.world.World;
+import org.lwjgl.input.Keyboard;
 
 import java.util.List;
 
@@ -25,10 +27,23 @@ public class ItemHourglass extends ItemElemental implements ITension, IDisassemb
         this.setNoRepair();
     }
 
+    @Override
     @SideOnly(Side.CLIENT)
     public void addInformation(ItemStack is, EntityPlayer player, List list, boolean flag)
     {
         list.add("Tension: " + "\u00a7e" + NBTHelper.getInt(is, NBTTags.TENSION_ENERGY) + "/" + "\u00a7e" + NBTHelper.getInt(is, NBTTags.MAX_TENSION));
+        list.add("");
+
+        if(Keyboard.isKeyDown(Keyboard.KEY_LSHIFT) || Keyboard.isKeyDown(Keyboard.KEY_RSHIFT))
+        {
+            list.add("Clockwork Quality: " + "\u00a7e" + NBTHelper.getInt(is, NBTTags.QUALITY));
+            list.add("Clockwork Speed: " + "\u00a7e" + NBTHelper.getInt(is, NBTTags.SPEED));
+            list.add("Memory Energy: " + "\u00a7e" + NBTHelper.getInt(is, NBTTags.MEMORY));
+        }
+        else
+        {
+            list.add("-Hold shift for details-");
+        }
     }
 
     public void elementize(Phases phase, EntityItem item)
@@ -38,16 +53,7 @@ public class ItemHourglass extends ItemElemental implements ITension, IDisassemb
         if(!item.getEntityItem().getItem().equals(ModItems.hourglassElements[id]))
         {
             ItemStack newItem = new ItemStack(ModItems.hourglassElements[id]);
-
-            if(NBTHelper.hasTag(item.getEntityItem(), NBTTags.MAX_TENSION))
-            {
-                NBTHelper.setInteger(newItem, NBTTags.MAX_TENSION, NBTHelper.getInt(item.getEntityItem(), NBTTags.MAX_TENSION));
-            }
-            if(NBTHelper.hasTag(item.getEntityItem(), NBTTags.TENSION_ENERGY))
-            {
-                NBTHelper.setInteger(newItem, NBTTags.TENSION_ENERGY, NBTHelper.getInt(item.getEntityItem(), NBTTags.TENSION_ENERGY));
-            }
-
+            newItem.setTagCompound(item.getEntityItem().stackTagCompound);
             newItem.setItemDamage(item.getEntityItem().getItemDamage());
             item.setEntityItemStack(newItem);
         }
@@ -59,16 +65,7 @@ public class ItemHourglass extends ItemElemental implements ITension, IDisassemb
         if(!item.getEntityItem().getItem().equals(ModItems.hourglass))
         {
             ItemStack newItem = new ItemStack(ModItems.hourglass);
-
-            if(NBTHelper.hasTag(item.getEntityItem(), NBTTags.MAX_TENSION))
-            {
-                NBTHelper.setInteger(newItem, NBTTags.MAX_TENSION, NBTHelper.getInt(item.getEntityItem(), NBTTags.MAX_TENSION));
-            }
-            if(NBTHelper.hasTag(item.getEntityItem(), NBTTags.TENSION_ENERGY))
-            {
-                NBTHelper.setInteger(newItem, NBTTags.TENSION_ENERGY, NBTHelper.getInt(item.getEntityItem(), NBTTags.TENSION_ENERGY));
-            }
-
+            newItem.setTagCompound(item.getEntityItem().stackTagCompound);
             newItem.setItemDamage(item.getEntityItem().getItemDamage());
             item.setEntityItemStack(newItem);
         }
@@ -139,12 +136,22 @@ public class ItemHourglass extends ItemElemental implements ITension, IDisassemb
             world.spawnEntityInWorld(new EntityItem(world, x, y, z, mainspring));
         }
 
-        ItemStack clockwork = new ItemStack(ModItems.clockwork);
+        if(NBTHelper.hasTag(is, NBTTags.CLOCKWORK))
+        {
+            NBTTagList tagList = NBTHelper.getTagList(is, NBTTags.CLOCKWORK);
+            if(tagList.tagCount() > 0)
+            {
+                ItemStack clockwork = ItemStack.loadItemStackFromNBT(tagList.getCompoundTagAt(0));
+                world.spawnEntityInWorld(new EntityItem(world, x, y, z, clockwork));
+            }
+        }
 
         NBTHelper.setInteger(is, NBTTags.TENSION_ENERGY, 0);
         NBTHelper.setInteger(is, NBTTags.MAX_TENSION, 0);
+        NBTHelper.setInteger(is, NBTTags.QUALITY, 0);
+        NBTHelper.setInteger(is, NBTTags.SPEED, 0);
+        NBTHelper.setInteger(is, NBTTags.MEMORY, 0);
+        NBTHelper.removeTag(is, NBTTags.CLOCKWORK);
         is.setItemDamage(is.getMaxDamage());
-
-        world.spawnEntityInWorld(new EntityItem(world, x, y, z, clockwork));
     }
 }

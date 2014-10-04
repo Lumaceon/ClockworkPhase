@@ -11,6 +11,9 @@ public class Names
     public static final String HOURGLASS = "hourglass";
     public static final String TIME_SAND_BUCKET = "timeSandBucket";
     public static final String BLAND_HOURGLASS = "blandHourglass";
+    public static final String GEAR_IRON = "cp_gearIron";
+    public static final String GEAR_BRASS = "cp_gearBrass";
+    public static final String MEMORY_CORE = "memoryCore";
 
     //#*BLOCKS*#\\
     public static final String BRASS_BLOCK = "brassBlock";

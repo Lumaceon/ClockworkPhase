@@ -34,5 +34,6 @@ public class Recipes
 
         GameRegistry.addRecipe(new RecipeChronomancersHourglass());
         GameRegistry.addRecipe(new RecipeHourglassRepair());
+        GameRegistry.addRecipe(new RecipeClockwork());
     }
 }

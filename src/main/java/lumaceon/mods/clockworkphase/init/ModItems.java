@@ -2,9 +2,9 @@ package lumaceon.mods.clockworkphase.init;
 
 import cpw.mods.fml.common.registry.GameRegistry;
 import lumaceon.mods.clockworkphase.item.*;
+import lumaceon.mods.clockworkphase.item.component.*;
 import lumaceon.mods.clockworkphase.item.elemental.hourglass.*;
 import lumaceon.mods.clockworkphase.lib.Names;
-import lumaceon.mods.clockworkphase.lib.Phases;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -24,6 +24,9 @@ public class ModItems
     public static Item handCrank;
     public static Item timeSandBucket;
     public static Item blandHourglass;
+    public static Item gearIron;
+    public static Item gearBrass;
+    public static Item memoryCore;
 
     public static Item hourglass;
     public static Item[] hourglassElements = new Item[8];
@@ -52,6 +55,15 @@ public class ModItems
 
         blandHourglass = new ItemBlandHourglass().setUnlocalizedName(Names.BLAND_HOURGLASS);
         GameRegistry.registerItem(blandHourglass, Names.BLAND_HOURGLASS);
+
+        gearIron = new ItemGearIron().setUnlocalizedName(Names.GEAR_IRON);
+        GameRegistry.registerItem(gearIron, Names.GEAR_IRON);
+
+        gearBrass = new ItemGearBrass().setUnlocalizedName(Names.GEAR_BRASS);
+        GameRegistry.registerItem(gearBrass, Names.GEAR_BRASS);
+
+        memoryCore = new ItemMemoryCore().setUnlocalizedName(Names.MEMORY_CORE);
+        GameRegistry.registerItem(memoryCore, Names.MEMORY_CORE);
 
 
         /** Chronomancer's Hourglass **/

@@ -1,15 +1,16 @@
 package lumaceon.mods.clockworkphase.recipe;
 
 import lumaceon.mods.clockworkphase.init.ModItems;
-import lumaceon.mods.clockworkphase.item.IDisassemble;
-import lumaceon.mods.clockworkphase.item.ItemClockwork;
-import lumaceon.mods.clockworkphase.item.ItemMainspring;
+import lumaceon.mods.clockworkphase.item.component.ItemClockwork;
+import lumaceon.mods.clockworkphase.item.component.ItemMainspring;
 import lumaceon.mods.clockworkphase.item.elemental.hourglass.ItemHourglass;
 import lumaceon.mods.clockworkphase.lib.NBTTags;
 import lumaceon.mods.clockworkphase.util.NBTHelper;
 import net.minecraft.inventory.InventoryCrafting;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.NBTTagList;
 import net.minecraft.world.World;
 
 public class RecipeHourglassRepair implements IRecipe
@@ -23,11 +24,33 @@ public class RecipeHourglassRepair implements IRecipe
         boolean hourglass = false;
         boolean doubles = false;
 
+        boolean alreadyContainsMainspring = false;
+        boolean alreadyContainsClockwork = false;
+
         for(int n = 0; n < ic.getSizeInventory(); n++)
         {
             item = ic.getStackInSlot(n);
             if(item != null)
             {
+                if(item.getItem() instanceof ItemHourglass)
+                {
+                    if(hourglass)
+                    {
+                        doubles = true;
+                    }
+                    hourglass = true;
+
+                    if(NBTHelper.getInt(item, NBTTags.MAX_TENSION) != 0)
+                    {
+                        alreadyContainsMainspring = true;
+                    }
+
+                    if(NBTHelper.hasTag(item, NBTTags.CLOCKWORK))
+                    {
+                        alreadyContainsClockwork = true;
+                    }
+                }
+
                 if(item.getItem() instanceof ItemMainspring)
                 {
                     if(mainspring)
@@ -45,16 +68,17 @@ public class RecipeHourglassRepair implements IRecipe
                     }
                     clockwork = true;
                 }
-
-                if(item.getItem() instanceof ItemHourglass)
-                {
-                    if(hourglass)
-                    {
-                        doubles = true;
-                    }
-                    hourglass = true;
-                }
             }
+        }
+
+        if(alreadyContainsMainspring && mainspring)
+        {
+            return false;
+        }
+
+        if(alreadyContainsClockwork && clockwork)
+        {
+            return false;
         }
 
         if(doubles) { return false; }
@@ -93,18 +117,32 @@ public class RecipeHourglassRepair implements IRecipe
             }
         }
 
-        tempItem = new ItemStack(hourglass.getItem());
+        ItemStack output = hourglass;
         if(mainspring != null)
         {
-            NBTHelper.setInteger(tempItem, NBTTags.MAX_TENSION, NBTHelper.getInt(mainspring, NBTTags.MAX_TENSION));
+            int currentTension = NBTHelper.getInt(mainspring, NBTTags.TENSION_ENERGY);
+            int maxTension = NBTHelper.getInt(mainspring, NBTTags.MAX_TENSION);
+
+            NBTHelper.setInteger(output, NBTTags.TENSION_ENERGY, currentTension);
+            NBTHelper.setInteger(output, NBTTags.MAX_TENSION, maxTension);
+
+            if(maxTension / 10 == 0) { output.setItemDamage(output.getMaxDamage()); }
+            else { output.setItemDamage(10 - (currentTension / (maxTension / 10))); }
         }
 
         if(clockwork != null)
         {
-            //Do clockworky stuff.
-        }
+            NBTHelper.setInteger(output, NBTTags.QUALITY, NBTHelper.getInt(clockwork, NBTTags.QUALITY));
+            NBTHelper.setInteger(output, NBTTags.SPEED, NBTHelper.getInt(clockwork, NBTTags.SPEED));
+            NBTHelper.setInteger(output, NBTTags.MEMORY, NBTHelper.getInt(clockwork, NBTTags.MEMORY));
 
-        return tempItem;
+            NBTTagList nbtList = new NBTTagList();
+            NBTTagCompound tag = new NBTTagCompound();
+            clockwork.writeToNBT(tag);
+            nbtList.appendTag(tag);
+            NBTHelper.setTag(output, NBTTags.CLOCKWORK, nbtList);
+        }
+        return output;
     }
 
     @Override

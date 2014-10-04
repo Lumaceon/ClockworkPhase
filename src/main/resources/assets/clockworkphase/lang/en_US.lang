@@ -6,6 +6,9 @@ item.clockworkphase:handCrank.name=Hand Crank
 item.clockworkphase:timeSandBucket.name=Time Sand Bucket
 item.clockworkphase:blandHourglass.name=Hourglass
 item.clockworkphase:clockwork.name=Clockwork
+item.clockworkphase:cp_gearIron.name=Iron Gear
+item.clockworkphase:cp_gearBrass.name=Brass Gear
+item.clockworkphase:memoryCore.name=Memory Core
 
 item.clockworkphase:hourglass.name=Chronomancer's Hourglass
 item.clockworkphase:hourglassLife.name=Chronomancer's Hourglass of Life

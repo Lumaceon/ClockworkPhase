@@ -1,7 +1,9 @@
 package lumaceon.mods.clockworkphase.util;
 
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTBase;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.NBTTagList;
 
 public class NBTHelper
 {
@@ -30,6 +32,44 @@ public class NBTHelper
         {
             itemStack.setTagCompound(new NBTTagCompound());
         }
+    }
+
+    public static void setTag(ItemStack itemStack, String keyName, NBTTagList nbt)
+    {
+        initNBTTagCompound(itemStack);
+
+        itemStack.stackTagCompound.setTag(keyName, nbt);
+    }
+
+    public static NBTBase getTag(ItemStack itemStack, String keyName)
+    {
+        initNBTTagCompound(itemStack);
+
+        if(!itemStack.stackTagCompound.hasKey(keyName))
+        {
+            setTag(itemStack, keyName, new NBTTagList());
+        }
+
+        return itemStack.stackTagCompound.getTag(keyName);
+    }
+
+    public static NBTTagList getTagList(ItemStack itemStack, String keyName)
+    {
+        initNBTTagCompound(itemStack);
+
+        if(!itemStack.stackTagCompound.hasKey(keyName))
+        {
+            setTag(itemStack, keyName, new NBTTagList());
+        }
+
+        NBTBase returnValue = itemStack.stackTagCompound.getTag(keyName);
+
+        if(!(returnValue instanceof NBTTagList))
+        {
+            Logger.error("Method getTagList in NBTHelper attempted to load an invalid tag.");
+            return new NBTTagList();
+        }
+        return (NBTTagList)returnValue;
     }
 
     public static void setLong(ItemStack itemStack, String keyName, long keyValue)

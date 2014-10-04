@@ -6,6 +6,8 @@ import lumaceon.mods.clockworkphase.util.NBTHelper;
 import net.minecraft.inventory.InventoryCrafting;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.NBTTagList;
 import net.minecraft.world.World;
 import net.minecraftforge.oredict.OreDictionary;
 
@@ -69,7 +71,7 @@ public class RecipeChronomancersHourglass implements IRecipe
     {
         ItemStack output = new ItemStack(ModItems.hourglass);
         ItemStack mainspring = ic.getStackInSlot(4);
-        ItemStack clockwork = ic.getStackInSlot(7);
+        ItemStack clockwork = ic.getStackInSlot(1);
 
         int maxTension = NBTHelper.getInt(mainspring, NBTTags.MAX_TENSION);
         int currentTension = NBTHelper.getInt(mainspring, NBTTags.TENSION_ENERGY);
@@ -79,6 +81,16 @@ public class RecipeChronomancersHourglass implements IRecipe
 
         if(maxTension / 10 == 0) { output.setItemDamage(output.getMaxDamage()); }
         else { output.setItemDamage(10 - (currentTension / (maxTension / 10))); }
+
+        NBTHelper.setInteger(output, NBTTags.QUALITY, NBTHelper.getInt(clockwork, NBTTags.QUALITY));
+        NBTHelper.setInteger(output, NBTTags.SPEED, NBTHelper.getInt(clockwork, NBTTags.SPEED));
+        NBTHelper.setInteger(output, NBTTags.MEMORY, NBTHelper.getInt(clockwork, NBTTags.MEMORY));
+
+        NBTTagList nbtList = new NBTTagList();
+        NBTTagCompound tag = new NBTTagCompound();
+        clockwork.writeToNBT(tag);
+        nbtList.appendTag(tag);
+        NBTHelper.setTag(output, NBTTags.CLOCKWORK, nbtList);
 
         return output;
     }
