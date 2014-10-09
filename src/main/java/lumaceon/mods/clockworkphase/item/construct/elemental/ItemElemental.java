@@ -1,7 +1,8 @@
-package lumaceon.mods.clockworkphase.item.elemental;
+package lumaceon.mods.clockworkphase.item.construct.elemental;
 
 import lumaceon.mods.clockworkphase.init.ModBlocks;
 import lumaceon.mods.clockworkphase.item.ItemClockworkPhase;
+import lumaceon.mods.clockworkphase.item.construct.elemental.IElemental;
 import lumaceon.mods.clockworkphase.lib.NBTTags;
 import lumaceon.mods.clockworkphase.lib.Phases;
 import lumaceon.mods.clockworkphase.lib.Ranges;
@@ -13,11 +14,12 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
 
-public class ItemElemental extends ItemClockworkPhase
+public class ItemElemental extends ItemClockworkPhase implements IElemental
 {
     public ItemElemental()
     {
         this.setMaxStackSize(1);
+        this.setMaxDamage(10);
         this.setNoRepair();
     }
 
@@ -83,7 +85,7 @@ public class ItemElemental extends ItemClockworkPhase
         return false;
     }
 
-    public void handleElementization(EntityItem item, int x, int y, int z)
+    private void handleElementization(EntityItem item, int x, int y, int z)
     {
         double xDifference = item.posX - x;
         double zDifference = item.posZ - z;
@@ -149,7 +151,7 @@ public class ItemElemental extends ItemClockworkPhase
         {
             if(NBTHelper.getInt(item.getEntityItem(), NBTTags.ELEMENTIZE_TIMER) > 200)
             {
-                elementize(Phases.DARK, item);
+                elementize(Phases.LUNAR, item);
                 return;
             }
         }

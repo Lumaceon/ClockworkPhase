@@ -1,13 +1,13 @@
-package lumaceon.mods.clockworkphase.item.elemental.hourglass;
+package lumaceon.mods.clockworkphase.item.construct.mix;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import lumaceon.mods.clockworkphase.init.ModItems;
-import lumaceon.mods.clockworkphase.item.IDisassemble;
-import lumaceon.mods.clockworkphase.item.ITension;
-import lumaceon.mods.clockworkphase.item.elemental.ItemElemental;
+import lumaceon.mods.clockworkphase.item.construct.clockwork.IClockwork;
+import lumaceon.mods.clockworkphase.item.construct.clockwork.IDisassemble;
+import lumaceon.mods.clockworkphase.item.construct.elemental.IElemental;
+import lumaceon.mods.clockworkphase.item.construct.elemental.ItemElemental;
 import lumaceon.mods.clockworkphase.lib.NBTTags;
-import lumaceon.mods.clockworkphase.lib.Phases;
 import lumaceon.mods.clockworkphase.util.NBTHelper;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
@@ -18,15 +18,8 @@ import org.lwjgl.input.Keyboard;
 
 import java.util.List;
 
-public class ItemHourglass extends ItemElemental implements ITension, IDisassemble
+public class ItemElementalClockworkConstruct extends ItemElemental implements IElemental, IClockwork, IDisassemble
 {
-    public ItemHourglass()
-    {
-        super();
-        this.setMaxDamage(10);
-        this.setNoRepair();
-    }
-
     @Override
     @SideOnly(Side.CLIENT)
     public void addInformation(ItemStack is, EntityPlayer player, List list, boolean flag)
@@ -43,31 +36,6 @@ public class ItemHourglass extends ItemElemental implements ITension, IDisassemb
         else
         {
             list.add("-Hold shift for details-");
-        }
-    }
-
-    public void elementize(Phases phase, EntityItem item)
-    {
-        super.elementize(phase, item);
-        int id = phase.ordinal();
-        if(!item.getEntityItem().getItem().equals(ModItems.hourglassElements[id]))
-        {
-            ItemStack newItem = new ItemStack(ModItems.hourglassElements[id]);
-            newItem.setTagCompound(item.getEntityItem().stackTagCompound);
-            newItem.setItemDamage(item.getEntityItem().getItemDamage());
-            item.setEntityItemStack(newItem);
-        }
-    }
-
-    public void unelementize(EntityItem item)
-    {
-        super.unelementize(item);
-        if(!item.getEntityItem().getItem().equals(ModItems.hourglass))
-        {
-            ItemStack newItem = new ItemStack(ModItems.hourglass);
-            newItem.setTagCompound(item.getEntityItem().stackTagCompound);
-            newItem.setItemDamage(item.getEntityItem().getItemDamage());
-            item.setEntityItemStack(newItem);
         }
     }
 
@@ -106,7 +74,7 @@ public class ItemHourglass extends ItemElemental implements ITension, IDisassemb
 
         if(currentTension - tension <= 0)
         {
-           NBTHelper.setInteger(is, NBTTags.TENSION_ENERGY, 0);
+            NBTHelper.setInteger(is, NBTTags.TENSION_ENERGY, 0);
         }
         else
         {

@@ -1,6 +1,6 @@
 package lumaceon.mods.clockworkphase.block;
 
-import lumaceon.mods.clockworkphase.item.IDisassemble;
+import lumaceon.mods.clockworkphase.item.construct.clockwork.IDisassemble;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.world.World;

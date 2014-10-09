@@ -3,7 +3,7 @@ package lumaceon.mods.clockworkphase.item.component;
 import lumaceon.mods.clockworkphase.item.ItemClockworkPhase;
 import net.minecraft.item.ItemStack;
 
-public class ItemGearIron extends ItemClockworkPhase implements IBaseComponent
+public class ItemOilBucket extends ItemClockworkPhase implements IBaseComponent
 {
     @Override
     public boolean isComponentSpeedy(ItemStack is)
@@ -14,7 +14,7 @@ public class ItemGearIron extends ItemClockworkPhase implements IBaseComponent
     @Override
     public boolean isComponentQuality(ItemStack is)
     {
-        return true;
+        return false;
     }
 
     @Override
@@ -26,13 +26,13 @@ public class ItemGearIron extends ItemClockworkPhase implements IBaseComponent
     @Override
     public int getGearQuality(ItemStack is)
     {
-        return 30;
+        return 0;
     }
 
     @Override
     public int getGearSpeed(ItemStack is)
     {
-        return 20;
+        return 85;
     }
 
     @Override

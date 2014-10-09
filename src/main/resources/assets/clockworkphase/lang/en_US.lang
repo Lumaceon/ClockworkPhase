@@ -6,8 +6,9 @@ item.clockworkphase:handCrank.name=Hand Crank
 item.clockworkphase:timeSandBucket.name=Time Sand Bucket
 item.clockworkphase:blandHourglass.name=Hourglass
 item.clockworkphase:clockwork.name=Clockwork
-item.clockworkphase:cp_gearIron.name=Iron Gear
-item.clockworkphase:cp_gearBrass.name=Brass Gear
+item.clockworkphase:gearIron.name=Iron Gear
+item.clockworkphase:gearBrass.name=Brass Gear
+item.clockworkphase:oilBucket.name= Oil Bucket
 item.clockworkphase:memoryCore.name=Memory Core
 
 item.clockworkphase:hourglass.name=Chronomancer's Hourglass
@@ -17,7 +18,7 @@ item.clockworkphase:hourglassWater.name=Chronomancer's Hourglass of Water
 item.clockworkphase:hourglassEarth.name=Chronomancer's Hourglass of Earth
 item.clockworkphase:hourglassAir.name=Chronomancer's Hourglass of Air
 item.clockworkphase:hourglassFire.name=Chronomancer's Hourglass of Fire
-item.clockworkphase:hourglassDark.name=Chronomancer's Hourglass of Darkness
+item.clockworkphase:hourglassLunar.name=Chronomancer's Hourglass of the Moon
 item.clockworkphase:hourglassDeath.name=Chronomancer's Hourglass of Death
 
 
@@ -30,6 +31,7 @@ tile.clockworkphase:timeSand.name=Time Sand
 tile.clockworkphase:celestialCompass.name=Celestial Compass Core
 tile.clockworkphase:celestialCompassSub.name=Celestial Compass
 tile.clockworkphase:disassembler.name=Disassembler
+tile.clockworkphase:hourglassLightBlock.name=Hourglass Light
 
 
 #General Localizations

@@ -1,5 +1,6 @@
 package lumaceon.mods.clockworkphase.recipe;
 
+import lumaceon.mods.clockworkphase.lib.MechanicTweaker;
 import lumaceon.mods.clockworkphase.lib.NBTTags;
 import lumaceon.mods.clockworkphase.util.NBTHelper;
 import net.minecraft.inventory.InventoryCrafting;
@@ -71,16 +72,16 @@ public class RecipeMainspring implements IRecipe
         if(!NBTHelper.hasTag(output, NBTTags.MAX_TENSION)) { NBTHelper.setInteger(output, NBTTags.MAX_TENSION, 8 * metalValue); }
         else
         {
-            if(previousMaxTension + 8 * metalValue >= 100000)
+            if(previousMaxTension + 8 * metalValue >= MechanicTweaker.MAX_TENSION)
             {
-                NBTHelper.setInteger(output, NBTTags.MAX_TENSION, 100000);
+                NBTHelper.setInteger(output, NBTTags.MAX_TENSION, MechanicTweaker.MAX_TENSION);
             }
             else
             {
                 NBTHelper.setInteger(output, NBTTags.MAX_TENSION, previousMaxTension + 8 * metalValue);
             }
         }
-        output.setItemDamage(10 - ((previousMaxTension + 8 * metalValue) / 10000));
+        output.setItemDamage(10 - ((previousMaxTension + 8 * metalValue) / (MechanicTweaker.MAX_TENSION / 10)));
         return output;
     }
 

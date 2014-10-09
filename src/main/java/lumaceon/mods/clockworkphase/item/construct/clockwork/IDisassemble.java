@@ -1,4 +1,4 @@
-package lumaceon.mods.clockworkphase.item;
+package lumaceon.mods.clockworkphase.item.construct.clockwork;
 
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;

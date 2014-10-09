@@ -3,7 +3,7 @@ package lumaceon.mods.clockworkphase.init;
 import cpw.mods.fml.common.registry.GameRegistry;
 import lumaceon.mods.clockworkphase.item.*;
 import lumaceon.mods.clockworkphase.item.component.*;
-import lumaceon.mods.clockworkphase.item.elemental.hourglass.*;
+import lumaceon.mods.clockworkphase.item.construct.mix.hourglass.*;
 import lumaceon.mods.clockworkphase.lib.Names;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
@@ -24,8 +24,10 @@ public class ModItems
     public static Item handCrank;
     public static Item timeSandBucket;
     public static Item blandHourglass;
+
     public static Item gearIron;
     public static Item gearBrass;
+    public static Item oilBucket;
     public static Item memoryCore;
 
     public static Item hourglass;
@@ -62,6 +64,9 @@ public class ModItems
         gearBrass = new ItemGearBrass().setUnlocalizedName(Names.GEAR_BRASS);
         GameRegistry.registerItem(gearBrass, Names.GEAR_BRASS);
 
+        oilBucket = new ItemOilBucket().setUnlocalizedName(Names.OIL_BUCKET);
+        GameRegistry.registerItem(oilBucket, Names.OIL_BUCKET);
+
         memoryCore = new ItemMemoryCore().setUnlocalizedName(Names.MEMORY_CORE);
         GameRegistry.registerItem(memoryCore, Names.MEMORY_CORE);
 
@@ -88,8 +93,8 @@ public class ModItems
         hourglassElements[5] = new ItemHourglassFire().setUnlocalizedName(Names.HOURGLASS + "Fire");
         GameRegistry.registerItem(hourglassElements[5], Names.HOURGLASS + "Fire");
 
-        hourglassElements[6] = new ItemHourglassDark().setUnlocalizedName(Names.HOURGLASS + "Dark");
-        GameRegistry.registerItem(hourglassElements[6], Names.HOURGLASS + "Dark");
+        hourglassElements[6] = new ItemHourglassLunar().setUnlocalizedName(Names.HOURGLASS + "Lunar");
+        GameRegistry.registerItem(hourglassElements[6], Names.HOURGLASS + "Lunar");
 
         hourglassElements[7] = new ItemHourglassDeath().setUnlocalizedName(Names.HOURGLASS + "Death");
         GameRegistry.registerItem(hourglassElements[7], Names.HOURGLASS + "Death");

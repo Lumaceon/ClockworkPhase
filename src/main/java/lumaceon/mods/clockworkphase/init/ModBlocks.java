@@ -3,7 +3,6 @@ package lumaceon.mods.clockworkphase.init;
 import cpw.mods.fml.common.registry.GameRegistry;
 import lumaceon.mods.clockworkphase.block.*;
 import lumaceon.mods.clockworkphase.block.tileentity.TileEntityCelestialCompass;
-import lumaceon.mods.clockworkphase.block.tileentity.TileEntityWindingBox;
 import lumaceon.mods.clockworkphase.lib.Names;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
@@ -19,6 +18,8 @@ public class ModBlocks
     public static Block celestialCompass;
     public static Block celestialCompassSub;
     public static Block disassembler;
+
+    public static Block hourglassLight;
 
     public static void init()
     {
@@ -46,11 +47,15 @@ public class ModBlocks
 
         disassembler = new BlockDisassembler(Material.iron).setBlockName(Names.DISASSEMBLER);
         GameRegistry.registerBlock(disassembler, Names.DISASSEMBLER);
+
+
+
+        hourglassLight = new BlockHourglassLight(Material.portal).setBlockName(Names.HOURGLASS_LIGHT);
+        GameRegistry.registerBlock(hourglassLight, Names.HOURGLASS_LIGHT);
     }
 
     public static void registerTileEntities()
     {
-        GameRegistry.registerTileEntity(TileEntityWindingBox.class, Names.WINDING_BOX);
         GameRegistry.registerTileEntity(TileEntityCelestialCompass.class, Names.CELESTIAL_COMPASS);
     }
 }

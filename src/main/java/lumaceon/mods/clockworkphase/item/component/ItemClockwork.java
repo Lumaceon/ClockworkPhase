@@ -2,10 +2,9 @@ package lumaceon.mods.clockworkphase.item.component;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
-import lumaceon.mods.clockworkphase.item.IDisassemble;
+import lumaceon.mods.clockworkphase.item.construct.clockwork.IDisassemble;
 import lumaceon.mods.clockworkphase.item.ItemClockworkPhase;
 import lumaceon.mods.clockworkphase.lib.NBTTags;
-import lumaceon.mods.clockworkphase.util.Logger;
 import lumaceon.mods.clockworkphase.util.NBTHelper;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;

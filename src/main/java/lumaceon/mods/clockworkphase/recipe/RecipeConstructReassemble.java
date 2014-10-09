@@ -3,7 +3,7 @@ package lumaceon.mods.clockworkphase.recipe;
 import lumaceon.mods.clockworkphase.init.ModItems;
 import lumaceon.mods.clockworkphase.item.component.ItemClockwork;
 import lumaceon.mods.clockworkphase.item.component.ItemMainspring;
-import lumaceon.mods.clockworkphase.item.elemental.hourglass.ItemHourglass;
+import lumaceon.mods.clockworkphase.item.construct.clockwork.IClockwork;
 import lumaceon.mods.clockworkphase.lib.NBTTags;
 import lumaceon.mods.clockworkphase.util.NBTHelper;
 import net.minecraft.inventory.InventoryCrafting;
@@ -13,7 +13,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.world.World;
 
-public class RecipeHourglassRepair implements IRecipe
+public class RecipeConstructReassemble implements IRecipe
 {
     @Override
     public boolean matches(InventoryCrafting ic, World world)
@@ -21,7 +21,7 @@ public class RecipeHourglassRepair implements IRecipe
         ItemStack item;
         boolean mainspring = false;
         boolean clockwork = false;
-        boolean hourglass = false;
+        boolean construct = false;
         boolean doubles = false;
 
         boolean alreadyContainsMainspring = false;
@@ -32,13 +32,13 @@ public class RecipeHourglassRepair implements IRecipe
             item = ic.getStackInSlot(n);
             if(item != null)
             {
-                if(item.getItem() instanceof ItemHourglass)
+                if(item.getItem() instanceof IClockwork)
                 {
-                    if(hourglass)
+                    if(construct)
                     {
                         doubles = true;
                     }
-                    hourglass = true;
+                    construct = true;
 
                     if(NBTHelper.getInt(item, NBTTags.MAX_TENSION) != 0)
                     {
@@ -82,7 +82,7 @@ public class RecipeHourglassRepair implements IRecipe
         }
 
         if(doubles) { return false; }
-        if((mainspring || clockwork) && hourglass) { return true; }
+        if((mainspring || clockwork) && construct) { return true; }
 
         return false;
     }
@@ -93,7 +93,7 @@ public class RecipeHourglassRepair implements IRecipe
         ItemStack tempItem;
         ItemStack mainspring = null;
         ItemStack clockwork = null;
-        ItemStack hourglass = null;
+        ItemStack construct = null;
 
         for(int n = 0; n < ic.getSizeInventory(); n++)
         {
@@ -110,14 +110,14 @@ public class RecipeHourglassRepair implements IRecipe
                     clockwork = tempItem.copy();
                 }
 
-                if(tempItem.getItem() instanceof ItemHourglass)
+                if(tempItem.getItem() instanceof IClockwork)
                 {
-                    hourglass = tempItem.copy();
+                    construct = tempItem.copy();
                 }
             }
         }
 
-        ItemStack output = hourglass;
+        ItemStack output = construct;
         if(mainspring != null)
         {
             int currentTension = NBTHelper.getInt(mainspring, NBTTags.TENSION_ENERGY);

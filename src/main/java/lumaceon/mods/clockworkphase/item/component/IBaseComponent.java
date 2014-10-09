@@ -2,6 +2,17 @@ package lumaceon.mods.clockworkphase.item.component;
 
 import net.minecraft.item.ItemStack;
 
+/**
+ * -General guide to making a base component-
+ * The value of a mechanical component is judged by the sum of it's quality and speed.
+ * Usually, the tension usage is a modified version of speed/quality, thus more quality will lower usage of tension.
+ *
+ * -Value of the component based on the sum of speed and quality-
+ * 0-30 Low quality component such as stone or wood gears.
+ * 35-70 Mid-tier component. Most of the more common metals fall into this category.
+ * 70-120 High-tier component. Both steel and diamonds fall into this category.
+ * 120+ God-tier component. Generally, only endgame mod items, such as Botania's Terrasteel, will reach this category.
+ */
 public interface IBaseComponent
 {
     /**
@@ -36,12 +47,12 @@ public interface IBaseComponent
      * A general guide to gear quality:
      * 0 - You tried to build a gear out of dirt and the result was a pile of dirt.
      * 10 - Gold gear that you made because gold. However, gold ended up being too soft a metal.
-     * 25 - Iron gear of average quality.
+     * 30 - Iron gear of average quality.
      * 35 - Brass gear of slightly above-average quality.
      * 40 - Bronze gear of rather decently above-average quality.
      * 50 - Steel gear of excellent quality.
-     * 70 - Diamond gear of rather outstanding though not entirely unbeatable quality.
-     * 70+ - Very high tier mod materials.
+     * 60 - Diamond gear of rather outstanding though not entirely unbeatable quality.
+     * 60+ - Very high tier mod materials.
      *
      * @return The quality of the gear. This is dependant on the item using it.
      */
@@ -55,8 +66,7 @@ public interface IBaseComponent
      * A general guide to gear speed:
      * 0 - You built a gear out of dirt and it flops around like a whale on a small island.
      * 5 - Gold gear.
-     * 15 - Iron gear.
-     * 20 - Bronze gear.
+     * 20 - Iron and bronze gears.
      * 25 - Brass gear.
      * 30 - Steel gear.
      * 50 - Diamond gear.

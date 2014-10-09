@@ -1,19 +1,14 @@
 package lumaceon.mods.clockworkphase.block;
 
-import lumaceon.mods.clockworkphase.block.tileentity.TileEntityWindingBox;
-import lumaceon.mods.clockworkphase.init.ModItems;
-import lumaceon.mods.clockworkphase.item.ITension;
+import lumaceon.mods.clockworkphase.item.construct.clockwork.IClockwork;
 import lumaceon.mods.clockworkphase.lib.NBTTags;
 import lumaceon.mods.clockworkphase.util.NBTHelper;
-import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 
-public class BlockWindingBox extends BlockClockworkPhase implements ITileEntityProvider
+public class BlockWindingBox extends BlockClockworkPhase
 {
     public BlockWindingBox(Material material)
     {
@@ -25,31 +20,16 @@ public class BlockWindingBox extends BlockClockworkPhase implements ITileEntityP
     {
         if(!player.isSneaking())
         {
-            if(player.getHeldItem() != null && player.getHeldItem().getItem().equals(ModItems.handCrank))
+            if(player.getHeldItem() != null && player.getHeldItem().getItem() instanceof IClockwork)
             {
-                ItemStack is = ((TileEntityWindingBox)world.getTileEntity(x, y, z)).getStackInSlot(0);
-
-                if(is == null)
+                ItemStack is = player.getHeldItem();
+                if(NBTHelper.hasTag(is, NBTTags.MAX_TENSION))
                 {
-                    return false;
-                }
-
-                if(is.getItem() instanceof ITension)
-                {
-                    if(NBTHelper.hasTag(is, NBTTags.MAX_TENSION))
-                    {
-                        ((ITension) is.getItem()).addTension(is, NBTHelper.getInt(is, NBTTags.MAX_TENSION) / 20);
-                        return true;
-                    }
+                    ((IClockwork) is.getItem()).addTension(is, NBTHelper.getInt(is, NBTTags.MAX_TENSION) / 25);
+                    return true;
                 }
             }
         }
         return false;
-    }
-
-    @Override
-    public TileEntity createNewTileEntity(World world, int meta)
-    {
-        return new TileEntityWindingBox();
     }
 }

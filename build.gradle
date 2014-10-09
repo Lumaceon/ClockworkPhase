@@ -17,13 +17,13 @@ buildscript {
 
 apply plugin: 'forge'
 
-version = "Dev 1.0.0"
+version = "Dev v1.0.0"
 group= "lumaceon.mods.clockworkphase" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = "clockworkphase"
 
 minecraft {
-    version = "1.7.10-10.13.0.1207"
-    assetDir = "eclipse/assets"
+    version = "1.7.10-10.13.1.1222"
+    runDir = "eclipse"
 }
 
 dependencies {

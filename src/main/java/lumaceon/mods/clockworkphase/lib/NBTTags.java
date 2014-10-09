@@ -12,4 +12,5 @@ public class NBTTags
     public static final String QUALITY = "quality";
     public static final String SPEED = "speed";
     public static final String MEMORY = "memory";
+    public static final String ACTIVE = "active";
 }
