@@ -2,13 +2,17 @@
 item.clockworkphase:bugSwatter.name=Bug Swatter
 item.clockworkphase:brassIngot.name=Brass Ingot
 item.clockworkphase:mainspring.name=Mainspring
-item.clockworkphase:handCrank.name=Hand Crank
 item.clockworkphase:timeSandBucket.name=Time Sand Bucket
 item.clockworkphase:blandHourglass.name=Hourglass
 item.clockworkphase:clockwork.name=Clockwork
 item.clockworkphase:gearIron.name=Iron Gear
 item.clockworkphase:gearBrass.name=Brass Gear
+item.clockworkphase:gearBronze.name=Bronze Gear
+item.clockworkphase:gearSteel.name=Steel Gear
+item.clockworkphase:gearDiamond.name=Diamond Gear
+item.clockworkphase:gearEmerald.name=Emerald Gear
 item.clockworkphase:oilBucket.name= Oil Bucket
+item.clockworkphase:framework.name=Framework
 item.clockworkphase:memoryCore.name=Memory Core
 
 item.clockworkphase:hourglass.name=Chronomancer's Hourglass
@@ -21,11 +25,14 @@ item.clockworkphase:hourglassFire.name=Chronomancer's Hourglass of Fire
 item.clockworkphase:hourglassLunar.name=Chronomancer's Hourglass of the Moon
 item.clockworkphase:hourglassDeath.name=Chronomancer's Hourglass of Death
 
+item.clockworkphase:clockworkPickaxe.name=Clockwork Pickaxe
+item.clockworkphase:clockworkAxe.name=Clockwork Axe
+item.clockworkphase:clockworkShovel.name=Clockwork Shovel
+
 
 #Block Localizations
 tile.clockworkphase:brassBlock.name=Brass Block
 tile.clockworkphase:windingBox.name=Winding Box
-tile.clockworkphase:gearPanel.name=Gear Panel
 tile.clockworkphase:growthExtractor.name=Growth Extractor
 tile.clockworkphase:timeSand.name=Time Sand
 tile.clockworkphase:celestialCompass.name=Celestial Compass Core

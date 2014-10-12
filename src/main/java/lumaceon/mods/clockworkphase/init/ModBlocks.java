@@ -12,7 +12,6 @@ public class ModBlocks
 {
     public static Block brassBlock;
     public static Block windingBox;
-    public static Block gearPanel;
     public static Block growthExtractor;
     public static Block timeSand;
     public static Block celestialCompass;
@@ -29,9 +28,6 @@ public class ModBlocks
 
         windingBox = new BlockWindingBox(Material.iron).setBlockName(Names.WINDING_BOX);
         GameRegistry.registerBlock(windingBox, Names.WINDING_BOX);
-
-        gearPanel = new BlockGear(Material.iron).setBlockName(Names.GEAR_PANEL);
-        GameRegistry.registerBlock(gearPanel, Names.GEAR_PANEL);
 
         growthExtractor = new BlockGrowthExtractor(Material.iron).setBlockName(Names.GROWTH_EXTRACTOR);
         GameRegistry.registerBlock(growthExtractor, Names.GROWTH_EXTRACTOR);

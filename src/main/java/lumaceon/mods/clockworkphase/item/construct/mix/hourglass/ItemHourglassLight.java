@@ -3,7 +3,9 @@ package lumaceon.mods.clockworkphase.item.construct.mix.hourglass;
 import lumaceon.mods.clockworkphase.init.ModBlocks;
 import lumaceon.mods.clockworkphase.lib.MechanicTweaker;
 import lumaceon.mods.clockworkphase.lib.NBTTags;
+import lumaceon.mods.clockworkphase.lib.Phases;
 import lumaceon.mods.clockworkphase.util.NBTHelper;
+import lumaceon.mods.clockworkphase.util.PhaseHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
@@ -23,8 +25,9 @@ public class ItemHourglassLight extends ItemHourglass
             int speed = NBTHelper.getInt(is, NBTTags.SPEED);
             int memory = NBTHelper.getInt(is, NBTTags.MEMORY);
 
-            float efficiency = Float.intBitsToFloat(speed) / Float.intBitsToFloat(quality);
+            float efficiency = (float)speed / (float)quality;
             int tensionCost = (int)Math.round(MechanicTweaker.LIGHT_HOURGLASS_TENSION_COST * Math.pow(efficiency, 2));
+            if(PhaseHelper.getPhaseForWorld(world).equals(Phases.LIGHT)) { tensionCost *= 0.1; }
             int newTension = tension - tensionCost;
 
             if(newTension <= 0)

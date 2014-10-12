@@ -2,7 +2,10 @@ package lumaceon.mods.clockworkphase.item.construct.mix.hourglass;
 
 import lumaceon.mods.clockworkphase.lib.MechanicTweaker;
 import lumaceon.mods.clockworkphase.lib.NBTTags;
+import lumaceon.mods.clockworkphase.lib.Phases;
+import lumaceon.mods.clockworkphase.util.Logger;
 import lumaceon.mods.clockworkphase.util.NBTHelper;
+import lumaceon.mods.clockworkphase.util.PhaseHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
@@ -22,8 +25,9 @@ public class ItemHourglassAir extends ItemHourglass
             int speed = NBTHelper.getInt(is, NBTTags.SPEED);
             int memory = NBTHelper.getInt(is, NBTTags.MEMORY);
 
-            float efficiency = Float.intBitsToFloat(speed) / Float.intBitsToFloat(quality);
+            float efficiency = (float)speed / (float)quality;
             int tensionCost = (int)Math.round(MechanicTweaker.AIR_HOURGLASS_TENSION_COST * Math.pow(efficiency, 2));
+            if(PhaseHelper.getPhaseForWorld(world).equals(Phases.AIR)) { tensionCost *= 0.1; }
             int newTension = tension - tensionCost;
 
             if(newTension <= 0)
@@ -42,7 +46,8 @@ public class ItemHourglassAir extends ItemHourglass
 
             if(speed > 10)
             {
-                player.setVelocity(player.getLookVec().xCoord * (speed / 100), player.getLookVec().yCoord * (speed / 100), player.getLookVec().zCoord * (speed / 100));
+                player.setVelocity(player.getLookVec().xCoord * ((float)speed / 200.0F), player.getLookVec().yCoord * ((float)speed / 200.0F), player.getLookVec().zCoord * ((float)speed / 200.0F));
+                player.fallDistance = 0;
                 this.removeTension(is, tensionCost);
             }
         }
@@ -56,6 +61,7 @@ public class ItemHourglassAir extends ItemHourglass
         return true;
     }
 
+    @Override
     public ItemStack onItemRightClick(ItemStack is, World world, EntityPlayer player)
     {
         boolean isActive = NBTHelper.getBoolean(is, NBTTags.ACTIVE);

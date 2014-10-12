@@ -41,8 +41,8 @@ public interface IBaseComponent
 
     /**
      * What gear quality determines is dependant on the construct using it.
-     * In most cases, quality will determine the maximum capabilities of an item, such
-     * as a pickaxe's effective harvesting level.
+     * In most cases, quality will determine how efficient the tool is with
+     * it's tension, using significantly less if quality is higher then speed.
      *
      * A general guide to gear quality:
      * 0 - You tried to build a gear out of dirt and the result was a pile of dirt.
@@ -50,7 +50,7 @@ public interface IBaseComponent
      * 30 - Iron gear of average quality.
      * 35 - Brass gear of slightly above-average quality.
      * 40 - Bronze gear of rather decently above-average quality.
-     * 50 - Steel gear of excellent quality.
+     * 55 - Steel gear of excellent quality.
      * 60 - Diamond gear of rather outstanding though not entirely unbeatable quality.
      * 60+ - Very high tier mod materials.
      *
@@ -69,8 +69,8 @@ public interface IBaseComponent
      * 20 - Iron and bronze gears.
      * 25 - Brass gear.
      * 30 - Steel gear.
-     * 50 - Diamond gear.
-     * 50+ - Very high tier mod materials.
+     * 40 - Diamond gear.
+     * 40+ - Very high tier mod materials.
      *
      * @return The speed of the gear. This is dependant on the item using it.
      */

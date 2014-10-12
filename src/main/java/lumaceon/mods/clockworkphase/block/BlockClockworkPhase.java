@@ -15,6 +15,7 @@ public class BlockClockworkPhase extends Block
     {
         super(material);
         this.setCreativeTab(ClockworkPhase.instance.creativeTabClockworkPhase);
+        this.setHardness(3.0F);
     }
 
     @Override

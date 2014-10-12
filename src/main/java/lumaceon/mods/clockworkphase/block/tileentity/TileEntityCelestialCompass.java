@@ -2,6 +2,7 @@ package lumaceon.mods.clockworkphase.block.tileentity;
 
 import lumaceon.mods.clockworkphase.init.ModBlocks;
 import lumaceon.mods.clockworkphase.lib.BlockPatterns;
+import lumaceon.mods.clockworkphase.lib.GlobalPhaseReference;
 import net.minecraft.nbt.NBTTagCompound;
 
 public class TileEntityCelestialCompass extends TileEntityClockworkPhase
@@ -11,6 +12,11 @@ public class TileEntityCelestialCompass extends TileEntityClockworkPhase
     @Override
     public void updateEntity()
     {
+        if(this.worldObj.getWorldTime() % GlobalPhaseReference.phaseDuration == 0)
+        {
+            this.worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
+        }
+
         if(!this.worldObj.isRemote)
         {
             if(blocksToPlace == 0)

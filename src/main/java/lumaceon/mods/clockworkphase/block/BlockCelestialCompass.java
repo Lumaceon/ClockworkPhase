@@ -2,11 +2,11 @@ package lumaceon.mods.clockworkphase.block;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import lumaceon.mods.clockworkphase.ClockworkPhase;
 import lumaceon.mods.clockworkphase.block.tileentity.TileEntityCelestialCompass;
 import lumaceon.mods.clockworkphase.util.PhaseHelper;
 import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.material.Material;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.IIcon;
@@ -31,7 +31,7 @@ public class BlockCelestialCompass extends BlockClockworkPhase implements ITileE
     @Override
     public IIcon getIcon(IBlockAccess blockAccess, int x, int y, int z, int meta)
     {
-        return this.icons[PhaseHelper.getPhaseForWorld(Minecraft.getMinecraft().theWorld).ordinal()];
+        return this.icons[PhaseHelper.getPhaseForWorld(ClockworkPhase.proxy.getStaticWorld()).ordinal()];
     }
 
     @Override

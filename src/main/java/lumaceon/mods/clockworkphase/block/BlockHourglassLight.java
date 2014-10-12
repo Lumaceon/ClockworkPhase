@@ -1,5 +1,7 @@
 package lumaceon.mods.clockworkphase.block;
 
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.material.Material;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.world.IBlockAccess;
@@ -15,6 +17,12 @@ public class BlockHourglassLight extends BlockClockworkPhase
         this.setCreativeTab(null);
         this.setLightOpacity(0);
         this.setBlockBounds(0.35F, 0.35F, 0.35F, 0.65F, 0.65F, 0.65F);
+    }
+
+    @Override
+    public boolean isOpaqueCube()
+    {
+        return false;
     }
 
     @Override

@@ -8,11 +8,16 @@ public class PhaseHelper
 {
     public static Phases getPhaseForWorld(World world)
     {
-        //phaseTime represents the time within the phase, translating the time of world to the time of phases.
-        int phaseTime = (int)(world.getWorldTime() % (GlobalPhaseReference.phaseDuration * Phases.values().length));
+        if(world == null)
+        {
+            Logger.error("PhaseHelper has been passed a null world. Defaulted to LIFE phase.");
+            return Phases.LIFE;
+        }
+        //allPhaseTime is the amount of time it takes to go through all phases.
+        int allPhaseTime = (int)(world.getWorldTime() % (GlobalPhaseReference.phaseDuration * Phases.values().length));
 
         //Get the actual phase from phaseTime.
-        int id = phaseTime / GlobalPhaseReference.phaseDuration;
+        int id = allPhaseTime / GlobalPhaseReference.phaseDuration;
 
         return Phases.values()[id];
     }

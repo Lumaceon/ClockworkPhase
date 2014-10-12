@@ -19,6 +19,7 @@ public class BlockCelestialCompassSub extends BlockClockworkPhase
     public BlockCelestialCompassSub(Material material)
     {
         super(material);
+        this.setCreativeTab(null);
         this.setBlockUnbreakable();
         this.setResistance(1000000F);
         this.setLightLevel(1.0F);

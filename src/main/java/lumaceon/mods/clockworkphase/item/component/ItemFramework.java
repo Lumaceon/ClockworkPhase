@@ -1,16 +1,10 @@
 package lumaceon.mods.clockworkphase.item.component;
 
 import lumaceon.mods.clockworkphase.item.ItemClockworkPhase;
-import lumaceon.mods.clockworkphase.lib.NBTTags;
-import lumaceon.mods.clockworkphase.util.NBTHelper;
 import net.minecraft.item.ItemStack;
 
-public class ItemMemoryCore extends ItemClockworkPhase implements IBaseComponent
+public class ItemFramework extends ItemClockworkPhase implements IBaseComponent
 {
-    public ItemMemoryCore()
-    {
-        this.setMaxStackSize(1);
-    }
 
     @Override
     public boolean isComponentSpeedy(ItemStack is)
@@ -21,19 +15,19 @@ public class ItemMemoryCore extends ItemClockworkPhase implements IBaseComponent
     @Override
     public boolean isComponentQuality(ItemStack is)
     {
-        return false;
+        return true;
     }
 
     @Override
     public boolean isComponentMemory(ItemStack is)
     {
-        return true;
+        return false;
     }
 
     @Override
     public int getGearQuality(ItemStack is)
     {
-        return 0;
+        return 90;
     }
 
     @Override
@@ -45,6 +39,6 @@ public class ItemMemoryCore extends ItemClockworkPhase implements IBaseComponent
     @Override
     public int getMemoryValue(ItemStack is)
     {
-        return NBTHelper.getInt(is, NBTTags.MEMORY);
+        return 0;
     }
 }

@@ -2,8 +2,8 @@
 {
   "modid": "clockworkphase",
   "name": "Clockwork Phase",
-  "description": "Time for some magic.",
-  "version": "Dev v1.0.0",
+  "description": "Adding time magic to Minecraft since 1979.",
+  "version": "v1.0.0a",
   "mcversion": "1.7.10",
   "url": "",
   "updateUrl": "",

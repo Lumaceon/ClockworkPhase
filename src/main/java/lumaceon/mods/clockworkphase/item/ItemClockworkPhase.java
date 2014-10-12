@@ -3,10 +3,17 @@ package lumaceon.mods.clockworkphase.item;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import lumaceon.mods.clockworkphase.ClockworkPhase;
+import lumaceon.mods.clockworkphase.item.component.IBaseComponent;
+import lumaceon.mods.clockworkphase.lib.NBTTags;
 import lumaceon.mods.clockworkphase.lib.Textures;
+import lumaceon.mods.clockworkphase.util.NBTHelper;
 import net.minecraft.client.renderer.texture.IIconRegister;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import org.lwjgl.input.Keyboard;
+
+import java.util.List;
 
 public class ItemClockworkPhase extends Item
 {
@@ -14,6 +21,28 @@ public class ItemClockworkPhase extends Item
     {
         super();
         this.setCreativeTab(ClockworkPhase.instance.creativeTabClockworkPhase);
+    }
+
+    @Override
+    @SideOnly(Side.CLIENT)
+    public void addInformation(ItemStack is, EntityPlayer player, List list, boolean flag)
+    {
+        if(is.getItem() instanceof IBaseComponent)
+        {
+            IBaseComponent component = (IBaseComponent)is.getItem();
+            if(component.isComponentQuality(is))
+            {
+                list.add("Quality: " + "\u00a7e" + component.getGearQuality(is));
+            }
+            if(component.isComponentSpeedy(is))
+            {
+                list.add("Speed: " + "\u00a7e" + component.getGearSpeed(is));
+            }
+            if(component.isComponentMemory(is))
+            {
+                list.add("Memory: " + "\u00a7e" + component.getMemoryValue(is));
+            }
+        }
     }
 
     @Override

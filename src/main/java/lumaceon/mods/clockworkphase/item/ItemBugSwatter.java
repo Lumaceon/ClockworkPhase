@@ -1,6 +1,8 @@
 package lumaceon.mods.clockworkphase.item;
 
 import lumaceon.mods.clockworkphase.ClockworkPhase;
+import lumaceon.mods.clockworkphase.lib.GlobalPhaseReference;
+import lumaceon.mods.clockworkphase.lib.Phases;
 import lumaceon.mods.clockworkphase.util.Logger;
 import lumaceon.mods.clockworkphase.util.PhaseHelper;
 import net.minecraft.entity.player.EntityPlayer;
@@ -13,6 +15,13 @@ public class ItemBugSwatter extends ItemClockworkPhase
     {
         super();
         this.setCreativeTab(ClockworkPhase.instance.creativeTabClockworkPhase);
+    }
+
+    @Override
+    public ItemStack onItemRightClick(ItemStack is, World world, EntityPlayer player)
+    {
+        Logger.info(Phases.values().length + "  " + (((int)(world.getWorldTime() % (GlobalPhaseReference.phaseDuration * Phases.values().length))) / GlobalPhaseReference.phaseDuration));
+        return is;
     }
 
     @Override
