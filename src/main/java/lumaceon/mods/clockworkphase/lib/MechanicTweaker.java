@@ -21,7 +21,7 @@ public class MechanicTweaker
     /** ??? **/
     public static final int LUNAR_HOURGLASS_TENSION_COST = 50;
     /** Once per infused hit **/
-    public static final int DEATH_HOURGLASS_TENSION_COST = 1000;
+    public static final int DEATH_HOURGLASS_TENSION_COST = 250;
 
     /** For clockwork tools, applies once each time a block is broken **/
     public static final int TENSION_PER_BLOCK_BREAK = 100;
