@@ -18,10 +18,16 @@ public class Names
     public static final String GEAR_EMERALD = "gearEmerald";
     public static final String OIL_BUCKET = "oilBucket";
     public static final String FRAMEWORK = "framework";
-    public static final String MEMORY_CORE = "memoryCore";
+    public static final String MEMENTO = "memento";
     public static final String CLOCKWORK_PICKAXE = "clockworkPickaxe";
     public static final String CLOCKWORK_AXE = "clockworkAxe";
     public static final String CLOCKWORK_SHOVEL = "clockworkShovel";
+    public static final String CLOCKWORK_SABER = "clockworkSaber";
+    public static final String CHRONOMANCER_HEADPIECE = "chronomancerHeadpiece";
+    public static final String CHRONOMANCER_CHESTPIECE = "chronomancerChestpiece";
+    public static final String CHRONOMANCER_LEGGINGS = "chronomancerLeggings";
+    public static final String CHRONOMANCER_BOOTS = "chronomancerBoots";
+
 
     //#*BLOCKS*#\\
     public static final String BRASS_BLOCK = "brassBlock";
@@ -32,5 +38,5 @@ public class Names
     public static final String CELESTIAL_COMPASS_SUB = "celestialCompassSub";
     public static final String DISASSEMBLER = "disassembler";
     public static final String HOURGLASS_LIGHT = "hourglassLightBlock";
-
+    public static final String TIME_WELL = "timeWell";
 }

@@ -31,6 +31,11 @@ public class BlockCelestialCompass extends BlockClockworkPhase implements ITileE
     @Override
     public IIcon getIcon(IBlockAccess blockAccess, int x, int y, int z, int meta)
     {
+        if(meta != 0 && meta != 1)
+        {
+            return this.blockIcon;
+        }
+
         return this.icons[PhaseHelper.getPhaseForWorld(ClockworkPhase.proxy.getStaticWorld()).ordinal()];
     }
 

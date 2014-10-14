@@ -7,6 +7,7 @@ import lumaceon.mods.clockworkphase.item.construct.clockwork.IClockwork;
 import lumaceon.mods.clockworkphase.item.construct.clockwork.IDisassemble;
 import lumaceon.mods.clockworkphase.item.construct.elemental.IElemental;
 import lumaceon.mods.clockworkphase.item.construct.elemental.ItemElemental;
+import lumaceon.mods.clockworkphase.lib.MechanicTweaker;
 import lumaceon.mods.clockworkphase.lib.NBTTags;
 import lumaceon.mods.clockworkphase.util.NBTHelper;
 import net.minecraft.entity.item.EntityItem;
@@ -25,13 +26,19 @@ public class ItemElementalClockworkConstruct extends ItemElemental implements IE
     public void addInformation(ItemStack is, EntityPlayer player, List list, boolean flag)
     {
         list.add("Tension: " + "\u00a7e" + NBTHelper.getInt(is, NBTTags.TENSION_ENERGY) + "/" + "\u00a7e" + NBTHelper.getInt(is, NBTTags.MAX_TENSION));
+        int timeSand = NBTHelper.getInt(is, NBTTags.INTERNAL_TIME_SAND);
+        if(timeSand > 0)
+        {
+            list.add("Internal Time Sand: " + "\u00A7e" + timeSand);
+        }
         list.add("");
 
         if(Keyboard.isKeyDown(Keyboard.KEY_LSHIFT) || Keyboard.isKeyDown(Keyboard.KEY_RSHIFT))
         {
-            list.add("Clockwork Quality: " + "\u00a7e" + NBTHelper.getInt(is, NBTTags.QUALITY));
-            list.add("Clockwork Speed: " + "\u00a7e" + NBTHelper.getInt(is, NBTTags.SPEED));
-            list.add("Memory Energy: " + "\u00a7e" + NBTHelper.getInt(is, NBTTags.MEMORY));
+            list.add("Clockwork Quality: " + "\u00A7e" + NBTHelper.getInt(is, NBTTags.QUALITY));
+            list.add("Clockwork Speed: " + "\u00A7e" + NBTHelper.getInt(is, NBTTags.SPEED));
+            list.add("Memory: " + "\u00A7e" + NBTHelper.getInt(is, NBTTags.MEMORY));
+            list.add("");
         }
         else
         {
@@ -83,6 +90,40 @@ public class ItemElementalClockworkConstruct extends ItemElemental implements IE
 
         if(maxTension / 10 == 0) { is.setItemDamage(is.getMaxDamage()); }
         else { is.setItemDamage(10 - (currentTension / (maxTension / 10))); }
+    }
+
+    @Override
+    public void addTimeSand(ItemStack is, int timeSand)
+    {
+        int currentMemoryPower = NBTHelper.getInt(is, NBTTags.INTERNAL_TIME_SAND);
+
+        if(currentMemoryPower + timeSand >= MechanicTweaker.MAX_TIME_SAND_TOOLS)
+        {
+            NBTHelper.setInteger(is, NBTTags.INTERNAL_TIME_SAND, MechanicTweaker.MAX_TIME_SAND_TOOLS);
+        }
+        else
+        {
+            NBTHelper.setInteger(is, NBTTags.INTERNAL_TIME_SAND, currentMemoryPower + timeSand);
+        }
+    }
+
+    @Override
+    public void removeTimeSand(ItemStack is, int timeSand)
+    {
+        int currentMemoryPower = NBTHelper.getInt(is, NBTTags.INTERNAL_TIME_SAND);
+
+        if(currentMemoryPower - timeSand <= 0)
+        {
+            NBTHelper.setInteger(is, NBTTags.INTERNAL_TIME_SAND, 0);
+        }
+        else if(currentMemoryPower - timeSand >= MechanicTweaker.MAX_TIME_SAND_TOOLS)
+        {
+            NBTHelper.setInteger(is, NBTTags.INTERNAL_TIME_SAND, MechanicTweaker.MAX_TIME_SAND_TOOLS);
+        }
+        else
+        {
+            NBTHelper.setInteger(is, NBTTags.INTERNAL_TIME_SAND, currentMemoryPower - timeSand);
+        }
     }
 
     @Override

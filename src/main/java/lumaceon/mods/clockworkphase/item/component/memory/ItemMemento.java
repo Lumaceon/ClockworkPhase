@@ -1,13 +1,14 @@
-package lumaceon.mods.clockworkphase.item.component;
+package lumaceon.mods.clockworkphase.item.component.memory;
 
 import lumaceon.mods.clockworkphase.item.ItemClockworkPhase;
+import lumaceon.mods.clockworkphase.item.component.IBaseComponent;
 import lumaceon.mods.clockworkphase.lib.NBTTags;
 import lumaceon.mods.clockworkphase.util.NBTHelper;
 import net.minecraft.item.ItemStack;
 
-public class ItemMemoryCore extends ItemClockworkPhase implements IBaseComponent
+public class ItemMemento extends ItemClockworkPhase implements IBaseComponent
 {
-    public ItemMemoryCore()
+    public ItemMemento()
     {
         this.setMaxStackSize(1);
     }

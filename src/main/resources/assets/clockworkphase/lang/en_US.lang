@@ -20,7 +20,7 @@ item.clockworkphase:hourglassLife.name=Chronomancer's Hourglass of Life
 item.clockworkphase:hourglassLight.name=Chronomancer's Hourglass of Light
 item.clockworkphase:hourglassWater.name=Chronomancer's Hourglass of Water
 item.clockworkphase:hourglassEarth.name=Chronomancer's Hourglass of Earth
-item.clockworkphase:hourglassAir.name=Chronomancer's Hourglass of Air
+item.clockworkphase:hourglassAir.name=Chronomancer's Hourglass of Wind
 item.clockworkphase:hourglassFire.name=Chronomancer's Hourglass of Fire
 item.clockworkphase:hourglassLunar.name=Chronomancer's Hourglass of the Moon
 item.clockworkphase:hourglassDeath.name=Chronomancer's Hourglass of Death
@@ -28,6 +28,17 @@ item.clockworkphase:hourglassDeath.name=Chronomancer's Hourglass of Death
 item.clockworkphase:clockworkPickaxe.name=Clockwork Pickaxe
 item.clockworkphase:clockworkAxe.name=Clockwork Axe
 item.clockworkphase:clockworkShovel.name=Clockwork Shovel
+item.clockworkphase:clockworkSaber.name=Clockwork Saber
+
+item.clockworkphase:chronomancerHeadpiece.name=Chronic Headpiece
+item.clockworkphase:chronomancerHeadpieceLife.name=Chronic Headpiece of Life
+item.clockworkphase:chronomancerHeadpieceLight.name=Chronic Headpiece of Light
+item.clockworkphase:chronomancerHeadpieceWater.name=Chronic Headpiece of Water
+item.clockworkphase:chronomancerHeadpieceEarth.name=Chronic Headpiece of Earth
+item.clockworkphase:chronomancerHeadpieceAir.name=Chronic Headpiece of Wind
+item.clockworkphase:chronomancerHeadpieceFire.name=Chronic Headpiece of Fire
+item.clockworkphase:chronomancerHeadpieceLunar.name=Chronic Headpiece of the Moon
+item.clockworkphase:chronomancerHeadpieceDeath.name=Chronic Headpiece of Death
 
 
 #Block Localizations
@@ -39,6 +50,7 @@ tile.clockworkphase:celestialCompass.name=Celestial Compass Core
 tile.clockworkphase:celestialCompassSub.name=Celestial Compass
 tile.clockworkphase:disassembler.name=Disassembler
 tile.clockworkphase:hourglassLightBlock.name=Hourglass Light
+tile.clockworkphase:timeWell.name=Well of Time
 
 
 #General Localizations

@@ -11,6 +11,8 @@ import lumaceon.mods.clockworkphase.lib.NBTTags;
 import lumaceon.mods.clockworkphase.lib.Textures;
 import lumaceon.mods.clockworkphase.util.NBTHelper;
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockOre;
+import net.minecraft.block.BlockRedstoneOre;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityItem;
@@ -52,15 +54,16 @@ public class ItemClockworkPickaxe extends ItemPickaxe implements IClockwork, IDi
     }
 
     @Override
-    public boolean onBlockDestroyed(ItemStack is, World p_150894_2_, Block p_150894_3_, int p_150894_4_, int p_150894_5_, int p_150894_6_, EntityLivingBase p_150894_7_)
+    public boolean onBlockDestroyed(ItemStack is, World world, Block block, int x, int y, int z, EntityLivingBase entity)
     {
-        if ((double)p_150894_3_.getBlockHardness(p_150894_2_, p_150894_4_, p_150894_5_, p_150894_6_) != 0.0D)
+        if ((double)block.getBlockHardness(world, x, y, z) != 0.0D)
         {
             if(is.getItem() instanceof IClockwork)
             {
                 int tension = NBTHelper.getInt(is, NBTTags.TENSION_ENERGY);
                 int quality = NBTHelper.getInt(is, NBTTags.QUALITY); if(quality <= 0) { return false; }
                 int speed = NBTHelper.getInt(is, NBTTags.SPEED);
+                int memory = NBTHelper.getInt(is, NBTTags.MEMORY);
                 float efficiency = (float)speed / (float)quality;
                 int tensionCost = (int)Math.round(MechanicTweaker.TENSION_PER_BLOCK_BREAK * Math.pow(efficiency, 2));
                 int newTension = tension - tensionCost;
@@ -69,6 +72,26 @@ public class ItemClockworkPickaxe extends ItemPickaxe implements IClockwork, IDi
                 {
                     this.removeTension(is, tension);
                     return true;
+                }
+
+                if(memory > 0)
+                {
+                    if(block instanceof BlockOre || block instanceof BlockRedstoneOre)
+                    {
+                        if(entity instanceof EntityPlayer)
+                        {
+                            EntityPlayer player = (EntityPlayer)entity;
+                            int chance = 20000 / memory;
+                            double modifiedXPLevel = Math.pow((float)player.experienceLevel + 1.0F, 2.0F);
+                            if(modifiedXPLevel / 200.0F > 0) { chance = (int)((float)chance / (modifiedXPLevel / 200.0F)); }
+
+                            if(chance < 1) { chance = 1; }
+                            if(world.rand.nextInt(chance) == 0)
+                            {
+                                this.addTimeSand(is, MechanicTweaker.PICKAXE_TIME_SAND_INCREMENT);
+                            }
+                        }
+                    }
                 }
                 this.removeTension(is, tensionCost);
             }
@@ -81,13 +104,18 @@ public class ItemClockworkPickaxe extends ItemPickaxe implements IClockwork, IDi
     public void addInformation(ItemStack is, EntityPlayer player, List list, boolean flag)
     {
         list.add("Tension: " + "\u00a7e" + NBTHelper.getInt(is, NBTTags.TENSION_ENERGY) + "/" + "\u00a7e" + NBTHelper.getInt(is, NBTTags.MAX_TENSION));
+        int timeSand = NBTHelper.getInt(is, NBTTags.INTERNAL_TIME_SAND);
+        if(timeSand > 0)
+        {
+            list.add("Internal Time Sand: " + "\u00A7e" + timeSand);
+        }
         list.add("");
 
         if(Keyboard.isKeyDown(Keyboard.KEY_LSHIFT) || Keyboard.isKeyDown(Keyboard.KEY_RSHIFT))
         {
-            list.add("Clockwork Quality: " + "\u00a7e" + NBTHelper.getInt(is, NBTTags.QUALITY));
-            list.add("Clockwork Speed: " + "\u00a7e" + NBTHelper.getInt(is, NBTTags.SPEED));
-            list.add("Memory Energy: " + "\u00a7e" + NBTHelper.getInt(is, NBTTags.MEMORY));
+            list.add("Clockwork Quality: " + "\u00A7e" + NBTHelper.getInt(is, NBTTags.QUALITY));
+            list.add("Clockwork Speed: " + "\u00A7e" + NBTHelper.getInt(is, NBTTags.SPEED));
+            list.add("Memory: " + "\u00A7e" + NBTHelper.getInt(is, NBTTags.MEMORY));
             list.add("");
         }
         else
@@ -146,6 +174,40 @@ public class ItemClockworkPickaxe extends ItemPickaxe implements IClockwork, IDi
 
         if(maxTension / 10 == 0) { is.setItemDamage(is.getMaxDamage()); }
         else { is.setItemDamage(10 - (currentTension / (maxTension / 10))); }
+    }
+
+    @Override
+    public void addTimeSand(ItemStack is, int timeSand)
+    {
+        int currentMemoryPower = NBTHelper.getInt(is, NBTTags.INTERNAL_TIME_SAND);
+
+        if(currentMemoryPower + timeSand >= MechanicTweaker.MAX_TIME_SAND_TOOLS)
+        {
+            NBTHelper.setInteger(is, NBTTags.INTERNAL_TIME_SAND, MechanicTweaker.MAX_TIME_SAND_TOOLS);
+        }
+        else
+        {
+            NBTHelper.setInteger(is, NBTTags.INTERNAL_TIME_SAND, currentMemoryPower + timeSand);
+        }
+    }
+
+    @Override
+    public void removeTimeSand(ItemStack is, int timeSand)
+    {
+        int currentMemoryPower = NBTHelper.getInt(is, NBTTags.INTERNAL_TIME_SAND);
+
+        if(currentMemoryPower - timeSand <= 0)
+        {
+            NBTHelper.setInteger(is, NBTTags.INTERNAL_TIME_SAND, 0);
+        }
+        else if(currentMemoryPower - timeSand >= MechanicTweaker.MAX_TIME_SAND_TOOLS)
+        {
+            NBTHelper.setInteger(is, NBTTags.INTERNAL_TIME_SAND, MechanicTweaker.MAX_TIME_SAND_TOOLS);
+        }
+        else
+        {
+            NBTHelper.setInteger(is, NBTTags.INTERNAL_TIME_SAND, currentMemoryPower - timeSand);
+        }
     }
 
     @Override

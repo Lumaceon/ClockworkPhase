@@ -34,6 +34,11 @@ public class BlockCelestialCompassSub extends BlockClockworkPhase
     @Override
     public IIcon getIcon(IBlockAccess blockAccess, int x, int y, int z, int meta)
     {
+        if(meta != 0 && meta != 1)
+        {
+            return this.blockIcon;
+        }
+
         boolean flag = true;
 
         //Coordinates to be passed into the TextureHelper.

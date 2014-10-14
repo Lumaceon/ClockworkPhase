@@ -9,9 +9,18 @@ import net.minecraft.world.World;
 
 public class EntityClockworkPhaseFX extends EntityFX
 {
-    protected EntityClockworkPhaseFX(World world, double x, double y, double z)
+    public EntityClockworkPhaseFX(World world, double x, double y, double z)
     {
         super(world, x, y, z);
+
+        this.prevPosX = this.posX;
+        this.prevPosY = this.posY;
+        this.prevPosZ = this.posZ;
+    }
+
+    public EntityClockworkPhaseFX(World world, double x, double y, double z, double xMotion, double yMotion, double zMotion)
+    {
+        super(world, x, y, z, xMotion, yMotion, zMotion);
 
         this.prevPosX = this.posX;
         this.prevPosY = this.posY;
@@ -56,5 +65,5 @@ public class EntityClockworkPhaseFX extends EntityFX
     }
 
     @Override
-    public void onUpdate() {}
+    public void onUpdate() { super.onUpdate(); }
 }

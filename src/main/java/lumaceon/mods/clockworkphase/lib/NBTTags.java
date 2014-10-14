@@ -13,6 +13,7 @@ public class NBTTags
     public static final String SPEED = "speed";
     public static final String MEMORY = "memory";
     public static final String ACTIVE = "active";
+    public static final String INTERNAL_TIME_SAND = "internal_time_sand";
 
     /** Earth Hourglass Specific **/
     public static final String Y_LEVEL = "y_lock";

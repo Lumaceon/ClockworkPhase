@@ -3,6 +3,7 @@ package lumaceon.mods.clockworkphase.init;
 import cpw.mods.fml.common.registry.GameRegistry;
 import lumaceon.mods.clockworkphase.block.*;
 import lumaceon.mods.clockworkphase.block.tileentity.TileEntityCelestialCompass;
+import lumaceon.mods.clockworkphase.block.tileentity.TileEntityMemoryWell;
 import lumaceon.mods.clockworkphase.lib.Names;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
@@ -12,11 +13,12 @@ public class ModBlocks
 {
     public static Block brassBlock;
     public static Block windingBox;
+    public static Block disassembler;
     public static Block growthExtractor;
     public static Block timeSand;
     public static Block celestialCompass;
     public static Block celestialCompassSub;
-    public static Block disassembler;
+    public static Block timeWell;
 
     public static Block hourglassLight;
 
@@ -28,6 +30,9 @@ public class ModBlocks
 
         windingBox = new BlockWindingBox(Material.iron).setBlockName(Names.WINDING_BOX);
         GameRegistry.registerBlock(windingBox, Names.WINDING_BOX);
+
+        disassembler = new BlockDisassembler(Material.iron).setBlockName(Names.DISASSEMBLER);
+        GameRegistry.registerBlock(disassembler, Names.DISASSEMBLER);
 
         growthExtractor = new BlockGrowthExtractor(Material.iron).setBlockName(Names.GROWTH_EXTRACTOR);
         GameRegistry.registerBlock(growthExtractor, Names.GROWTH_EXTRACTOR);
@@ -41,9 +46,8 @@ public class ModBlocks
         celestialCompassSub = new BlockCelestialCompassSub(Material.iron).setBlockName(Names.CELESTIAL_COMPASS_SUB);
         GameRegistry.registerBlock(celestialCompassSub, Names.CELESTIAL_COMPASS_SUB);
 
-        disassembler = new BlockDisassembler(Material.iron).setBlockName(Names.DISASSEMBLER);
-        GameRegistry.registerBlock(disassembler, Names.DISASSEMBLER);
-
+        timeWell = new BlockTimeWell(Material.iron).setBlockName(Names.TIME_WELL);
+        GameRegistry.registerBlock(timeWell, Names.TIME_WELL);
 
 
         hourglassLight = new BlockHourglassLight(Material.portal).setBlockName(Names.HOURGLASS_LIGHT);
@@ -53,5 +57,6 @@ public class ModBlocks
     public static void registerTileEntities()
     {
         GameRegistry.registerTileEntity(TileEntityCelestialCompass.class, Names.CELESTIAL_COMPASS);
+        GameRegistry.registerTileEntity(TileEntityMemoryWell.class, Names.TIME_WELL);
     }
 }

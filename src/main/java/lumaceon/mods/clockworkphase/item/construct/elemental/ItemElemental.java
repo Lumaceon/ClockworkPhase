@@ -1,13 +1,17 @@
 package lumaceon.mods.clockworkphase.item.construct.elemental;
 
+import lumaceon.mods.clockworkphase.ClockworkPhase;
+import lumaceon.mods.clockworkphase.client.particle.entityfx.EntityElementalAttunementFX;
 import lumaceon.mods.clockworkphase.init.ModBlocks;
 import lumaceon.mods.clockworkphase.item.ItemClockworkPhase;
 import lumaceon.mods.clockworkphase.item.construct.elemental.IElemental;
 import lumaceon.mods.clockworkphase.lib.NBTTags;
 import lumaceon.mods.clockworkphase.lib.Phases;
 import lumaceon.mods.clockworkphase.lib.Ranges;
+import lumaceon.mods.clockworkphase.proxy.ClientProxy;
 import lumaceon.mods.clockworkphase.util.NBTHelper;
 import net.minecraft.block.Block;
+import net.minecraft.client.particle.EntityFX;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
@@ -93,6 +97,12 @@ public class ItemElemental extends ItemClockworkPhase implements IElemental
         //Null
         if(Ranges.CELESTIAL_NULL[0].isValueInclusivelyWithinRange(xDifference) && Ranges.CELESTIAL_NULL[1].isValueInclusivelyWithinRange(zDifference))
         {
+            if(item.worldObj.isRemote)
+            {
+                EntityFX particle = new EntityElementalAttunementFX(item.worldObj, item.posX, item.posY, item.posZ);
+                ClientProxy.particleGenerator.spawnParticle(particle, 64.0F);
+            }
+
             if(NBTHelper.getInt(item.getEntityItem(), NBTTags.ELEMENTIZE_TIMER) > 200)
             {
                 unelementize(item);
@@ -101,6 +111,12 @@ public class ItemElemental extends ItemClockworkPhase implements IElemental
         }
         else if(Ranges.CELESTIAL_LIFE[0].isValueInclusivelyWithinRange(xDifference) && Ranges.CELESTIAL_LIFE[1].isValueInclusivelyWithinRange(zDifference))
         {
+            if(item.worldObj.isRemote)
+            {
+                EntityFX particle = new EntityElementalAttunementFX(item.worldObj, item.posX, item.posY, item.posZ);
+                ClientProxy.particleGenerator.spawnParticle(particle, 64.0F);
+            }
+
             if(NBTHelper.getInt(item.getEntityItem(), NBTTags.ELEMENTIZE_TIMER) > 200)
             {
                 elementize(Phases.LIFE, item);
@@ -109,6 +125,12 @@ public class ItemElemental extends ItemClockworkPhase implements IElemental
         }
         else if(Ranges.CELESTIAL_LIGHT[0].isValueInclusivelyWithinRange(xDifference) && Ranges.CELESTIAL_LIGHT[1].isValueInclusivelyWithinRange(zDifference))
         {
+            if(item.worldObj.isRemote)
+            {
+                EntityFX particle = new EntityElementalAttunementFX(item.worldObj, item.posX, item.posY, item.posZ);
+                ClientProxy.particleGenerator.spawnParticle(particle, 64.0F);
+            }
+
             if(NBTHelper.getInt(item.getEntityItem(), NBTTags.ELEMENTIZE_TIMER) > 200)
             {
                 elementize(Phases.LIGHT, item);
@@ -117,6 +139,12 @@ public class ItemElemental extends ItemClockworkPhase implements IElemental
         }
         else if(Ranges.CELESTIAL_WATER[0].isValueInclusivelyWithinRange(xDifference) && Ranges.CELESTIAL_WATER[1].isValueInclusivelyWithinRange(zDifference))
         {
+            if(item.worldObj.isRemote)
+            {
+                EntityFX particle = new EntityElementalAttunementFX(item.worldObj, item.posX, item.posY, item.posZ);
+                ClientProxy.particleGenerator.spawnParticle(particle, 64.0F);
+            }
+
             if(NBTHelper.getInt(item.getEntityItem(), NBTTags.ELEMENTIZE_TIMER) > 200)
             {
                 elementize(Phases.WATER, item);
@@ -125,6 +153,12 @@ public class ItemElemental extends ItemClockworkPhase implements IElemental
         }
         else if(Ranges.CELESTIAL_EARTH[0].isValueInclusivelyWithinRange(xDifference) && Ranges.CELESTIAL_EARTH[1].isValueInclusivelyWithinRange(zDifference))
         {
+            if(item.worldObj.isRemote)
+            {
+                EntityFX particle = new EntityElementalAttunementFX(item.worldObj, item.posX, item.posY, item.posZ);
+                ClientProxy.particleGenerator.spawnParticle(particle, 64.0F);
+            }
+
             if(NBTHelper.getInt(item.getEntityItem(), NBTTags.ELEMENTIZE_TIMER) > 200)
             {
                 elementize(Phases.EARTH, item);
@@ -133,6 +167,12 @@ public class ItemElemental extends ItemClockworkPhase implements IElemental
         }
         else if(Ranges.CELESTIAL_AIR[0].isValueInclusivelyWithinRange(xDifference) && Ranges.CELESTIAL_AIR[1].isValueInclusivelyWithinRange(zDifference))
         {
+            if(item.worldObj.isRemote)
+            {
+                EntityFX particle = new EntityElementalAttunementFX(item.worldObj, item.posX, item.posY, item.posZ);
+                ClientProxy.particleGenerator.spawnParticle(particle, 64.0F);
+            }
+
             if(NBTHelper.getInt(item.getEntityItem(), NBTTags.ELEMENTIZE_TIMER) > 200)
             {
                 elementize(Phases.AIR, item);
@@ -141,6 +181,12 @@ public class ItemElemental extends ItemClockworkPhase implements IElemental
         }
         else if(Ranges.CELESTIAL_FIRE[0].isValueInclusivelyWithinRange(xDifference) && Ranges.CELESTIAL_FIRE[1].isValueInclusivelyWithinRange(zDifference))
         {
+            if(item.worldObj.isRemote)
+            {
+                EntityFX particle = new EntityElementalAttunementFX(item.worldObj, item.posX, item.posY, item.posZ);
+                ClientProxy.particleGenerator.spawnParticle(particle, 64.0F);
+            }
+
             if(NBTHelper.getInt(item.getEntityItem(), NBTTags.ELEMENTIZE_TIMER) > 200)
             {
                 elementize(Phases.FIRE, item);
@@ -149,6 +195,12 @@ public class ItemElemental extends ItemClockworkPhase implements IElemental
         }
         else if(Ranges.CELESTIAL_DARKNESS[0].isValueInclusivelyWithinRange(xDifference) && Ranges.CELESTIAL_DARKNESS[1].isValueInclusivelyWithinRange(zDifference))
         {
+            if(item.worldObj.isRemote)
+            {
+                EntityFX particle = new EntityElementalAttunementFX(item.worldObj, item.posX, item.posY, item.posZ);
+                ClientProxy.particleGenerator.spawnParticle(particle, 64.0F);
+            }
+
             if(NBTHelper.getInt(item.getEntityItem(), NBTTags.ELEMENTIZE_TIMER) > 200)
             {
                 elementize(Phases.LUNAR, item);
@@ -157,6 +209,12 @@ public class ItemElemental extends ItemClockworkPhase implements IElemental
         }
         else if(Ranges.CELESTIAL_DEATH[0].isValueInclusivelyWithinRange(xDifference) && Ranges.CELESTIAL_DEATH[1].isValueInclusivelyWithinRange(zDifference))
         {
+            if(item.worldObj.isRemote)
+            {
+                EntityFX particle = new EntityElementalAttunementFX(item.worldObj, item.posX, item.posY, item.posZ);
+                ClientProxy.particleGenerator.spawnParticle(particle, 64.0F);
+            }
+
             if(NBTHelper.getInt(item.getEntityItem(), NBTTags.ELEMENTIZE_TIMER) > 200)
             {
                 elementize(Phases.DEATH, item);
@@ -168,14 +226,7 @@ public class ItemElemental extends ItemClockworkPhase implements IElemental
             return;
         }
 
-        if(NBTHelper.hasTag(item.getEntityItem(), NBTTags.ELEMENTIZE_TIMER))
-        {
-            NBTHelper.setInteger(item.getEntityItem(), NBTTags.ELEMENTIZE_TIMER, NBTHelper.getInt(item.getEntityItem(), NBTTags.ELEMENTIZE_TIMER) + 1);
-        }
-        else
-        {
-            NBTHelper.setInteger(item.getEntityItem(), NBTTags.ELEMENTIZE_TIMER, 0);
-        }
+        NBTHelper.setInteger(item.getEntityItem(), NBTTags.ELEMENTIZE_TIMER, NBTHelper.getInt(item.getEntityItem(), NBTTags.ELEMENTIZE_TIMER) + 1);
     }
 
     /**

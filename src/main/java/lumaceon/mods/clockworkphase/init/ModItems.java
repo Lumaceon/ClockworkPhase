@@ -3,9 +3,13 @@ package lumaceon.mods.clockworkphase.init;
 import cpw.mods.fml.common.registry.GameRegistry;
 import lumaceon.mods.clockworkphase.item.*;
 import lumaceon.mods.clockworkphase.item.component.*;
+import lumaceon.mods.clockworkphase.item.component.memory.ItemMemento;
+import lumaceon.mods.clockworkphase.item.component.memory.MemoryItemRegistry;
+import lumaceon.mods.clockworkphase.item.construct.clockwork.ItemClockworkSaber;
 import lumaceon.mods.clockworkphase.item.construct.clockwork.tool.ItemClockworkAxe;
 import lumaceon.mods.clockworkphase.item.construct.clockwork.tool.ItemClockworkPickaxe;
 import lumaceon.mods.clockworkphase.item.construct.clockwork.tool.ItemClockworkShovel;
+import lumaceon.mods.clockworkphase.item.construct.elemental.chronoarmor.headpiece.*;
 import lumaceon.mods.clockworkphase.item.construct.mix.hourglass.*;
 import lumaceon.mods.clockworkphase.lib.Names;
 import net.minecraft.init.Items;
@@ -35,14 +39,18 @@ public class ModItems
     public static Item gearEmerald;
     public static Item oilBucket;
     public static Item framework;
-    public static Item memoryCore;
+    public static Item memento;
 
     public static Item hourglass;
     public static Item[] hourglassElements = new Item[8];
 
+    public static Item chronomancerHeadpiece;
+    public static Item[] chronomancerHeadpieceElements = new Item[8];
+
     public static Item clockworkPickaxe;
     public static Item clockworkAxe;
     public static Item clockworkShovel;
+    public static Item clockworkSaber;
 
     public static void init()
     {
@@ -96,8 +104,9 @@ public class ModItems
         framework = new ItemFramework().setUnlocalizedName(Names.FRAMEWORK);
         GameRegistry.registerItem(framework, Names.FRAMEWORK);
 
-        memoryCore = new ItemMemoryCore().setUnlocalizedName(Names.MEMORY_CORE);
-        GameRegistry.registerItem(memoryCore, Names.MEMORY_CORE);
+        memento = new ItemMemento().setUnlocalizedName(Names.MEMENTO);
+        GameRegistry.registerItem(memento, Names.MEMENTO);
+        MemoryItemRegistry.memoryItemDrops.add(memento);
 
 
         /** Chronomancer's Hourglass **/
@@ -130,6 +139,36 @@ public class ModItems
         //END HOURGLASS\\
 
 
+        /** Chronic Headpiece **/
+        chronomancerHeadpiece = new ItemChronomancerHeadpiece().setUnlocalizedName(Names.CHRONOMANCER_HEADPIECE);
+        GameRegistry.registerItem(chronomancerHeadpiece, Names.CHRONOMANCER_HEADPIECE);
+
+        chronomancerHeadpieceElements[0] = new ItemChronomancerHeadpieceLife().setUnlocalizedName(Names.CHRONOMANCER_HEADPIECE + "Life");
+        GameRegistry.registerItem(chronomancerHeadpieceElements[0], Names.CHRONOMANCER_HEADPIECE + "Life");
+
+        chronomancerHeadpieceElements[1] = new ItemChronomancerHeadpieceLight().setUnlocalizedName(Names.CHRONOMANCER_HEADPIECE + "Light");
+        GameRegistry.registerItem(chronomancerHeadpieceElements[1], Names.CHRONOMANCER_HEADPIECE + "Light");
+
+        chronomancerHeadpieceElements[2] = new ItemChronomancerHeadpieceWater().setUnlocalizedName(Names.CHRONOMANCER_HEADPIECE + "Water");
+        GameRegistry.registerItem(chronomancerHeadpieceElements[2], Names.CHRONOMANCER_HEADPIECE + "Water");
+
+        chronomancerHeadpieceElements[3] = new ItemChronomancerHeadpieceEarth().setUnlocalizedName(Names.CHRONOMANCER_HEADPIECE + "Earth");
+        GameRegistry.registerItem(chronomancerHeadpieceElements[3], Names.CHRONOMANCER_HEADPIECE + "Earth");
+
+        chronomancerHeadpieceElements[4] = new ItemChronomancerHeadpieceAir().setUnlocalizedName(Names.CHRONOMANCER_HEADPIECE + "Air");
+        GameRegistry.registerItem(chronomancerHeadpieceElements[4], Names.CHRONOMANCER_HEADPIECE + "Air");
+
+        chronomancerHeadpieceElements[5] = new ItemChronomancerHeadpieceFire().setUnlocalizedName(Names.CHRONOMANCER_HEADPIECE + "Fire");
+        GameRegistry.registerItem(chronomancerHeadpieceElements[5], Names.CHRONOMANCER_HEADPIECE + "Fire");
+
+        chronomancerHeadpieceElements[6] = new ItemChronomancerHeadpieceLunar().setUnlocalizedName(Names.CHRONOMANCER_HEADPIECE + "Lunar");
+        GameRegistry.registerItem(chronomancerHeadpieceElements[6], Names.CHRONOMANCER_HEADPIECE + "Lunar");
+
+        chronomancerHeadpieceElements[7] = new ItemChronomancerHeadpieceDeath().setUnlocalizedName(Names.CHRONOMANCER_HEADPIECE + "Death");
+        GameRegistry.registerItem(chronomancerHeadpieceElements[7], Names.CHRONOMANCER_HEADPIECE + "Death");
+        //END CHRONOMANCER ROBES\\
+
+
         clockworkPickaxe = new ItemClockworkPickaxe(clockworkMaterial).setUnlocalizedName(Names.CLOCKWORK_PICKAXE);
         GameRegistry.registerItem(clockworkPickaxe, Names.CLOCKWORK_PICKAXE);
 
@@ -138,5 +177,8 @@ public class ModItems
 
         clockworkShovel = new ItemClockworkShovel(clockworkMaterial).setUnlocalizedName(Names.CLOCKWORK_SHOVEL);
         GameRegistry.registerItem(clockworkShovel, Names.CLOCKWORK_SHOVEL);
+
+        clockworkSaber = new ItemClockworkSaber().setUnlocalizedName(Names.CLOCKWORK_SABER);
+        GameRegistry.registerItem(clockworkSaber, Names.CLOCKWORK_SABER);
     }
 }

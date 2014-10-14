@@ -79,11 +79,9 @@ public interface IBaseComponent
     /**
      * Memory value represents the total memories that this item holds. In many cases, this
      * value may return the result of an NBT value held by the component itself. Memory effects
-     * often increase the power that the item gains as a result of the player having more XP.
+     * the amount of memories
      *
-     * Memory typically adds a "secondary benefit" to the resultant item. In the case of a
-     * clockwork pickaxe, you may be given the chance to double-harvest, which is completely
-     * separate from any fortune effect the pickaxe may be enchanted with.
+     * Memory typically adds a "secondary benefit" to the resultant item.
      *
      * @return The amount memories of past times that this memory item represents.
      */
