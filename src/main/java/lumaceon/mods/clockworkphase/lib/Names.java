@@ -19,6 +19,9 @@ public class Names
     public static final String OIL_BUCKET = "oilBucket";
     public static final String FRAMEWORK = "framework";
     public static final String MEMENTO = "memento";
+    public static final String GEAR_RUSTY = "gearRusty";
+    public static final String GEAR_CHRONOSPHERE = "gearChronosphere";
+    public static final String NOTE_BOTTLE = "noteBottle";
     public static final String CLOCKWORK_PICKAXE = "clockworkPickaxe";
     public static final String CLOCKWORK_AXE = "clockworkAxe";
     public static final String CLOCKWORK_SHOVEL = "clockworkShovel";
@@ -27,6 +30,7 @@ public class Names
     public static final String CHRONOMANCER_CHESTPIECE = "chronomancerChestpiece";
     public static final String CHRONOMANCER_LEGGINGS = "chronomancerLeggings";
     public static final String CHRONOMANCER_BOOTS = "chronomancerBoots";
+    public static final String TEMPORAL_MULTITOOL = "temporalMultitool";
 
 
     //#*BLOCKS*#\\

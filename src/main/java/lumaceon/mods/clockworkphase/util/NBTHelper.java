@@ -1,5 +1,6 @@
 package lumaceon.mods.clockworkphase.util;
 
+import lumaceon.mods.clockworkphase.lib.NBTTags;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTBase;
 import net.minecraft.nbt.NBTTagCompound;
@@ -28,7 +29,57 @@ public class NBTHelper
         }
     }
 
-    public static void setTag(ItemStack is, String keyName, NBTTagList nbt)
+    public static void setNBTTagListFromInventory(ItemStack is, String keyName, ItemStack[] inventory)
+    {
+        initNBTTagCompound(is);
+
+        NBTTagList nbtList = new NBTTagList();
+        for (int index = 0; index < inventory.length; index++)
+        {
+            if (inventory[index] != null)
+            {
+                NBTTagCompound tag = new NBTTagCompound();
+                tag.setByte("slot_index", (byte)index);
+                inventory[index].writeToNBT(tag);
+                nbtList.appendTag(tag);
+            }
+        }
+        setTagList(is, keyName, nbtList);
+    }
+
+    public static ItemStack[] getInventoryFromNBTTag(ItemStack is, String keyName)
+    {
+        initNBTTagCompound(is);
+
+        if(!is.stackTagCompound.hasKey(keyName))
+        {
+            return null;
+        }
+
+        NBTTagList nbt = getTagList(is, keyName);
+        ItemStack[] inventory;
+        inventory = new ItemStack[nbt.tagCount()];
+
+        for (int i = 0; i < nbt.tagCount(); ++i)
+        {
+            NBTTagCompound tagCompound = nbt.getCompoundTagAt(i);
+            byte slotIndex = tagCompound.getByte("slot_index");
+            if (slotIndex >= 0 && slotIndex < inventory.length)
+            {
+                inventory[slotIndex] = ItemStack.loadItemStackFromNBT(tagCompound);
+            }
+        }
+        return inventory;
+    }
+
+    public static void setTag(ItemStack is, String keyName, NBTBase nbt)
+    {
+        initNBTTagCompound(is);
+
+        is.stackTagCompound.setTag(keyName, nbt);
+    }
+
+    public static void setTagList(ItemStack is, String keyName, NBTTagList nbt)
     {
         initNBTTagCompound(is);
 
@@ -41,7 +92,7 @@ public class NBTHelper
 
         if(!is.stackTagCompound.hasKey(keyName))
         {
-            setTag(is, keyName, new NBTTagList());
+            setTagList(is, keyName, new NBTTagList());
         }
 
         return is.stackTagCompound.getTag(keyName);
@@ -53,7 +104,7 @@ public class NBTHelper
 
         if(!is.stackTagCompound.hasKey(keyName))
         {
-            setTag(is, keyName, new NBTTagList());
+            setTagList(is, keyName, new NBTTagList());
         }
 
         NBTBase returnValue = is.stackTagCompound.getTag(keyName);

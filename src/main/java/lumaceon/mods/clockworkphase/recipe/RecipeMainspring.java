@@ -34,7 +34,7 @@ public class RecipeMainspring implements IRecipe
             item = ic.getStackInSlot(n);
             if(item != null && item instanceof ItemStack)
             {
-                if(n == 4 && !item.getItem().equals(this.mainspring.getItem())) //Center slot
+                if(n == 4 && !item.getItem().equals(this.mainspring.getItem())) //Center components
                 {
                     return false;
                 }

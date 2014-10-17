@@ -50,8 +50,7 @@ public class RecipeConstructReassemble implements IRecipe
                         alreadyContainsClockwork = true;
                     }
                 }
-
-                if(item.getItem() instanceof ItemMainspring)
+                else if(item.getItem() instanceof ItemMainspring)
                 {
                     if(mainspring)
                     {
@@ -59,14 +58,17 @@ public class RecipeConstructReassemble implements IRecipe
                     }
                     mainspring = true;
                 }
-
-                if(item.getItem() instanceof ItemClockwork)
+                else if(item.getItem() instanceof ItemClockwork)
                 {
                     if(clockwork)
                     {
                         doubles = true;
                     }
                     clockwork = true;
+                }
+                else
+                {
+                    return false;
                 }
             }
         }
@@ -140,7 +142,7 @@ public class RecipeConstructReassemble implements IRecipe
             NBTTagCompound tag = new NBTTagCompound();
             clockwork.writeToNBT(tag);
             nbtList.appendTag(tag);
-            NBTHelper.setTag(output, NBTTags.CLOCKWORK, nbtList);
+            NBTHelper.setTagList(output, NBTTags.CLOCKWORK, nbtList);
         }
         return output;
     }

@@ -45,10 +45,14 @@ public class TextureHelper
             index = z + 85;
         }
         //[92-96]
-        else
+        else if(x == 5)
         {
             z += 2;
             index = z + 92;
+        }
+        else
+        {
+            return 0;
         }
 
         if(index >= 48) { index--; }

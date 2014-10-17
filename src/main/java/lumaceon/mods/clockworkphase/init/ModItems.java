@@ -3,8 +3,7 @@ package lumaceon.mods.clockworkphase.init;
 import cpw.mods.fml.common.registry.GameRegistry;
 import lumaceon.mods.clockworkphase.item.*;
 import lumaceon.mods.clockworkphase.item.component.*;
-import lumaceon.mods.clockworkphase.item.component.memory.ItemMemento;
-import lumaceon.mods.clockworkphase.item.component.memory.MemoryItemRegistry;
+import lumaceon.mods.clockworkphase.item.component.memory.*;
 import lumaceon.mods.clockworkphase.item.construct.clockwork.ItemClockworkSaber;
 import lumaceon.mods.clockworkphase.item.construct.clockwork.tool.ItemClockworkAxe;
 import lumaceon.mods.clockworkphase.item.construct.clockwork.tool.ItemClockworkPickaxe;
@@ -39,7 +38,11 @@ public class ModItems
     public static Item gearEmerald;
     public static Item oilBucket;
     public static Item framework;
+
     public static Item memento;
+    public static Item gearRusty;
+    public static Item gearChronosphere;
+    public static Item noteBottle;
 
     public static Item hourglass;
     public static Item[] hourglassElements = new Item[8];
@@ -51,6 +54,8 @@ public class ModItems
     public static Item clockworkAxe;
     public static Item clockworkShovel;
     public static Item clockworkSaber;
+
+    public static Item temporalMultitool;
 
     public static void init()
     {
@@ -104,10 +109,21 @@ public class ModItems
         framework = new ItemFramework().setUnlocalizedName(Names.FRAMEWORK);
         GameRegistry.registerItem(framework, Names.FRAMEWORK);
 
+
+        gearChronosphere = new ItemGearChronosphere().setUnlocalizedName(Names.GEAR_CHRONOSPHERE);
+        GameRegistry.registerItem(gearChronosphere, Names.GEAR_CHRONOSPHERE);
+
         memento = new ItemMemento().setUnlocalizedName(Names.MEMENTO);
         GameRegistry.registerItem(memento, Names.MEMENTO);
         MemoryItemRegistry.memoryItemDrops.add(memento);
 
+        gearRusty = new ItemRustyGear().setUnlocalizedName(Names.GEAR_RUSTY);
+        GameRegistry.registerItem(gearRusty, Names.GEAR_RUSTY);
+        MemoryItemRegistry.memoryItemDrops.add(gearRusty);
+
+        noteBottle = new ItemNoteBottle().setUnlocalizedName(Names.NOTE_BOTTLE);
+        GameRegistry.registerItem(noteBottle, Names.NOTE_BOTTLE);
+        MemoryItemRegistry.memoryItemDrops.add(noteBottle);
 
         /** Chronomancer's Hourglass **/
         hourglass = new ItemHourglass().setUnlocalizedName(Names.HOURGLASS);
@@ -180,5 +196,9 @@ public class ModItems
 
         clockworkSaber = new ItemClockworkSaber().setUnlocalizedName(Names.CLOCKWORK_SABER);
         GameRegistry.registerItem(clockworkSaber, Names.CLOCKWORK_SABER);
+
+
+        temporalMultitool = new ItemTemporalMultitool().setUnlocalizedName(Names.TEMPORAL_MULTITOOL);
+        GameRegistry.registerItem(temporalMultitool, Names.TEMPORAL_MULTITOOL);
     }
 }

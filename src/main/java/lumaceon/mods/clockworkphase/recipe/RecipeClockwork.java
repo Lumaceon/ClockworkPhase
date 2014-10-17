@@ -96,7 +96,7 @@ public class RecipeClockwork implements IRecipe
                     resultingMemory += componentData.getMemoryValue(tempItem);
                 }
             }
-            NBTHelper.setTag(output, NBTTags.INVENTORY_ARRAY, nbtList);
+            NBTHelper.setTagList(output, NBTTags.INVENTORY_ARRAY, nbtList);
         }
 
         NBTHelper.setInteger(output, NBTTags.QUALITY, resultingQuality);

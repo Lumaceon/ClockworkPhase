@@ -98,7 +98,7 @@ public class RecipeClockworkPickaxe implements IRecipe
         NBTTagCompound tag = new NBTTagCompound();
         clockwork.writeToNBT(tag);
         nbtList.appendTag(tag);
-        NBTHelper.setTag(output, NBTTags.CLOCKWORK, nbtList);
+        NBTHelper.setTagList(output, NBTTags.CLOCKWORK, nbtList);
 
         return output;
     }

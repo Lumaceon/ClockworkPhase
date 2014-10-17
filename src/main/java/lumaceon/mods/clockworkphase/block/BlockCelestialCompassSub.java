@@ -77,7 +77,12 @@ public class BlockCelestialCompassSub extends BlockClockworkPhase
             }
         }
 
-        return this.icons[TextureHelper.getCCTextureIndexFromCoordinates(xOffset, zOffset)];
+        int iconIndex = TextureHelper.getCCTextureIndexFromCoordinates(xOffset, zOffset);
+        if(iconIndex < 0 || iconIndex > 96)
+        {
+            iconIndex = 0;
+        }
+        return this.icons[iconIndex];
     }
 
     @Override

@@ -13,7 +13,9 @@ item.clockworkphase:gearDiamond.name=Diamond Gear
 item.clockworkphase:gearEmerald.name=Emerald Gear
 item.clockworkphase:oilBucket.name= Oil Bucket
 item.clockworkphase:framework.name=Framework
-item.clockworkphase:memoryCore.name=Memory Core
+
+item.clockworkphase:gearRusty.name=Rusty Gear
+item.clockworkphase:gearChronosphere.name=Gear of the Chronosphere
 
 item.clockworkphase:hourglass.name=Chronomancer's Hourglass
 item.clockworkphase:hourglassLife.name=Chronomancer's Hourglass of Life
@@ -29,6 +31,7 @@ item.clockworkphase:clockworkPickaxe.name=Clockwork Pickaxe
 item.clockworkphase:clockworkAxe.name=Clockwork Axe
 item.clockworkphase:clockworkShovel.name=Clockwork Shovel
 item.clockworkphase:clockworkSaber.name=Clockwork Saber
+item.clockworkphase:temporalMultitool.name=Temporal Multi-tool
 
 item.clockworkphase:chronomancerHeadpiece.name=Chronic Headpiece
 item.clockworkphase:chronomancerHeadpieceLife.name=Chronic Headpiece of Life
@@ -55,3 +58,8 @@ tile.clockworkphase:timeWell.name=Well of Time
 
 #General Localizations
 itemGroup.ClockworkPhase=Clockwork Phase
+
+
+#Key Localizations
+key.clockworkphase.category=Clockwork Phase
+key.clockworkphase.multitool=Multi-tool

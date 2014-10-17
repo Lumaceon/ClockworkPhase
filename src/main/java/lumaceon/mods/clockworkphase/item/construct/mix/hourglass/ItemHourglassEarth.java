@@ -46,6 +46,7 @@ public class ItemHourglassEarth extends ItemHourglass
 
             if(speed > 10)
             {
+                player.fallDistance = 0;
                 int targetY = NBTHelper.getInt(is, NBTTags.Y_LEVEL);
                 double playersY = player.posY;
                 if(world.isRemote) { playersY -= 1.62000000476837; }

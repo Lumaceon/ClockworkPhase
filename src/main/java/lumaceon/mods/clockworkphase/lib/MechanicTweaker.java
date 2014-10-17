@@ -3,6 +3,7 @@ package lumaceon.mods.clockworkphase.lib;
 public class MechanicTweaker
 {
     public static final int MAX_TENSION = 1000000;
+    public static final int MAX_TS_TIME_WELL = 100000000;
 
     //Values for time sand addition\\
     public static final int PICKAXE_TIME_SAND_INCREMENT = 100;

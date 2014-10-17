@@ -6,12 +6,12 @@ import net.minecraftforge.common.MinecraftForge;
 
 public class ServerProxy extends CommonProxy
 {
+    @Override
+    public void registerKeybindings() {}
+
+    @Override
     public void initializeParticleGenerator() {}
 
     @Override
-    public World getStaticWorld()
-    {
-        //NOOP
-        return null;
-    }
+    public World getStaticWorld(){ return null; }
 }

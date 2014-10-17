@@ -4,6 +4,7 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import lumaceon.mods.clockworkphase.ClockworkPhase;
 import lumaceon.mods.clockworkphase.block.tileentity.TileEntityCelestialCompass;
+import lumaceon.mods.clockworkphase.util.Logger;
 import lumaceon.mods.clockworkphase.util.PhaseHelper;
 import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.material.Material;
@@ -20,6 +21,13 @@ public class BlockCelestialCompass extends BlockClockworkPhase implements ITileE
     public BlockCelestialCompass(Material material)
     {
         super(material);
+        this.setResistance(1000000.0F);
+    }
+
+    @Override
+    public void onBlockDestroyedByPlayer(World world, int x, int y, int z, int meta)
+    {
+        TileEntityCelestialCompass.destroyCompass(world, x, y, z);
     }
 
     @Override

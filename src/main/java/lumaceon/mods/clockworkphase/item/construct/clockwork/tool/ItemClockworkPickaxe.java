@@ -3,6 +3,8 @@ package lumaceon.mods.clockworkphase.item.construct.clockwork.tool;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import lumaceon.mods.clockworkphase.ClockworkPhase;
+import lumaceon.mods.clockworkphase.block.tileentity.TileEntityTimeWell;
+import lumaceon.mods.clockworkphase.init.ModBlocks;
 import lumaceon.mods.clockworkphase.init.ModItems;
 import lumaceon.mods.clockworkphase.item.construct.clockwork.IClockwork;
 import lumaceon.mods.clockworkphase.item.construct.clockwork.IDisassemble;
@@ -20,6 +22,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemPickaxe;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagList;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 import org.lwjgl.input.Keyboard;
 
@@ -35,6 +38,72 @@ public class ItemClockworkPickaxe extends ItemPickaxe implements IClockwork, IDi
         this.setMaxDamage(10);
         this.setNoRepair();
         this.setHarvestLevel("pickaxe", 3);
+    }
+
+    @Override
+    public boolean onItemUse(ItemStack is, EntityPlayer player, World world, int x, int y, int z, int meta, float f1, float f2, float f3)
+    {
+        /**if(NBTHelper.hasTag(is, NBTTags.FLUXED_ITEM))
+        {
+            ItemStack fluxedItem = ItemStack.loadItemStackFromNBT((NBTTagCompound)NBTHelper.getTag(is, NBTTags.FLUXED_ITEM));
+            NBTTagCompound nbt = new NBTTagCompound();
+            is.writeToNBT(nbt);
+            NBTHelper.setTag(fluxedItem, NBTTags.ORIGINAL_CLOCKWORK_ITEM, nbt);
+            NBTHelper.removeTag(is, NBTTags.FLUXED_ITEM);
+            player.inventory.setInventorySlotContents(player.inventory.currentItem, fluxedItem);
+            return true;
+        }**/
+        return false;
+    }
+
+    @Override
+    public ItemStack onItemRightClick(ItemStack is, World world, EntityPlayer player)
+    {
+        /**if(NBTHelper.hasTag(is, NBTTags.FLUXED_ITEM))
+        {
+            ItemStack fluxedItem = ItemStack.loadItemStackFromNBT((NBTTagCompound)NBTHelper.getTag(is, NBTTags.FLUXED_ITEM));
+            NBTTagCompound nbt = new NBTTagCompound();
+            is.writeToNBT(nbt);
+            NBTHelper.setTag(fluxedItem, NBTTags.ORIGINAL_CLOCKWORK_ITEM, nbt);
+            NBTHelper.removeTag(is, NBTTags.FLUXED_ITEM);
+            player.inventory.setInventorySlotContents(player.inventory.currentItem, fluxedItem);
+            return is;
+        }**/
+        return is;
+    }
+
+    @Override
+    public boolean onEntityItemUpdate(EntityItem entityItem)
+    {
+        int x = (int) Math.floor(entityItem.posX);
+        int y = (int) Math.floor(entityItem.posY - 1);
+        int z = (int) Math.floor(entityItem.posZ);
+
+        Block targetBlock = entityItem.worldObj.getBlock(x, y, z);
+        boolean flag = true;
+
+        if (targetBlock == null)
+        {
+            return false;
+        }
+
+        if (!targetBlock.equals(ModBlocks.timeWell))
+        {
+            return false;
+        }
+
+        TileEntity te = entityItem.worldObj.getTileEntity(x, y, z);
+        if(te != null && te instanceof TileEntityTimeWell)
+        {
+            if(!entityItem.worldObj.isRemote)
+            {
+                int amountRemoved = this.removeTimeSand(entityItem.getEntityItem(), 1000);
+                TileEntityTimeWell timeWell = (TileEntityTimeWell)te;
+                timeWell.addTimeSand(amountRemoved);
+                return false;
+            }
+        }
+        return false;
     }
 
     @Override
@@ -177,36 +246,40 @@ public class ItemClockworkPickaxe extends ItemPickaxe implements IClockwork, IDi
     }
 
     @Override
-    public void addTimeSand(ItemStack is, int timeSand)
+    public int addTimeSand(ItemStack is, int timeSand)
     {
-        int currentMemoryPower = NBTHelper.getInt(is, NBTTags.INTERNAL_TIME_SAND);
+        int currentTimeSand = NBTHelper.getInt(is, NBTTags.INTERNAL_TIME_SAND);
 
-        if(currentMemoryPower + timeSand >= MechanicTweaker.MAX_TIME_SAND_TOOLS)
+        if(currentTimeSand + timeSand >= MechanicTweaker.MAX_TIME_SAND_TOOLS)
         {
             NBTHelper.setInteger(is, NBTTags.INTERNAL_TIME_SAND, MechanicTweaker.MAX_TIME_SAND_TOOLS);
+            return MechanicTweaker.MAX_TIME_SAND_TOOLS - currentTimeSand;
         }
         else
         {
-            NBTHelper.setInteger(is, NBTTags.INTERNAL_TIME_SAND, currentMemoryPower + timeSand);
+            NBTHelper.setInteger(is, NBTTags.INTERNAL_TIME_SAND, currentTimeSand + timeSand);
+            return timeSand;
         }
     }
 
     @Override
-    public void removeTimeSand(ItemStack is, int timeSand)
+    public int removeTimeSand(ItemStack is, int timeSand)
     {
-        int currentMemoryPower = NBTHelper.getInt(is, NBTTags.INTERNAL_TIME_SAND);
+        int currentTimeSand = NBTHelper.getInt(is, NBTTags.INTERNAL_TIME_SAND);
 
-        if(currentMemoryPower - timeSand <= 0)
+        if(currentTimeSand - timeSand <= 0)
         {
             NBTHelper.setInteger(is, NBTTags.INTERNAL_TIME_SAND, 0);
+            return currentTimeSand;
         }
-        else if(currentMemoryPower - timeSand >= MechanicTweaker.MAX_TIME_SAND_TOOLS)
+        else if(timeSand <= 0)
         {
-            NBTHelper.setInteger(is, NBTTags.INTERNAL_TIME_SAND, MechanicTweaker.MAX_TIME_SAND_TOOLS);
+            return 0;
         }
         else
         {
-            NBTHelper.setInteger(is, NBTTags.INTERNAL_TIME_SAND, currentMemoryPower - timeSand);
+            NBTHelper.setInteger(is, NBTTags.INTERNAL_TIME_SAND, currentTimeSand - timeSand);
+            return timeSand;
         }
     }
 

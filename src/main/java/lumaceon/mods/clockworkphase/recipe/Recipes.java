@@ -104,5 +104,6 @@ public class Recipes
         GameRegistry.addRecipe(new RecipeClockworkPickaxe());
         GameRegistry.addRecipe(new RecipeClockworkAxe());
         GameRegistry.addRecipe(new RecipeClockworkShovel());
+        GameRegistry.addRecipe(new RecipeTimeInfusion());
     }
 }

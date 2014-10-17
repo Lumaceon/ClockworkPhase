@@ -22,4 +22,7 @@ public class NBTTags
     public static final String X_MOTION = "cp_motion_x";
     public static final String Y_MOTION = "cp_motion_y";
     public static final String Z_MOTION = "cp_motion_z";
+
+    /** Temporal Multitool item specific **/
+    public static final String TEMPORAL_ITEMS = "temporal_items";
 }

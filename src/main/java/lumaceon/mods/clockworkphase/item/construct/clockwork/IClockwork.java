@@ -8,7 +8,7 @@ public interface IClockwork
 
     public void removeTension(ItemStack is, int tension);
 
-    public void addTimeSand(ItemStack is, int timeSand);
+    public int addTimeSand(ItemStack is, int timeSand);
 
-    public void removeTimeSand(ItemStack is, int timeSand);
+    public int removeTimeSand(ItemStack is, int timeSand);
 }

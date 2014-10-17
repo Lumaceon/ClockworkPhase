@@ -1,6 +1,6 @@
 package lumaceon.mods.clockworkphase.client.particle.entityfx;
 
-import lumaceon.mods.clockworkphase.lib.ParticleResourceLocations;
+import lumaceon.mods.clockworkphase.lib.Textures;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.particle.EntityFX;
 import net.minecraft.client.renderer.Tessellator;
@@ -49,13 +49,13 @@ public class EntityClockworkPhaseFX extends EntityFX
         t.addVertexWithUV((double)(f11 + par3 * f10 - par6 * f10), (double)(f12 - par4 * f10), (double)(f13 + par5 * f10 - par7 * f10), 0, 1);
         t.draw();
 
-        Minecraft.getMinecraft().renderEngine.bindTexture(ParticleResourceLocations.VANILLA_PARTICLES);
+        Minecraft.getMinecraft().renderEngine.bindTexture(Textures.VANILLA_PARTICLES);
         t.startDrawingQuads();
     }
 
     public ResourceLocation getResourceLocation()
     {
-        return ParticleResourceLocations.VANILLA_PARTICLES;
+        return Textures.VANILLA_PARTICLES;
     }
 
     @Override

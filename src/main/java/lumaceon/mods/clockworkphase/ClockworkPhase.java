@@ -9,16 +9,20 @@ import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import lumaceon.mods.clockworkphase.block.BlockClockworkPhase;
 import lumaceon.mods.clockworkphase.client.ClientTickHandler;
+import lumaceon.mods.clockworkphase.client.gui.GuiHandler;
 import lumaceon.mods.clockworkphase.client.handler.TextureStitchHandler;
 import lumaceon.mods.clockworkphase.config.ConfigurationHandler;
 import lumaceon.mods.clockworkphase.creativetab.CreativeTabClockworkPhase;
 import lumaceon.mods.clockworkphase.eventhandlers.BucketHandler;
 import lumaceon.mods.clockworkphase.eventhandlers.EntityHandler;
 import lumaceon.mods.clockworkphase.eventhandlers.GrowthHandler;
+import lumaceon.mods.clockworkphase.eventhandlers.KeyHandler;
 import lumaceon.mods.clockworkphase.init.ModBlocks;
 import lumaceon.mods.clockworkphase.init.ModFluids;
 import lumaceon.mods.clockworkphase.init.ModItems;
+import lumaceon.mods.clockworkphase.lib.BlockConversions;
 import lumaceon.mods.clockworkphase.recipe.Recipes;
 import lumaceon.mods.clockworkphase.lib.Reference;
 import lumaceon.mods.clockworkphase.network.PacketHandler;
@@ -50,6 +54,8 @@ public class ClockworkPhase
         ModBlocks.init();
 
         ModItems.init();
+
+        proxy.registerKeybindings();
     }
 
     @Mod.EventHandler
@@ -70,6 +76,10 @@ public class ClockworkPhase
         MinecraftForge.EVENT_BUS.register(new EntityHandler());
 
         proxy.initializeParticleGenerator();
+
+        FMLCommonHandler.instance().bus().register(new KeyHandler());
+
+        new GuiHandler();
 
         PacketHandler.init();
     }

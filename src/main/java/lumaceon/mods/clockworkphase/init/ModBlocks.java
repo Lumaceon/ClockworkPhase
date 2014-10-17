@@ -3,7 +3,7 @@ package lumaceon.mods.clockworkphase.init;
 import cpw.mods.fml.common.registry.GameRegistry;
 import lumaceon.mods.clockworkphase.block.*;
 import lumaceon.mods.clockworkphase.block.tileentity.TileEntityCelestialCompass;
-import lumaceon.mods.clockworkphase.block.tileentity.TileEntityMemoryWell;
+import lumaceon.mods.clockworkphase.block.tileentity.TileEntityTimeWell;
 import lumaceon.mods.clockworkphase.lib.Names;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
@@ -57,6 +57,6 @@ public class ModBlocks
     public static void registerTileEntities()
     {
         GameRegistry.registerTileEntity(TileEntityCelestialCompass.class, Names.CELESTIAL_COMPASS);
-        GameRegistry.registerTileEntity(TileEntityMemoryWell.class, Names.TIME_WELL);
+        GameRegistry.registerTileEntity(TileEntityTimeWell.class, Names.TIME_WELL);
     }
 }

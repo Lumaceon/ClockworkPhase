@@ -1,6 +1,6 @@
 package lumaceon.mods.clockworkphase.client.particle.entityfx;
 
-import lumaceon.mods.clockworkphase.lib.ParticleResourceLocations;
+import lumaceon.mods.clockworkphase.lib.Textures;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 
@@ -22,7 +22,7 @@ public class EntityGrowthAbsorptionFX extends EntityClockworkPhaseFX
     @Override
     public ResourceLocation getResourceLocation()
     {
-        return ParticleResourceLocations.GROWTH_ABSORPTION;
+        return Textures.GROWTH_ABSORPTION;
     }
 
     @Override
