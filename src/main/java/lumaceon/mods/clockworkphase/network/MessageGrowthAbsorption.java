@@ -5,8 +5,10 @@ import cpw.mods.fml.common.network.simpleimpl.IMessageHandler;
 import cpw.mods.fml.common.network.simpleimpl.MessageContext;
 import io.netty.buffer.ByteBuf;
 import lumaceon.mods.clockworkphase.ClockworkPhase;
+import lumaceon.mods.clockworkphase.client.particle.entityfx.EntityGrowthAbsorptionFX;
 import lumaceon.mods.clockworkphase.client.particle.sequence.ParticleSequenceGrowthAbsorption;
 import lumaceon.mods.clockworkphase.proxy.ClientProxy;
+import net.minecraft.client.particle.EntityFX;
 
 public class MessageGrowthAbsorption implements IMessageHandler<MessageGrowthAbsorption, IMessage>, IMessage
 {
@@ -53,7 +55,8 @@ public class MessageGrowthAbsorption implements IMessageHandler<MessageGrowthAbs
     @Override
     public IMessage onMessage(MessageGrowthAbsorption message, MessageContext ctx)
     {
-        ClientProxy.particleGenerator.spawnParticleSequence(new ParticleSequenceGrowthAbsorption(ClientProxy.particleGenerator, message.from[0], message.from[1], message.from[2], message.to[0], message.to[1], message.to[2]));
+        EntityFX particle = new EntityGrowthAbsorptionFX(ClockworkPhase.proxy.getStaticWorld(), message.from[0], message.from[1], message.from[2], message.to[0], message.to[1], message.to[2]);
+        ClientProxy.particleGenerator.spawnParticle(particle, 64.0F);
         return null;
     }
 }

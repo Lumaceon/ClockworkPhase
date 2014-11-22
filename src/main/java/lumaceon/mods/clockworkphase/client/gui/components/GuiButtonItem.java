@@ -31,6 +31,7 @@ public class GuiButtonItem extends GuiButton
             FontRenderer fontrenderer = p_146112_1_.fontRenderer;
             p_146112_1_.getTextureManager().bindTexture(buttonTextures);
             GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
+            GL11.glDisable(GL11.GL_LIGHTING);
             this.field_146123_n = p_146112_2_ >= this.xPosition && p_146112_3_ >= this.yPosition && p_146112_2_ < this.xPosition + this.width && p_146112_3_ < this.yPosition + this.height;
             int k = this.getHoverState(this.field_146123_n);
             GL11.glEnable(GL11.GL_BLEND);
@@ -64,13 +65,15 @@ public class GuiButtonItem extends GuiButton
     private void drawItemStack(ItemStack is, int x, int y, String name)
     {
         GL11.glTranslatef(0.0F, 0.0F, 32.0F);
+        float zLevelOrigin = this.zLevel;
         this.zLevel = 200.0F;
         itemRender.zLevel = 200.0F;
         FontRenderer font = null;
         if (is != null) font = is.getItem().getFontRenderer(is);
         if (font == null) font = fontRenderer;
         itemRender.renderItemAndEffectIntoGUI(font, this.mc.getTextureManager(), is, x, y);
-        this.zLevel = 0.0F;
+        //itemRender.renderItemOverlayIntoGUI(font, this.mc.getTextureManager(), is, x, y);
+        this.zLevel = zLevelOrigin;
         itemRender.zLevel = 0.0F;
     }
 }

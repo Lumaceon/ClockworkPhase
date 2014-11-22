@@ -6,5 +6,6 @@ import org.lwjgl.input.Keyboard;
 
 public class Keybindings
 {
-    public static KeyBinding multitool = new KeyBinding(KeyLib.MULTITOOL, Keyboard.KEY_R, KeyLib.CATEGORY);
+    public static KeyBinding multitool = new KeyBinding(KeyLib.MULTITOOL, Keyboard.KEY_V, KeyLib.CATEGORY);
+    public static KeyBinding temporal = new KeyBinding(KeyLib.TEMPORAL_ABILITY, Keyboard.KEY_R, KeyLib.CATEGORY);
 }

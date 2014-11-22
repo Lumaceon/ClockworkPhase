@@ -6,17 +6,26 @@ import lumaceon.mods.clockworkphase.ClockworkPhase;
 import lumaceon.mods.clockworkphase.block.tileentity.TileEntityTimeWell;
 import lumaceon.mods.clockworkphase.init.ModBlocks;
 import lumaceon.mods.clockworkphase.init.ModItems;
-import lumaceon.mods.clockworkphase.item.construct.clockwork.IClockwork;
-import lumaceon.mods.clockworkphase.item.construct.clockwork.IDisassemble;
+import lumaceon.mods.clockworkphase.item.construct.IKeybindAbility;
+import lumaceon.mods.clockworkphase.item.construct.ITemporalChange;
+import lumaceon.mods.clockworkphase.item.construct.abstracts.ITimeSand;
+import lumaceon.mods.clockworkphase.item.construct.abstracts.IClockwork;
+import lumaceon.mods.clockworkphase.item.construct.abstracts.IDisassemble;
+import lumaceon.mods.clockworkphase.item.construct.abstracts.ITimeSandSupplier;
 import lumaceon.mods.clockworkphase.lib.MechanicTweaker;
 import lumaceon.mods.clockworkphase.lib.NBTTags;
 import lumaceon.mods.clockworkphase.lib.Textures;
+import lumaceon.mods.clockworkphase.network.MessageTemporalItemChange;
+import lumaceon.mods.clockworkphase.network.PacketHandler;
 import lumaceon.mods.clockworkphase.util.NBTHelper;
+import lumaceon.mods.clockworkphase.util.TensionHelper;
+import lumaceon.mods.clockworkphase.util.TimeSandHelper;
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.inventory.IInventory;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemSpade;
 import net.minecraft.item.ItemStack;
@@ -27,7 +36,7 @@ import org.lwjgl.input.Keyboard;
 
 import java.util.List;
 
-public class ItemClockworkShovel extends ItemSpade implements IClockwork, IDisassemble
+public class ItemClockworkShovel extends ItemSpade implements IClockwork, IDisassemble, ITimeSand, IKeybindAbility, ITemporalChange
 {
     public ItemClockworkShovel(Item.ToolMaterial mat)
     {
@@ -59,7 +68,6 @@ public class ItemClockworkShovel extends ItemSpade implements IClockwork, IDisas
         int z = (int) Math.floor(entityItem.posZ);
 
         Block targetBlock = entityItem.worldObj.getBlock(x, y, z);
-        boolean flag = true;
 
         if (targetBlock == null)
         {
@@ -129,9 +137,12 @@ public class ItemClockworkShovel extends ItemSpade implements IClockwork, IDisas
                         if(entity instanceof EntityPlayer)
                         {
                             EntityPlayer player = (EntityPlayer)entity;
-                            int chance = 20000 / memory;
-                            double modifiedXPLevel = Math.pow((float)player.experienceLevel + 1.0F, 2.0F);
-                            if(modifiedXPLevel / 200.0F > 0) { chance = (int)((float)chance / (modifiedXPLevel / 200.0F)); }
+                            int memoryWebPower = (int)(memory * Math.pow(player.experienceLevel + 1.0F, 2.0F));
+                            int chance = MechanicTweaker.TIME_SAND_CHANCE_FACTOR;
+                            if(memoryWebPower > 0)
+                            {
+                                chance = MechanicTweaker.TIME_SAND_CHANCE_FACTOR / memoryWebPower;
+                            }
 
                             if(chance < 1) { chance = 1; }
                             if(world.rand.nextInt(chance) == 0)
@@ -152,18 +163,36 @@ public class ItemClockworkShovel extends ItemSpade implements IClockwork, IDisas
     public void addInformation(ItemStack is, EntityPlayer player, List list, boolean flag)
     {
         list.add("Tension: " + "\u00a7e" + NBTHelper.getInt(is, NBTTags.TENSION_ENERGY) + "/" + "\u00a7e" + NBTHelper.getInt(is, NBTTags.MAX_TENSION));
-        int timeSand = NBTHelper.getInt(is, NBTTags.INTERNAL_TIME_SAND);
-        if(timeSand > 0)
-        {
-            list.add("Internal Time Sand: " + "\u00A7e" + timeSand);
-        }
-        list.add("");
+        list.add("Time Sand: " + "\u00A7e" + getTimeSand(is));
 
         if(Keyboard.isKeyDown(Keyboard.KEY_LSHIFT) || Keyboard.isKeyDown(Keyboard.KEY_RSHIFT))
         {
-            list.add("Clockwork Quality: " + "\u00A7e" + NBTHelper.getInt(is, NBTTags.QUALITY));
-            list.add("Clockwork Speed: " + "\u00A7e" + NBTHelper.getInt(is, NBTTags.SPEED));
-            list.add("Memory: " + "\u00A7e" + NBTHelper.getInt(is, NBTTags.MEMORY));
+            int quality = NBTHelper.getInt(is, NBTTags.QUALITY);
+            int speed = NBTHelper.getInt(is, NBTTags.SPEED);
+            int memory = NBTHelper.getInt(is, NBTTags.MEMORY);
+            int memoryWebPower = (int)(memory * Math.pow(player.experienceLevel + 1.0F, 2.0F));
+            int chance = MechanicTweaker.TIME_SAND_CHANCE_FACTOR;
+            if(memoryWebPower > 0)
+            {
+                chance = MechanicTweaker.TIME_SAND_CHANCE_FACTOR / memoryWebPower;
+            }
+
+            list.add("");
+            list.add("Clockwork Quality: " + "\u00A7e" + quality);
+            list.add("Clockwork Speed: " + "\u00A7e" + speed);
+            list.add("Memory: " + "\u00A7e" + memory);
+            if(memory > 0)
+            {
+                if(chance < 1000000)
+                {
+                    list.add("Chance of Extracting Time Sand: 1 in " + chance);
+                }
+                else
+                {
+                    list.add("Chance of Extracting Time Sand: 1 in an eternity.");
+                }
+            }
+
             list.add("");
         }
         else
@@ -181,85 +210,49 @@ public class ItemClockworkShovel extends ItemSpade implements IClockwork, IDisas
     @Override
     public void addTension(ItemStack is, int tension)
     {
-        if(NBTHelper.hasTag(is, NBTTags.MAX_TENSION))
-        {
-            int maxTension = NBTHelper.getInt(is, NBTTags.MAX_TENSION);
-            int currentTension;
-            if(!NBTHelper.hasTag(is, NBTTags.TENSION_ENERGY)) { currentTension = 0; }
-            else { currentTension = NBTHelper.getInt(is, NBTTags.TENSION_ENERGY); }
-
-            if(currentTension + tension >= maxTension)
-            {
-                NBTHelper.setInteger(is, NBTTags.TENSION_ENERGY, maxTension);
-            }
-            else
-            {
-                NBTHelper.setInteger(is, NBTTags.TENSION_ENERGY, currentTension + tension);
-            }
-
-            if(maxTension / 10 == 0) { is.setItemDamage(is.getMaxDamage()); }
-            else { is.setItemDamage(10 - (currentTension / (maxTension / 10))); }
-        }
+        TensionHelper.addTension(is, tension);
     }
 
     @Override
     public void removeTension(ItemStack is, int tension)
     {
-        int maxTension = 0;
-        int currentTension;
-        if(NBTHelper.hasTag(is, NBTTags.MAX_TENSION)) { maxTension = NBTHelper.getInt(is, NBTTags.MAX_TENSION); }
-        if(!NBTHelper.hasTag(is, NBTTags.TENSION_ENERGY)) { currentTension = 0; }
-        else { currentTension = NBTHelper.getInt(is, NBTTags.TENSION_ENERGY); }
+        TensionHelper.removeTension(is, tension);
+    }
 
-        if(currentTension - tension <= 0)
-        {
-            NBTHelper.setInteger(is, NBTTags.TENSION_ENERGY, 0);
-        }
-        else
-        {
-            NBTHelper.setInteger(is, NBTTags.TENSION_ENERGY, currentTension - tension);
-        }
+    @Override
+    public int getMaxTimeSand()
+    {
+        return MechanicTweaker.MAX_TIME_SAND_TOOLS;
+    }
 
-        if(maxTension / 10 == 0) { is.setItemDamage(is.getMaxDamage()); }
-        else { is.setItemDamage(10 - (currentTension / (maxTension / 10))); }
+    @Override
+    public int getTimeSand(ItemStack is)
+    {
+        return TimeSandHelper.getTimeSand(is);
     }
 
     @Override
     public int addTimeSand(ItemStack is, int timeSand)
     {
-        int currentTimeSand = NBTHelper.getInt(is, NBTTags.INTERNAL_TIME_SAND);
-
-        if(currentTimeSand + timeSand >= MechanicTweaker.MAX_TIME_SAND_TOOLS)
-        {
-            NBTHelper.setInteger(is, NBTTags.INTERNAL_TIME_SAND, MechanicTweaker.MAX_TIME_SAND_TOOLS);
-            return MechanicTweaker.MAX_TIME_SAND_TOOLS - currentTimeSand;
-        }
-        else
-        {
-            NBTHelper.setInteger(is, NBTTags.INTERNAL_TIME_SAND, currentTimeSand + timeSand);
-            return timeSand;
-        }
+        return TimeSandHelper.addTimeSand(is, timeSand, getMaxTimeSand());
     }
 
     @Override
     public int removeTimeSand(ItemStack is, int timeSand)
     {
-        int currentTimeSand = NBTHelper.getInt(is, NBTTags.INTERNAL_TIME_SAND);
+        return TimeSandHelper.removeTimeSand(is, timeSand);
+    }
 
-        if(currentTimeSand - timeSand <= 0)
-        {
-            NBTHelper.setInteger(is, NBTTags.INTERNAL_TIME_SAND, 0);
-            return currentTimeSand;
-        }
-        else if(timeSand <= 0)
-        {
-            return 0;
-        }
-        else
-        {
-            NBTHelper.setInteger(is, NBTTags.INTERNAL_TIME_SAND, currentTimeSand - timeSand);
-            return timeSand;
-        }
+    @Override
+    public int removeTimeSandFromInventory(IInventory inventory, int timeSand)
+    {
+        return TimeSandHelper.removeTimeSandFromInventory(inventory, timeSand);
+    }
+
+    @Override
+    public int getTimeSandFromInventory(IInventory inventory)
+    {
+        return TimeSandHelper.getTimeSandFromInventory(inventory);
     }
 
     @Override
@@ -317,5 +310,17 @@ public class ItemClockworkShovel extends ItemSpade implements IClockwork, IDisas
     public void registerIcons(IIconRegister registry)
     {
         this.itemIcon = registry.registerIcon(this.getUnlocalizedName().substring(this.getUnlocalizedName().indexOf(".") + 1));
+    }
+
+    @Override
+    public void useTemporalAbility()
+    {
+        PacketHandler.INSTANCE.sendToServer(new MessageTemporalItemChange());
+    }
+
+    @Override
+    public Item getItemChangeTo()
+    {
+        return ModItems.temporalClockworkShovel;
     }
 }

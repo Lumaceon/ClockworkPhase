@@ -13,16 +13,12 @@ import org.lwjgl.opengl.GL11;
 public class GuiMultitool extends GuiContainer
 {
     public ItemStack[] items;
-    public RenderItem[] itemRenders;
+    public RenderItem itemRenders;
 
     public GuiMultitool(ItemStack[] itemStacks)
     {
         super(new ContainerMultitool());
-        itemRenders = new RenderItem[20];
-        for(int n = 0; n < 20; n++)
-        {
-            itemRenders[n] = new RenderItem();
-        }
+        itemRenders = new RenderItem();
 
         if(itemStacks == null)
         {
@@ -45,11 +41,11 @@ public class GuiMultitool extends GuiContainer
             {
                 if(items.length > index && items[index] != null)
                 {
-                    buttonList.add(new GuiButtonItem(items[index], index, guiLeft + (x % 10) * 30, guiTop + y * 30, "", itemRenders[index], fontRendererObj));
+                    buttonList.add(new GuiButtonItem(items[index], index, guiLeft + (x % 10) * 30, guiTop + y * 30, "", itemRenders, fontRendererObj));
                 }
                 else
                 {
-                    buttonList.add(new GuiButtonItem(null, index, guiLeft + (x % 10) * 30, guiTop + y * 30, "", itemRenders[index], fontRendererObj));
+                    buttonList.add(new GuiButtonItem(null, index, guiLeft + (x % 10) * 30, guiTop + y * 30, "", itemRenders, fontRendererObj));
                 }
                 index++;
             }

@@ -4,8 +4,8 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import lumaceon.mods.clockworkphase.ClockworkPhase;
 import lumaceon.mods.clockworkphase.block.tileentity.TileEntityCelestialCompass;
-import lumaceon.mods.clockworkphase.util.Logger;
 import lumaceon.mods.clockworkphase.util.PhaseHelper;
+import net.minecraft.block.Block;
 import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
@@ -14,7 +14,7 @@ import net.minecraft.util.IIcon;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
-public class BlockCelestialCompass extends BlockClockworkPhase implements ITileEntityProvider
+public class BlockCelestialCompass extends BlockClockworkPhaseAbstract implements ITileEntityProvider
 {
     public IIcon[] icons = new IIcon[8];
 
@@ -25,9 +25,10 @@ public class BlockCelestialCompass extends BlockClockworkPhase implements ITileE
     }
 
     @Override
-    public void onBlockDestroyedByPlayer(World world, int x, int y, int z, int meta)
+    public void breakBlock(World world, int x, int y, int z, Block block, int meta)
     {
         TileEntityCelestialCompass.destroyCompass(world, x, y, z);
+        super.breakBlock(world, x, y, z, block, meta);
     }
 
     @Override

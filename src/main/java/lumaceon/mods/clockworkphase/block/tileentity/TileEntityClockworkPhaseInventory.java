@@ -35,7 +35,7 @@ public class TileEntityClockworkPhaseInventory extends TileEntityClockworkPhase 
     {
         super.readFromNBT(nbt);
 
-        NBTTagList tagList = nbt.getTagList(NBTTags.INVENTORY_ARRAY, 0);
+        NBTTagList tagList = nbt.getTagList(NBTTags.INVENTORY_ARRAY, 10);
         inventory = new ItemStack[getSizeInventory()];
         for (int i = 0; i < tagList.tagCount(); ++i)
         {

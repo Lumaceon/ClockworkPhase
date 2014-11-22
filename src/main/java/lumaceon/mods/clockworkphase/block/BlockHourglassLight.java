@@ -1,7 +1,5 @@
 package lumaceon.mods.clockworkphase.block;
 
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.material.Material;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.world.IBlockAccess;
@@ -9,13 +7,14 @@ import net.minecraft.world.World;
 
 import java.util.Random;
 
-public class BlockHourglassLight extends BlockClockworkPhase
+public class BlockHourglassLight extends BlockClockworkPhaseAbstract
 {
     public BlockHourglassLight(Material material)
     {
         super(material);
         this.setCreativeTab(null);
         this.setLightOpacity(0);
+        this.setHardness(0.0F);
         this.setBlockBounds(0.35F, 0.35F, 0.35F, 0.65F, 0.65F, 0.65F);
     }
 

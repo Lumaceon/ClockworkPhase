@@ -1,22 +1,30 @@
 package lumaceon.mods.clockworkphase.client.particle.entityfx;
 
 import lumaceon.mods.clockworkphase.lib.Textures;
+import lumaceon.mods.clockworkphase.proxy.ClientProxy;
+import net.minecraft.client.particle.EntityFX;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 
 public class EntityGrowthAbsorptionFX extends EntityClockworkPhaseFX
 {
     public double[] targetLocation = new double[3];
+    public double[] originLocation = new double[3];
 
     public EntityGrowthAbsorptionFX(World world, double x, double y, double z, double xTarget, double yTarget, double zTarget)
     {
         super(world, x, y, z);
 
+        originLocation[0] = x;
+        originLocation[1] = y;
+        originLocation[2] = z;
+
         targetLocation[0] = xTarget;
         targetLocation[1] = yTarget;
         targetLocation[2] = zTarget;
 
-        this.particleMaxAge = 60;
+        this.particleMaxAge = 15;
+        this.noClip = true;
     }
 
     @Override
@@ -28,34 +36,14 @@ public class EntityGrowthAbsorptionFX extends EntityClockworkPhaseFX
     @Override
     public void onUpdate()
     {
-        this.prevPosX = this.posX;
-        this.prevPosY = this.posY;
-        this.prevPosZ = this.posZ;
+        super.onUpdate();
 
-        if(this.particleAge == 0)
-        {
-            this.motionX = this.targetLocation[0] - this.posX;
-            this.motionY = 5.0F;
-            this.motionZ = this.targetLocation[2] - this.posZ;
-        }
-        else if(this.particleAge > 0)
-        {
-            this.motionY *= 0.8;
-        }
+        posX = targetLocation[0] - ((targetLocation[0] - originLocation[0]) * ((particleMaxAge - particleAge) / (double)particleMaxAge));
+        posY = targetLocation[1] - ((targetLocation[1] - originLocation[1]) * ((particleMaxAge - particleAge) / (double)particleMaxAge));
+        posZ = targetLocation[2] - ((targetLocation[2] - originLocation[2]) * ((particleMaxAge - particleAge) / (double)particleMaxAge));
 
-        if (this.particleAge++ >= this.particleMaxAge)
-        {
-            this.setDead();
-        }
-
-        this.posX += this.motionX/10;
-        this.posY += (this.motionY - 1.0F)/10;
-        this.posZ += this.motionZ/10;
-    }
-
-    @Override
-    public int getBrightnessForRender(float p_70070_1_)
-    {
-        return 255;
+        float mult = 0.05F;
+        EntityFX particle = new EntityGrowthAbsorptionSubFX(worldObj, posX, posY, posZ, (worldObj.rand.nextFloat() - 0.5) * mult, worldObj.rand.nextFloat() * mult * 0.5, (worldObj.rand.nextFloat() - 0.5) * mult);
+        ClientProxy.particleGenerator.spawnParticle(particle, 64.0F);
     }
 }

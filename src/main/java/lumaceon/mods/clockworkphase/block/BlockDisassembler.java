@@ -1,11 +1,11 @@
 package lumaceon.mods.clockworkphase.block;
 
-import lumaceon.mods.clockworkphase.item.construct.clockwork.IDisassemble;
+import lumaceon.mods.clockworkphase.item.construct.abstracts.IDisassemble;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.world.World;
 
-public class BlockDisassembler extends BlockClockworkPhase
+public class BlockDisassembler extends BlockClockworkPhaseAbstract
 {
     public BlockDisassembler(Material material)
     {

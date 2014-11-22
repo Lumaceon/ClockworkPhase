@@ -1,7 +1,7 @@
 package lumaceon.mods.clockworkphase.recipe;
 
 import lumaceon.mods.clockworkphase.init.ModItems;
-import lumaceon.mods.clockworkphase.item.component.IBaseComponent;
+import lumaceon.mods.clockworkphase.item.component.generic.IBaseComponent;
 import lumaceon.mods.clockworkphase.lib.NBTTags;
 import lumaceon.mods.clockworkphase.util.NBTHelper;
 import net.minecraft.inventory.InventoryCrafting;

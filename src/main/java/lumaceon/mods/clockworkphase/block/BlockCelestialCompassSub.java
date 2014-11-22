@@ -2,9 +2,7 @@ package lumaceon.mods.clockworkphase.block;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
-import lumaceon.mods.clockworkphase.block.tileentity.TileEntityCelestialCompass;
 import lumaceon.mods.clockworkphase.init.ModBlocks;
-import lumaceon.mods.clockworkphase.util.Logger;
 import lumaceon.mods.clockworkphase.util.TextureHelper;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
@@ -12,7 +10,7 @@ import net.minecraft.util.IIcon;
 import net.minecraft.world.IBlockAccess;
 import net.minecraftforge.common.util.ForgeDirection;
 
-public class BlockCelestialCompassSub extends BlockClockworkPhase
+public class BlockCelestialCompassSub extends BlockClockworkPhaseAbstract
 {
     public IIcon[] icons = new IIcon[96];
 

@@ -1,11 +1,11 @@
 package lumaceon.mods.clockworkphase.item.component;
 
-import lumaceon.mods.clockworkphase.item.ItemClockworkPhase;
+import lumaceon.mods.clockworkphase.item.ItemClockworkPhaseGeneric;
+import lumaceon.mods.clockworkphase.item.component.generic.ItemBaseComponentGeneric;
 import net.minecraft.item.ItemStack;
 
-public class ItemFramework extends ItemClockworkPhase implements IBaseComponent
+public class ItemFramework extends ItemBaseComponentGeneric
 {
-
     @Override
     public boolean isComponentSpeedy(ItemStack is)
     {

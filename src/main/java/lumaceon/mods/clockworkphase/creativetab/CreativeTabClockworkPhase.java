@@ -1,6 +1,7 @@
 package lumaceon.mods.clockworkphase.creativetab;
 
 import lumaceon.mods.clockworkphase.init.ModItems;
+import lumaceon.mods.clockworkphase.lib.Phases;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 
@@ -14,6 +15,6 @@ public class CreativeTabClockworkPhase extends CreativeTabs
     @Override
     public Item getTabIconItem()
     {
-        return ModItems.brassIngot;
+        return ModItems.hourglassElements[Phases.AIR.ordinal()];
     }
 }

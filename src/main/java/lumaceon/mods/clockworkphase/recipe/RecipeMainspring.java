@@ -32,7 +32,7 @@ public class RecipeMainspring implements IRecipe
         for(int n = 0; n < ic.getSizeInventory(); n++)
         {
             item = ic.getStackInSlot(n);
-            if(item != null && item instanceof ItemStack)
+            if(item != null)
             {
                 if(n == 4 && !item.getItem().equals(this.mainspring.getItem())) //Center components
                 {
@@ -81,7 +81,18 @@ public class RecipeMainspring implements IRecipe
                 NBTHelper.setInteger(output, NBTTags.MAX_TENSION, previousMaxTension + 8 * metalValue);
             }
         }
-        output.setItemDamage(10 - ((previousMaxTension + 8 * metalValue) / (MechanicTweaker.MAX_TENSION / 10)));
+        if(output.getMaxDamage() == 0)
+        {
+            output.setItemDamage(0);
+        }
+        else if(MechanicTweaker.MAX_TENSION / output.getMaxDamage() == 0)
+        {
+            output.setItemDamage(0);
+        }
+        else
+        {
+            output.setItemDamage(output.getMaxDamage() - ((previousMaxTension + 8 * metalValue) / (MechanicTweaker.MAX_TENSION / output.getMaxDamage())));
+        }
         return output;
     }
 

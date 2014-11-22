@@ -1,9 +1,8 @@
 package lumaceon.mods.clockworkphase.item.construct.paradox;
 
-import lumaceon.mods.clockworkphase.item.ItemClockworkPhase;
-import net.minecraft.item.ItemStack;
+import lumaceon.mods.clockworkphase.item.ItemClockworkPhaseGeneric;
 
-public class ItemParadoxical extends ItemClockworkPhase implements IParadoxical
+public class ItemParadoxical extends ItemClockworkPhaseGeneric implements IParadoxical
 {
 
 }

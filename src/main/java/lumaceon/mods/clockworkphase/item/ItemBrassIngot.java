@@ -1,9 +1,8 @@
 package lumaceon.mods.clockworkphase.item;
 
 import lumaceon.mods.clockworkphase.ClockworkPhase;
-import net.minecraft.item.Item;
 
-public class ItemBrassIngot extends ItemClockworkPhase
+public class ItemBrassIngot extends ItemClockworkPhaseStackableGeneric
 {
     public ItemBrassIngot()
     {

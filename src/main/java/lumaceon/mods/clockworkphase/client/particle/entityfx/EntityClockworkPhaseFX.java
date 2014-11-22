@@ -13,6 +13,7 @@ public class EntityClockworkPhaseFX extends EntityFX
     {
         super(world, x, y, z);
 
+        this.particleAlpha = 1.0F;
         this.prevPosX = this.posX;
         this.prevPosY = this.posY;
         this.prevPosZ = this.posZ;
@@ -22,6 +23,7 @@ public class EntityClockworkPhaseFX extends EntityFX
     {
         super(world, x, y, z, xMotion, yMotion, zMotion);
 
+        this.particleAlpha = 1.0F;
         this.prevPosX = this.posX;
         this.prevPosY = this.posY;
         this.prevPosZ = this.posZ;
@@ -42,7 +44,6 @@ public class EntityClockworkPhaseFX extends EntityFX
 
         t.startDrawingQuads();
         t.setColorRGBA_F(this.particleRed * f14, this.particleGreen * f14, this.particleBlue * f14, this.particleAlpha);
-        t.setBrightness(255);
         t.addVertexWithUV((double)(f11 - par3 * f10 - par6 * f10), (double)(f12 - par4 * f10), (double)(f13 - par5 * f10 - par7 * f10), 1, 1);
         t.addVertexWithUV((double)(f11 - par3 * f10 + par6 * f10), (double)(f12 + par4 * f10), (double)(f13 - par5 * f10 + par7 * f10), 1, 0);
         t.addVertexWithUV((double)(f11 + par3 * f10 + par6 * f10), (double)(f12 + par4 * f10), (double)(f13 + par5 * f10 + par7 * f10), 0, 0);
@@ -63,7 +64,4 @@ public class EntityClockworkPhaseFX extends EntityFX
     {
         return 255;
     }
-
-    @Override
-    public void onUpdate() { super.onUpdate(); }
 }

@@ -2,8 +2,8 @@ package lumaceon.mods.clockworkphase.item.component;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
-import lumaceon.mods.clockworkphase.item.construct.clockwork.IDisassemble;
-import lumaceon.mods.clockworkphase.item.ItemClockworkPhase;
+import lumaceon.mods.clockworkphase.item.ItemClockworkPhaseGeneric;
+import lumaceon.mods.clockworkphase.item.construct.abstracts.IDisassemble;
 import lumaceon.mods.clockworkphase.lib.NBTTags;
 import lumaceon.mods.clockworkphase.util.NBTHelper;
 import net.minecraft.entity.item.EntityItem;
@@ -15,16 +15,8 @@ import net.minecraft.world.World;
 
 import java.util.List;
 
-public class ItemClockwork extends ItemClockworkPhase implements IDisassemble
+public class ItemClockwork extends ItemClockworkPhaseGeneric implements IDisassemble
 {
-    public ItemClockwork()
-    {
-        super();
-        this.setMaxStackSize(1);
-        this.setMaxDamage(10);
-        this.setNoRepair();
-    }
-
     @SideOnly(Side.CLIENT)
     public void addInformation(ItemStack is, EntityPlayer player, List list, boolean flag)
     {

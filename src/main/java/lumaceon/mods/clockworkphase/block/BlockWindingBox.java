@@ -1,6 +1,6 @@
 package lumaceon.mods.clockworkphase.block;
 
-import lumaceon.mods.clockworkphase.item.construct.clockwork.IClockwork;
+import lumaceon.mods.clockworkphase.item.construct.abstracts.IClockwork;
 import lumaceon.mods.clockworkphase.lib.NBTTags;
 import lumaceon.mods.clockworkphase.util.NBTHelper;
 import net.minecraft.block.material.Material;
@@ -8,7 +8,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 
-public class BlockWindingBox extends BlockClockworkPhase
+public class BlockWindingBox extends BlockClockworkPhaseAbstract
 {
     public BlockWindingBox(Material material)
     {

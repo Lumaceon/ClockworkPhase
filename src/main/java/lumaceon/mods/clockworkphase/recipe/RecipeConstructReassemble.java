@@ -3,7 +3,7 @@ package lumaceon.mods.clockworkphase.recipe;
 import lumaceon.mods.clockworkphase.init.ModItems;
 import lumaceon.mods.clockworkphase.item.component.ItemClockwork;
 import lumaceon.mods.clockworkphase.item.component.ItemMainspring;
-import lumaceon.mods.clockworkphase.item.construct.clockwork.IClockwork;
+import lumaceon.mods.clockworkphase.item.construct.abstracts.IClockwork;
 import lumaceon.mods.clockworkphase.lib.NBTTags;
 import lumaceon.mods.clockworkphase.util.NBTHelper;
 import net.minecraft.inventory.InventoryCrafting;
@@ -128,8 +128,17 @@ public class RecipeConstructReassemble implements IRecipe
             NBTHelper.setInteger(output, NBTTags.TENSION_ENERGY, currentTension);
             NBTHelper.setInteger(output, NBTTags.MAX_TENSION, maxTension);
 
-            if(maxTension / 10 == 0) { output.setItemDamage(output.getMaxDamage()); }
-            else { output.setItemDamage(10 - (currentTension / (maxTension / 10))); }
+            if(output != null)
+            {
+                if(maxTension / output.getMaxDamage() == 0) //Check for division by 0
+                {
+                    output.setItemDamage(output.getMaxDamage());
+                }
+                else
+                {
+                    output.setItemDamage(output.getMaxDamage() - (currentTension / (maxTension / output.getMaxDamage())));
+                }
+            }
         }
 
         if(clockwork != null)
