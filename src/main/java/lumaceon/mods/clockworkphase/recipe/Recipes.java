@@ -251,7 +251,7 @@ public class Recipes
         ItemStack chip = new ItemStack(ModItems.chipTemporal);
         output = new ItemStack(ModItems.nuggetTemporal);
         GameRegistry.addShapelessRecipe(output, chip, chip, chip, chip);
-        output = new ItemStack(ModItems.brassIngot); output.stackSize = 2;
+        output = new ItemStack(ModItems.brassIngot); output.stackSize = 3;
         GameRegistry.addRecipe(new ShapelessOreRecipe(output, "ingotIron", "ingotIron", "ingotIron", "ingotGold"));
     }
 
