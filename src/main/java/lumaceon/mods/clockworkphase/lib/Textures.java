@@ -43,7 +43,7 @@ public class Textures
     public static final ResourceLocation ELEMENTAL_ATTUNEMENT = new ResourceLocation(Reference.MOD_ID, "textures/particles/growth_absorption.png");
     public static final ResourceLocation GROWTH_ABSORPTION = new ResourceLocation(Reference.MOD_ID, "textures/particles/growth_absorption.png");
     public static final ResourceLocation CLOCKWORK_PICK_SPECIAL = new ResourceLocation(Reference.MOD_ID, "textures/particles/clockwork_pick_special.png");
-    public static final ResourceLocation BLOCK_IN_THE_WAY = new ResourceLocation(Reference.MOD_ID, "textures/particles/blockInTheWay.png");
+    public static final ResourceLocation BLOCK_IN_THE_WAY = new ResourceLocation(Reference.MOD_ID, "textures/particles/blockBlocking.png");
     public static final ResourceLocation TIME_TUNNEL = new ResourceLocation(Reference.MOD_ID, "textures/particles/time_tunnel.png");
     public static final ResourceLocation TIME_TUNNEL_SUB = new ResourceLocation(Reference.MOD_ID, "textures/particles/time_tunnel_sub.png");
 
