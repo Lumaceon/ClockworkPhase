@@ -1,76 +1,29 @@
 package lumaceon.mods.clockworkphase.recipe;
 
+import lumaceon.mods.clockworkphase.init.ModItems;
 import lumaceon.mods.clockworkphase.lib.MechanicTweaker;
 import lumaceon.mods.clockworkphase.lib.NBTTags;
+import lumaceon.mods.clockworkphase.util.Logger;
 import lumaceon.mods.clockworkphase.util.NBTHelper;
+import net.minecraft.block.Block;
+import net.minecraft.init.Blocks;
 import net.minecraft.inventory.InventoryCrafting;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.world.World;
 import net.minecraftforge.oredict.OreDictionary;
+import net.minecraftforge.oredict.ShapedOreRecipe;
 
 import java.util.ArrayList;
 
-public class RecipeMainspring implements IRecipe
+public class RecipeMainspring extends ShapedOreRecipe implements IRecipe
 {
-    ItemStack mainspring;
-    String metal;
     int metalValue;
 
-    public RecipeMainspring(ItemStack mainspring, String metal, int metalValue)
+    public RecipeMainspring(int metalValue, Object... recipe)
     {
-        this.mainspring = mainspring.copy();
-        this.metal = metal;
+        super(new ItemStack(Blocks.dirt), recipe);
         this.metalValue = metalValue;
-        this.mainspring.setItemDamage(this.mainspring.getMaxDamage());
-    }
-
-    @Override
-    public boolean matches(InventoryCrafting ic, World world)
-    {
-        ItemStack item;
-        boolean mainspringFound = false;
-
-        for(int n = 0; n < ic.getSizeInventory(); n++)
-        {
-            item = ic.getStackInSlot(n);
-            if(item != null)
-            {
-                if(n == 4) //Center components
-                {
-                    if(item.getItem().equals(this.mainspring.getItem()))
-                    {
-                        mainspringFound = true;
-                    }
-                    else
-                    {
-                        return false;
-                    }
-                }
-                else
-                {
-                    ArrayList<ItemStack> metals = OreDictionary.getOres(this.metal);
-                    boolean equal = false;
-                    for(int i = 0; i < metals.size() && !equal; i++)
-                    {
-                        if(metals.get(i).getItem().equals(item.getItem()))
-                        {
-                            equal = true;
-                        }
-                    }
-
-                    if(!equal)
-                    {
-                        return false;
-                    }
-                }
-            }
-            else
-            {
-                return false;
-            }
-        }
-        return mainspringFound;
     }
 
     @Override
@@ -119,6 +72,8 @@ public class RecipeMainspring implements IRecipe
     @Override
     public ItemStack getRecipeOutput()
     {
-        return mainspring.copy();
+        ItemStack mainspring = new ItemStack(ModItems.mainspring);
+        NBTHelper.setInteger(mainspring, NBTTags.MAX_TENSION, NBTHelper.getInt(mainspring, NBTTags.MAX_TENSION) + metalValue * 8);
+        return mainspring;
     }
 }

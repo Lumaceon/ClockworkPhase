@@ -2,6 +2,8 @@ package lumaceon.mods.clockworkphase.lib;
 
 public class MechanicTweaker
 {
+    public static final int MAINSPRING_TENSION_MUILTIPLIER = 5;
+
     public static final int MAX_TENSION = 1000000;
     public static final int MAX_TS_DEFAULT = 1000000;
     public static final int MAX_TIME_SAND_TOOLS = 10000;
