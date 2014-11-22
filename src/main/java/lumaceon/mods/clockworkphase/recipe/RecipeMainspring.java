@@ -29,16 +29,25 @@ public class RecipeMainspring implements IRecipe
     public boolean matches(InventoryCrafting ic, World world)
     {
         ItemStack item;
+        boolean mainspringFound = false;
+
         for(int n = 0; n < ic.getSizeInventory(); n++)
         {
             item = ic.getStackInSlot(n);
             if(item != null)
             {
-                if(n == 4 && !item.getItem().equals(this.mainspring.getItem())) //Center components
+                if(n == 4) //Center components
                 {
-                    return false;
+                    if(item.getItem().equals(this.mainspring.getItem()))
+                    {
+                        mainspringFound = true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
                 }
-                if(n != 4)
+                else
                 {
                     ArrayList<ItemStack> metals = OreDictionary.getOres(this.metal);
                     boolean equal = false;
@@ -61,12 +70,17 @@ public class RecipeMainspring implements IRecipe
                 return false;
             }
         }
-        return true;
+        return mainspringFound;
     }
 
     @Override
     public ItemStack getCraftingResult(InventoryCrafting ic)
     {
+        if(ic.getSizeInventory() < 5)
+        {
+            return null;
+        }
+
         ItemStack output = ic.getStackInSlot(4).copy();
         int previousMaxTension = NBTHelper.getInt(output, NBTTags.MAX_TENSION);
         if(!NBTHelper.hasTag(output, NBTTags.MAX_TENSION)) { NBTHelper.setInteger(output, NBTTags.MAX_TENSION, 8 * metalValue); }
