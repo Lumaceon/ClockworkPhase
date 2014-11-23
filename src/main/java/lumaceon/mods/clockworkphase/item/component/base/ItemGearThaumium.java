@@ -29,13 +29,13 @@ public class ItemGearThaumium extends ItemBaseComponentGeneric implements IDisas
     @Override
     public int getGearQuality(ItemStack is)
     {
-        return 50;
+        return 45;
     }
 
     @Override
     public int getGearSpeed(ItemStack is)
     {
-        return 35;
+        return 40;
     }
 
     @Override

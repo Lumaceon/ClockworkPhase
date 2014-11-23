@@ -29,13 +29,13 @@ public class ItemGearBrass extends ItemBaseComponentGeneric implements IDisassem
     @Override
     public int getGearQuality(ItemStack is)
     {
-        return 30;
+        return 20;
     }
 
     @Override
     public int getGearSpeed(ItemStack is)
     {
-        return 45;
+        return 55;
     }
 
     @Override

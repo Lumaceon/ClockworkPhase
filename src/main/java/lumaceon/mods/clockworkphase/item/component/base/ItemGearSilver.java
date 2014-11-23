@@ -29,13 +29,13 @@ public class ItemGearSilver extends ItemBaseComponentGeneric implements IDisasse
     @Override
     public int getGearQuality(ItemStack is)
     {
-        return 40;
+        return 25;
     }
 
     @Override
     public int getGearSpeed(ItemStack is)
     {
-        return 35;
+        return 50;
     }
 
     @Override

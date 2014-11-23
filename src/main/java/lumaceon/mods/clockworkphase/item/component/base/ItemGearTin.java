@@ -29,13 +29,13 @@ public class ItemGearTin extends ItemBaseComponentGeneric implements IDisassembl
     @Override
     public int getGearQuality(ItemStack is)
     {
-        return 40;
+        return 30;
     }
 
     @Override
     public int getGearSpeed(ItemStack is)
     {
-        return 30;
+        return 40;
     }
 
     @Override

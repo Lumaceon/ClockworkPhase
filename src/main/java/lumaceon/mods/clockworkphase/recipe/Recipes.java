@@ -31,7 +31,7 @@ public class Recipes
         ItemStack output;
 
         output = new ItemStack(ModBlocks.timeWell);
-        GameRegistry.addRecipe(new ShapedOreRecipe(output, "bSb", "ATA", "bSb", 'b', "ingotBrass", 'S', ModItems.temporalCoreSedate, 'T', "blockTemporal", 'A', ModItems.temporalCoreActive));
+        GameRegistry.addRecipe(new ShapedOreRecipe(output, "bSb", "ATA", "bSb", 'b', "ingotBrass", 'S', ModItems.temporalCoreSedate, 'T', "ingotTemporal", 'A', ModItems.temporalCoreActive));
 
         output = new ItemStack(ModBlocks.extractorsElements[0]);
         GameRegistry.addRecipe(new ShapedOreRecipe(output, "btb", "aIa", "btb",
@@ -146,11 +146,11 @@ public class Recipes
         ItemStack output;
 
         output = new ItemStack(ModItems.temporalCoreActive);
-        GameRegistry.addRecipe(new ShapedOreRecipe(output, "trt", "rtr", "trt",
-                't', "ingotTemporal", 'r', "dustRedstone"));
+        GameRegistry.addRecipe(new ShapedOreRecipe(output, "ttt", "rTr", "ttt",
+                'T', "ingotTemporal", 't', "nuggetTemporal", 'r', "dustRedstone"));
         output = new ItemStack(ModItems.temporalCoreSedate);
-        GameRegistry.addRecipe(new ShapedOreRecipe(output, "sts", "tst", "sts",
-                't', "ingotTemporal", 's', "stone"));
+        GameRegistry.addRecipe(new ShapedOreRecipe(output, "ttt", "sTs", "ttt",
+                'T', "ingotTemporal", 't', "nuggetTemporal", 's', "stone"));
 
         output = new ItemStack(ModItems.blandHourglass);
         GameRegistry.addRecipe(new ShapedOreRecipe(output, "ggg", " g ", "ggg", 'g', "blockGlass"));

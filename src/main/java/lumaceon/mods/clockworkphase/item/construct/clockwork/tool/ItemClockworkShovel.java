@@ -43,7 +43,7 @@ public class ItemClockworkShovel extends ItemSpade implements IClockwork, IDisas
         super(mat);
         this.setCreativeTab(ClockworkPhase.instance.creativeTabClockworkPhase);
         this.setMaxStackSize(1);
-        this.setMaxDamage(10);
+        this.setMaxDamage(50);
         this.setNoRepair();
         this.setHarvestLevel("shovel", 3);
     }

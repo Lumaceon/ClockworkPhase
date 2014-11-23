@@ -41,7 +41,7 @@ public class MechanicTweaker
     public static final int TIME_SAND_PER_BLOCK_BREAK_PICKAXE = PICKAXE_TIME_SAND_INCREMENT; //For temporal pickaxe, applies once each time a block is broken.
     public static final int TIME_SAND_PER_BLOCK_BREAK_AXE = AXE_TIME_SAND_INCREMENT; //For temporal axe, applies once each time a block is broken.
     public static final int TIME_SAND_PER_BLOCK_BREAK_SHOVEL = SHOVEL_TIME_SAND_INCREMENT; //For temporal shovel, applies once each time a block is broken.
-    public static final int TIME_SAND_PER_ENTITY_HIT = SABER_TIME_SAND_INCREMENT_KILL * 2; //For temporal saber, applies once each time an entity is hit.
+    public static final int TIME_SAND_PER_ENTITY_HIT = SABER_TIME_SAND_INCREMENT_KILL; //For temporal saber, applies once each time an entity is hit.
 
     public static final int TIME_SAND_CHANCE_FACTOR = 12800000;
 
