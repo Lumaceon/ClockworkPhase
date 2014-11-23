@@ -4,6 +4,7 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import lumaceon.mods.clockworkphase.ClockworkPhase;
 import lumaceon.mods.clockworkphase.block.tileentity.TileEntityTimeWell;
+import lumaceon.mods.clockworkphase.client.particle.entityfx.EntityTimeSandExtractionFX;
 import lumaceon.mods.clockworkphase.init.ModBlocks;
 import lumaceon.mods.clockworkphase.init.ModItems;
 import lumaceon.mods.clockworkphase.item.construct.abstracts.ITimeSand;
@@ -11,12 +12,12 @@ import lumaceon.mods.clockworkphase.item.construct.IKeybindAbility;
 import lumaceon.mods.clockworkphase.item.construct.ITemporalChange;
 import lumaceon.mods.clockworkphase.item.construct.abstracts.IClockwork;
 import lumaceon.mods.clockworkphase.item.construct.abstracts.IDisassemble;
-import lumaceon.mods.clockworkphase.item.construct.abstracts.ITimeSandSupplier;
 import lumaceon.mods.clockworkphase.lib.MechanicTweaker;
 import lumaceon.mods.clockworkphase.lib.NBTTags;
 import lumaceon.mods.clockworkphase.lib.Textures;
 import lumaceon.mods.clockworkphase.network.MessageTemporalItemChange;
 import lumaceon.mods.clockworkphase.network.PacketHandler;
+import lumaceon.mods.clockworkphase.proxy.ClientProxy;
 import lumaceon.mods.clockworkphase.util.NBTHelper;
 import lumaceon.mods.clockworkphase.util.TensionHelper;
 import lumaceon.mods.clockworkphase.util.TimeSandHelper;
@@ -168,6 +169,15 @@ public class ItemClockworkPickaxe extends ItemPickaxe implements IClockwork, IDi
                             if(world.rand.nextInt(chance) == 0)
                             {
                                 this.addTimeSand(is, MechanicTweaker.PICKAXE_TIME_SAND_INCREMENT);
+                                if(world.isRemote)
+                                {
+                                    for(int n = 0; n < 10; n++)
+                                    {
+                                        EntityTimeSandExtractionFX particle = new EntityTimeSandExtractionFX(world, x + 0.5, y + 0.5, z + 0.5);
+                                        ClientProxy.particleGenerator.spawnParticle(particle, 48);
+                                    }
+
+                                }
                             }
                         }
                     }
@@ -195,6 +205,7 @@ public class ItemClockworkPickaxe extends ItemPickaxe implements IClockwork, IDi
             if(memoryWebPower > 0)
             {
                 chance = MechanicTweaker.TIME_SAND_CHANCE_FACTOR / memoryWebPower;
+                if(chance < 1) { chance = 1; }
             }
 
             list.add("");

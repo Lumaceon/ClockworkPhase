@@ -46,6 +46,7 @@ public class Textures
     public static final ResourceLocation BLOCK_IN_THE_WAY = new ResourceLocation(Reference.MOD_ID, "textures/particles/blockBlocking.png");
     public static final ResourceLocation TIME_TUNNEL = new ResourceLocation(Reference.MOD_ID, "textures/particles/time_tunnel.png");
     public static final ResourceLocation TIME_TUNNEL_SUB = new ResourceLocation(Reference.MOD_ID, "textures/particles/time_tunnel_sub.png");
+    public static final ResourceLocation TIME_SAND_EXTRACTION = new ResourceLocation(Reference.MOD_ID, "textures/particles/timeSandExtraction.png");
 
     /** Misc Resources **/
     public static final ResourceLocation EXTRACTOR = new ResourceLocation(Reference.MOD_ID, "textures/blocks/extractor.png");

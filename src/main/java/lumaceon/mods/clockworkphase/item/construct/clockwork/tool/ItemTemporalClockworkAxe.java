@@ -13,6 +13,7 @@ import lumaceon.mods.clockworkphase.network.MessageTemporalItemChange;
 import lumaceon.mods.clockworkphase.network.PacketHandler;
 import lumaceon.mods.clockworkphase.util.NBTHelper;
 import net.minecraft.block.Block;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
@@ -28,6 +29,26 @@ public class ItemTemporalClockworkAxe extends ItemClockworkAxe implements IKeybi
     {
         super(mat);
         this.setCreativeTab(null);
+    }
+
+    @Override
+    public void onUpdate(ItemStack is, World world, Entity entity, int p_77663_4_, boolean p_77663_5_)
+    {
+        if(entity instanceof EntityPlayer)
+        {
+            EntityPlayer player = (EntityPlayer)entity;
+            int timeSand = getTimeSand(is);
+            if(timeSand < MechanicTweaker.TIME_SAND_PER_BLOCK_BREAK_AXE && player.inventory.getStackInSlot(player.inventory.currentItem) != null)
+            {
+                if(player.inventory.getStackInSlot(player.inventory.currentItem).equals(is))
+                {
+                    ItemStack newItem = new ItemStack(this.getItemChangeTo());
+                    newItem.setTagCompound(is.stackTagCompound);
+                    newItem.setItemDamage(is.getItemDamage());
+                    player.inventory.setInventorySlotContents(player.inventory.currentItem, newItem);
+                }
+            }
+        }
     }
 
     @Override

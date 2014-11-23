@@ -4,6 +4,7 @@ import cpw.mods.fml.common.eventhandler.Event;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import lumaceon.mods.clockworkphase.block.extractor.ExtractorAreas;
 import lumaceon.mods.clockworkphase.block.tileentity.TileEntityExtractor;
+import lumaceon.mods.clockworkphase.client.particle.entityfx.EntityTimeSandExtractionFX;
 import lumaceon.mods.clockworkphase.extendeddata.ExtendedPlayerProperties;
 import lumaceon.mods.clockworkphase.init.ModItems;
 import lumaceon.mods.clockworkphase.item.component.base.memory.MemoryItemRegistry;
@@ -13,6 +14,7 @@ import lumaceon.mods.clockworkphase.item.construct.pocketwatch.ItemPocketWatch;
 import lumaceon.mods.clockworkphase.lib.MechanicTweaker;
 import lumaceon.mods.clockworkphase.lib.NBTTags;
 import lumaceon.mods.clockworkphase.lib.Phases;
+import lumaceon.mods.clockworkphase.proxy.ClientProxy;
 import lumaceon.mods.clockworkphase.util.InventorySearchHelper;
 import lumaceon.mods.clockworkphase.util.NBTHelper;
 import net.minecraft.entity.item.EntityItem;
@@ -138,9 +140,17 @@ public class EntityHandler
                         if(player.worldObj.rand.nextInt(chance) == 0)
                         {
                             ((ItemClockworkSaber)is.getItem()).addTimeSand(is, MechanicTweaker.SABER_TIME_SAND_INCREMENT_KILL);
+                            if(player.worldObj.isRemote)
+                            {
+                                for(int n = 0; n < 10; n++)
+                                {
+                                    EntityTimeSandExtractionFX particle = new EntityTimeSandExtractionFX(player.worldObj, event.entity.posX, event.entity.posY, event.entity.posZ);
+                                    ClientProxy.particleGenerator.spawnParticle(particle, 48);
+                                }
+                            }
                         }
                     }
-                    if(is.getItem() instanceof ItemTemporalClockworkSaber)
+                    if(!player.worldObj.isRemote && is.getItem() instanceof ItemTemporalClockworkSaber)
                     {
                         ItemStack result = new ItemStack(ModItems.nuggetTemporal);
                         float f = 0.7F;

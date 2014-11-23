@@ -42,6 +42,7 @@ public class ItemClockworkSaber extends ItemTimeSandClockworkAbstract implements
             if(memoryWebPower > 0)
             {
                 chance = MechanicTweaker.TIME_SAND_CHANCE_FACTOR / memoryWebPower;
+                if(chance < 1) { chance = 1; }
             }
 
             list.add("");
