@@ -78,6 +78,15 @@ public class ItemHourglassEarth extends ItemHourglass
         if(!isActive) //Being turned on
         {
             NBTHelper.setInteger(is, NBTTags.Y_LEVEL, (int)Math.floor(player.posY + 0.5));
+            if(!world.isRemote)
+            {
+                player.capabilities.allowFlying = true;
+            }
+        }
+        else if(!player.capabilities.isCreativeMode)
+        {
+            player.capabilities.isFlying = false;
+            player.capabilities.allowFlying = false;
         }
         return true;
     }
@@ -89,6 +98,15 @@ public class ItemHourglassEarth extends ItemHourglass
         if(!isActive) //Being turned on
         {
             NBTHelper.setInteger(is, NBTTags.Y_LEVEL, (int)Math.floor(player.posY + 0.5));
+            if(!world.isRemote)
+            {
+                player.capabilities.allowFlying = true;
+            }
+        }
+        else if(!player.capabilities.isCreativeMode)
+        {
+            player.capabilities.isFlying = false;
+            player.capabilities.allowFlying = false;
         }
         return is;
     }

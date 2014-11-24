@@ -27,6 +27,11 @@ public class ItemHourglassAir extends ItemHourglass
             if(player.isInWater())
             {
                 NBTHelper.setBoolean(is, NBTTags.ACTIVE, false);
+                if(!player.capabilities.isCreativeMode)
+                {
+                    player.capabilities.allowFlying = false;
+                    player.capabilities.isFlying = false;
+                }
                 return;
             }
 
@@ -37,23 +42,43 @@ public class ItemHourglassAir extends ItemHourglass
 
             if(newTension <= 0)
             {
-                this.removeTension(is, tension);
                 NBTHelper.setBoolean(is, NBTTags.ACTIVE, false);
+                if(!player.capabilities.isCreativeMode)
+                {
+                    player.capabilities.allowFlying = false;
+                    player.capabilities.isFlying = false;
+                }
                 return;
             }
 
             if(efficiency > 10)
             {
                 NBTHelper.setBoolean(is, NBTTags.ACTIVE, false);
+                if(!player.capabilities.isCreativeMode)
+                {
+                    player.capabilities.allowFlying = false;
+                    player.capabilities.isFlying = false;
+                }
                 player.addChatComponentMessage(new ChatComponentText("Your clockwork's quality can't handle it's speed."));
                 return;
             }
 
             if(speed > 10)
             {
-                player.setVelocity(player.getLookVec().xCoord * ((float)speed / 200.0F), player.getLookVec().yCoord * ((float)speed / 200.0F), player.getLookVec().zCoord * ((float)speed / 200.0F));
+                player.motionX = player.getLookVec().xCoord * ((float)speed / 200.0F);
+                player.motionY = player.getLookVec().yCoord * ((float)speed / 200.0F);
+                player.motionZ = player.getLookVec().zCoord * ((float)speed / 200.0F);
                 player.fallDistance = 0;
                 this.removeTension(is, tensionCost);
+            }
+            else
+            {
+                NBTHelper.setBoolean(is, NBTTags.ACTIVE, false);
+                if(!player.capabilities.isCreativeMode)
+                {
+                    player.capabilities.allowFlying = false;
+                    player.capabilities.isFlying = false;
+                }
             }
         }
     }
@@ -63,6 +88,15 @@ public class ItemHourglassAir extends ItemHourglass
     {
         boolean isActive = NBTHelper.getBoolean(is, NBTTags.ACTIVE);
         NBTHelper.setBoolean(is, NBTTags.ACTIVE, !isActive);
+        if(isActive && !player.capabilities.isCreativeMode)
+        {
+            player.capabilities.allowFlying = false;
+            player.capabilities.isFlying = false;
+        }
+        else
+        {
+            player.capabilities.allowFlying = true;
+        }
         return true;
     }
 
@@ -71,6 +105,15 @@ public class ItemHourglassAir extends ItemHourglass
     {
         boolean isActive = NBTHelper.getBoolean(is, NBTTags.ACTIVE);
         NBTHelper.setBoolean(is, NBTTags.ACTIVE, !isActive);
+        if(isActive && !player.capabilities.isCreativeMode)
+        {
+            player.capabilities.allowFlying = false;
+            player.capabilities.isFlying = false;
+        }
+        else
+        {
+            player.capabilities.allowFlying = true;
+        }
         return is;
     }
 }

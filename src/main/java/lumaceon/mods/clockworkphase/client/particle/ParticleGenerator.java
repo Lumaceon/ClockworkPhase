@@ -13,6 +13,8 @@ import java.util.Random;
 @SideOnly(Side.CLIENT)
 public class ParticleGenerator
 {
+    public final ParticleSpawner SPAWNER = new ParticleSpawner(this);
+
     public Minecraft mc;
     public World world;
     public Random random;
@@ -26,6 +28,12 @@ public class ParticleGenerator
     public void spawnParticleSequence(ParticleSequence particleSequence)
     {
         activeSequences.add(particleSequence);
+    }
+
+    public void initWorldAndRandom()
+    {
+        this.world = mc.theWorld;
+        this.random = mc.theWorld.rand;
     }
 
     public void updateParticleSequences()

@@ -32,7 +32,6 @@ public class ClockworkPhase
     @SidedProxy(clientSide = Reference.CLIENT_PROXY, serverSide = Reference.SERVER_PROXY)
     public static IProxy proxy;
 
-    @SideOnly(Side.CLIENT)
     public CreativeTabClockworkPhase creativeTabClockworkPhase = new CreativeTabClockworkPhase(CreativeTabs.getNextID(), Reference.MOD_NAME);
 
     @Mod.EventHandler

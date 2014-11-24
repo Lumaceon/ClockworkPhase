@@ -18,7 +18,7 @@ public class EntityElementalAttunementFX extends EntityClockworkPhaseFX
     @Override
     public ResourceLocation getResourceLocation()
     {
-        return Textures.ELEMENTAL_ATTUNEMENT;
+        return Textures.TIME_SAND_EXTRACTION;
     }
 
     @Override

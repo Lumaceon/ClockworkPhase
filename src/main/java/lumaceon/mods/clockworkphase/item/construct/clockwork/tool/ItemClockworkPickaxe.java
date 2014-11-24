@@ -1,10 +1,10 @@
 package lumaceon.mods.clockworkphase.item.construct.clockwork.tool;
 
+import cpw.mods.fml.common.network.NetworkRegistry;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import lumaceon.mods.clockworkphase.ClockworkPhase;
 import lumaceon.mods.clockworkphase.block.tileentity.TileEntityTimeWell;
-import lumaceon.mods.clockworkphase.client.particle.entityfx.EntityTimeSandExtractionFX;
 import lumaceon.mods.clockworkphase.init.ModBlocks;
 import lumaceon.mods.clockworkphase.init.ModItems;
 import lumaceon.mods.clockworkphase.item.construct.abstracts.ITimeSand;
@@ -15,6 +15,7 @@ import lumaceon.mods.clockworkphase.item.construct.abstracts.IDisassemble;
 import lumaceon.mods.clockworkphase.lib.MechanicTweaker;
 import lumaceon.mods.clockworkphase.lib.NBTTags;
 import lumaceon.mods.clockworkphase.lib.Textures;
+import lumaceon.mods.clockworkphase.network.MessageParticleSpawn;
 import lumaceon.mods.clockworkphase.network.MessageTemporalItemChange;
 import lumaceon.mods.clockworkphase.network.PacketHandler;
 import lumaceon.mods.clockworkphase.proxy.ClientProxy;
@@ -151,7 +152,7 @@ public class ItemClockworkPickaxe extends ItemPickaxe implements IClockwork, IDi
                     return true;
                 }
 
-                if(memory > 0)
+                if(memory > 0 && !world.isRemote)
                 {
                     if(this.func_150893_a(is, block) > 1.0F)
                     {
@@ -169,15 +170,7 @@ public class ItemClockworkPickaxe extends ItemPickaxe implements IClockwork, IDi
                             if(world.rand.nextInt(chance) == 0)
                             {
                                 this.addTimeSand(is, MechanicTweaker.PICKAXE_TIME_SAND_INCREMENT);
-                                if(world.isRemote)
-                                {
-                                    for(int n = 0; n < 10; n++)
-                                    {
-                                        EntityTimeSandExtractionFX particle = new EntityTimeSandExtractionFX(world, x + 0.5, y + 0.5, z + 0.5);
-                                        ClientProxy.particleGenerator.spawnParticle(particle, 48);
-                                    }
-
-                                }
+                                PacketHandler.INSTANCE.sendToAllAround(new MessageParticleSpawn(x + 0.5, y + 0.5, z + 0.5, 1), new NetworkRegistry.TargetPoint(world.provider.dimensionId, x + 0.5, y + 0.5, z + 0.5, 64));
                             }
                         }
                     }

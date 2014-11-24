@@ -6,6 +6,8 @@ import cpw.mods.fml.common.network.simpleimpl.MessageContext;
 import io.netty.buffer.ByteBuf;
 import lumaceon.mods.clockworkphase.item.construct.ITemporalChange;
 import lumaceon.mods.clockworkphase.item.construct.abstracts.ITimeSand;
+import lumaceon.mods.clockworkphase.util.Logger;
+import lumaceon.mods.clockworkphase.util.TimeSandHelper;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 
@@ -35,20 +37,26 @@ public class MessageTemporalItemChange implements IMessageHandler<MessageTempora
             {
                 if(is.getItem() instanceof ITemporalChange)
                 {
-                    //Check for ITimeSand items, not allowing change if they're out of time sand.\\
+                    boolean timeSand = false;
+                    if(TimeSandHelper.getTimeSandFromInventory(player.inventory) > 0)
+                    {
+                        timeSand = true;
+                    }
                     if(is.getItem() instanceof ITimeSand)
                     {
-                        if(((ITimeSand)is.getItem()).getTimeSandFromInventory(player.inventory) <= 0 && ((ITimeSand)is.getItem()).getTimeSand(is) <= 0)
+                        if(((ITimeSand) is.getItem()).getTimeSand(is) > 0)
                         {
-                            return null;
+                            timeSand = true;
                         }
                     }
-                    //Check for ITimeSand items, not allowing change if they're out of time sand.\\
 
-                    ItemStack newItem = new ItemStack(((ITemporalChange) is.getItem()).getItemChangeTo());
-                    newItem.setTagCompound(is.stackTagCompound);
-                    newItem.setItemDamage(is.getItemDamage());
-                    player.inventory.setInventorySlotContents(player.inventory.currentItem, newItem);
+                    if(timeSand)
+                    {
+                        ItemStack newItem = new ItemStack(((ITemporalChange) is.getItem()).getItemChangeTo());
+                        newItem.setTagCompound(is.stackTagCompound);
+                        newItem.setItemDamage(is.getItemDamage());
+                        player.inventory.setInventorySlotContents(player.inventory.currentItem, newItem);
+                    }
                 }
             }
         }

@@ -2,17 +2,13 @@ package lumaceon.mods.clockworkphase.block.tileentity;
 
 import cpw.mods.fml.common.network.NetworkRegistry;
 import lumaceon.mods.clockworkphase.block.extractor.ExtractorAreas;
-import lumaceon.mods.clockworkphase.client.particle.entityfx.EntityElementalAttunementFX;
-import lumaceon.mods.clockworkphase.client.particle.entityfx.EntityTimeSandTunnelFX;
 import lumaceon.mods.clockworkphase.init.ModItems;
 import lumaceon.mods.clockworkphase.item.ItemCatalyst;
 import lumaceon.mods.clockworkphase.lib.MechanicTweaker;
 import lumaceon.mods.clockworkphase.lib.NBTTags;
 import lumaceon.mods.clockworkphase.lib.Phases;
-import lumaceon.mods.clockworkphase.network.MessageTimeSandTunnelParticle;
+import lumaceon.mods.clockworkphase.network.MessageDoublePositionParticleSpawn;
 import lumaceon.mods.clockworkphase.network.PacketHandler;
-import lumaceon.mods.clockworkphase.proxy.ClientProxy;
-import net.minecraft.client.particle.EntityFX;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.inventory.IInventory;
@@ -85,6 +81,7 @@ public class TileEntityExtractor extends TileEntityTimeSandCapacitor implements 
 
                         timeSandToAdd = (int)((lightLevels / 75.0) * MechanicTweaker.TIME_SAND_FROM_LIGHT_SECOND);
                         if(timeSandToAdd <= 0) { return false; }
+                        if(timeSandToAdd > MechanicTweaker.TIME_SAND_FROM_LIGHT_SECOND) { timeSandToAdd = MechanicTweaker.TIME_SAND_FROM_LIGHT_SECOND; }
                         addTimeSand(timeSandToAdd);
                         newDamage = inventory.getItemDamage() + 1;
                         if(newDamage > inventory.getMaxDamage())
@@ -231,7 +228,7 @@ public class TileEntityExtractor extends TileEntityTimeSandCapacitor implements 
                 timeSandToRemove = getTimeSand() / 10;
             }
 
-            if(worldObj.getWorldTime() % 20 == 0 && getTimeSand() >= timeSandToRemove)
+            if(worldObj.getWorldTime() % 100 == 0 && getTimeSand() >= timeSandToRemove)
             {
                 TileEntity te = worldObj.getTileEntity(timeWellX, timeWellY, timeWellZ);
                 if(te != null && te instanceof TileEntityTimeWell)
@@ -248,7 +245,7 @@ public class TileEntityExtractor extends TileEntityTimeSandCapacitor implements 
 
                     if(!worldObj.isRemote)
                     {
-                        PacketHandler.INSTANCE.sendToAllAround(new MessageTimeSandTunnelParticle(xCoord + 0.5, yCoord + 0.5, zCoord + 0.5, timeWellX + 0.5, timeWellY + 0.5, timeWellZ + 0.5), new NetworkRegistry.TargetPoint(worldObj.provider.dimensionId, xCoord + 0.5, yCoord + 0.5, zCoord + 0.5, 64));
+                        PacketHandler.INSTANCE.sendToAllAround(new MessageDoublePositionParticleSpawn(xCoord + 0.5, yCoord + 0.5, zCoord + 0.5, timeWellX + 0.5, timeWellY + 0.5, timeWellZ + 0.5, 1), new NetworkRegistry.TargetPoint(worldObj.provider.dimensionId, xCoord + 0.5, yCoord + 0.5, zCoord + 0.5, 64));
                     }
                 }
             }

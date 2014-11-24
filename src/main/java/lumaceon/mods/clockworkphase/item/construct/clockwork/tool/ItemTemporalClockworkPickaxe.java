@@ -40,6 +40,7 @@ public class ItemTemporalClockworkPickaxe extends ItemClockworkPickaxe implement
         {
             EntityPlayer player = (EntityPlayer)entity;
             int timeSand = getTimeSand(is);
+            timeSand += getTimeSandFromInventory(player.inventory);
             if(timeSand < MechanicTweaker.TIME_SAND_PER_BLOCK_BREAK_PICKAXE && player.inventory.getStackInSlot(player.inventory.currentItem) != null)
             {
                 if(player.inventory.getStackInSlot(player.inventory.currentItem).equals(is))

@@ -4,14 +4,11 @@ import lumaceon.mods.clockworkphase.item.ItemTemporalMultitool;
 import lumaceon.mods.clockworkphase.lib.NBTTags;
 import lumaceon.mods.clockworkphase.util.NBTHelper;
 import net.minecraft.inventory.InventoryCrafting;
-import net.minecraft.item.ItemArmor;
-import net.minecraft.item.ItemBlock;
-import net.minecraft.item.ItemPotion;
-import net.minecraft.item.ItemStack;
+import net.minecraft.item.*;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.world.World;
 
-public class RecipeTimeInfusion implements IRecipe
+public class RecipeMultitoolAddition implements IRecipe
 {
     @Override
     public boolean matches(InventoryCrafting ic, World world)
@@ -40,7 +37,7 @@ public class RecipeTimeInfusion implements IRecipe
                        return false;
                     }
                 }
-                else if(item.getItem().getItemStackLimit(item) == 1 && !(item.getItem() instanceof ItemBlock) && !(item.getItem() instanceof ItemTemporalMultitool) && !(item.getItem() instanceof ItemPotion) && !(item.getItem() instanceof ItemArmor))
+                else if(item.getItem().getItemStackLimit(item) == 1 && !(item.getItem() instanceof ItemBlock) && !(item.getItem() instanceof ItemTemporalMultitool) && !(item.getItem() instanceof ItemPotion) && !(item.getItem() instanceof ItemArmor) && !(item.getItem() instanceof ItemBucket))
                 {
                     if(fluxItem)
                     {

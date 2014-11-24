@@ -172,8 +172,8 @@ public class Recipes
         GameRegistry.addRecipe(new ShapedOreRecipe(output, "g w", "gTw", "g w",
                 'g', Blocks.glowstone, 'w', Blocks.wool, 'T', "ingotTemporal"));
         output = new ItemStack(ModItems.catalystElements[2]); //Water
-        GameRegistry.addRecipe(new ShapedOreRecipe(output, "w b", "wTb", "w b",
-                'w', Items.water_bucket, 'b', Items.bucket, 'T', "ingotTemporal"));
+        GameRegistry.addRecipe(new ShapedOreRecipe(output, "w l", "wTl", "w l",
+                'w', Items.water_bucket, 'l', Items.lava_bucket, 'T', "ingotTemporal"));
         output = new ItemStack(ModItems.catalystElements[3]); //Earth
         GameRegistry.addRecipe(new ShapedOreRecipe(output, "b a", "bTa", "b a",
                 'b', Items.bone, 'a', Items.stone_axe, 'T', "ingotTemporal"));
@@ -220,7 +220,7 @@ public class Recipes
         output = new ItemStack(ModItems.gearTin);
         GameRegistry.addRecipe(new ShapedOreRecipe(output, "sis", "i i", "sis", 'i', "ingotTin", 's', "stickWood"));
         output = new ItemStack(ModItems.framework);
-        GameRegistry.addRecipe(new ShapedOreRecipe(output, "bib", "iBi", "bib", 'b', "ingotBrass", 'i', "ingotIron", 'B', "blockBrass"));
+        GameRegistry.addRecipe(new ShapedOreRecipe(output, "bib", "ibi", "bib", 'b', "ingotBrass", 'i', "ingotIron"));
     }
 
     public static void initMetalRecipes()
@@ -263,14 +263,13 @@ public class Recipes
         output = new ItemStack(ModItems.mainspring);
         output.setItemDamage(output.getMaxDamage());
         NBTHelper.setInteger(output, NBTTags.MAX_TENSION, 2000);
-        GameRegistry.addRecipe(new ShapedOreRecipe(output, "mmm", "mbm", "mmm", 'm', "ingotIron", 'b', "blockIron"));
+        GameRegistry.addRecipe(new ShapedOreRecipe(output, "mmm", "msm", "mmm", 'm', "ingotIron", 's', "stickWood"));
 
         GameRegistry.addRecipe(new RecipeMainspring(250 * multiplier, "iii", "imi", "iii", 'm', ModItems.mainspring, 'i', "ingotIron"));
         GameRegistry.addRecipe(new RecipeMainspring(2250 * multiplier, "iii", "imi", "iii", 'm', ModItems.mainspring, 'i', "blockIron"));
         GameRegistry.addRecipe(new RecipeMainspring(350 * multiplier, "iii", "imi", "iii", 'm', ModItems.mainspring, 'i', "ingotBrass"));
         GameRegistry.addRecipe(new RecipeMainspring(3150 * multiplier, "iii", "imi", "iii", 'm', ModItems.mainspring, 'i', "blockBrass"));
         GameRegistry.addRecipe(new RecipeMainspring(2500 * multiplier, "iii", "imi", "iii", 'm', ModItems.mainspring, 'i', "ingotTemporal"));
-        GameRegistry.addRecipe(new RecipeMainspring(22500 * multiplier, "iii", "imi", "iii", 'm', ModItems.mainspring, 'i', "blockTemporal"));
         GameRegistry.addRecipe(new RecipeMainspring(100 * multiplier, "iii", "imi", "iii", 'm', ModItems.mainspring, 'i', "ingotGold"));
         GameRegistry.addRecipe(new RecipeMainspring(700 * multiplier, "iii", "imi", "iii", 'm', ModItems.mainspring, 'i', "ingotThaumium"));
         GameRegistry.addRecipe(new RecipeMainspring(750 * multiplier, "iii", "imi", "iii", 'm', ModItems.mainspring, 'i', "ingotSteel"));
@@ -299,6 +298,8 @@ public class Recipes
         GameRegistry.addRecipe(new RecipeMainspring(4500 * multiplier, "iii", "imi", "iii", 'm', ModItems.mainspring, 'i', "blockAlumite"));
         GameRegistry.addRecipe(new RecipeMainspring(400 * multiplier, "iii", "imi", "iii", 'm', ModItems.mainspring, 'i', "ingotElectrum"));
         GameRegistry.addRecipe(new RecipeMainspring(3600 * multiplier, "iii", "imi", "iii", 'm', ModItems.mainspring, 'i', "blockElectrum"));
+        GameRegistry.addRecipe(new RecipeMainspring(300 * multiplier, "iii", "imi", "iii", 'm', ModItems.mainspring, 'i', "ingotNickel"));
+        GameRegistry.addRecipe(new RecipeMainspring(2700 * multiplier, "iii", "imi", "iii", 'm', ModItems.mainspring, 'i', "blockNickel"));
         GameRegistry.addRecipe(new RecipeMainspring(500 * multiplier, "iii", "imi", "iii", 'm', ModItems.mainspring, 'i', "ingotInvar"));
         GameRegistry.addRecipe(new RecipeMainspring(4500 * multiplier, "iii", "imi", "iii", 'm', ModItems.mainspring, 'i', "blockInvar"));
     }
@@ -311,7 +312,7 @@ public class Recipes
         //GameRegistry.addRecipe(new RecipeClockworkShovel());
         GameRegistry.addRecipe(new RecipeConstructReassemble());
         GameRegistry.addRecipe(new RecipeClockwork());
-        GameRegistry.addRecipe(new RecipeTimeInfusion());
+        GameRegistry.addRecipe(new RecipeMultitoolAddition());
         GameRegistry.addRecipe(new RecipePocketWatchModule());
     }
 }

@@ -38,6 +38,7 @@ public class ItemTemporalClockworkAxe extends ItemClockworkAxe implements IKeybi
         {
             EntityPlayer player = (EntityPlayer)entity;
             int timeSand = getTimeSand(is);
+            timeSand += getTimeSandFromInventory(player.inventory);
             if(timeSand < MechanicTweaker.TIME_SAND_PER_BLOCK_BREAK_AXE && player.inventory.getStackInSlot(player.inventory.currentItem) != null)
             {
                 if(player.inventory.getStackInSlot(player.inventory.currentItem).equals(is))

@@ -34,12 +34,22 @@ public class ItemHourglassLunar extends ItemHourglass
             {
                 this.removeTension(is, tension);
                 NBTHelper.setBoolean(is, NBTTags.ACTIVE, false);
+                if(!player.capabilities.isCreativeMode)
+                {
+                    player.capabilities.allowFlying = false;
+                    player.capabilities.isFlying = false;
+                }
                 return;
             }
 
             if(efficiency > 10)
             {
                 NBTHelper.setBoolean(is, NBTTags.ACTIVE, false);
+                if(!player.capabilities.isCreativeMode)
+                {
+                    player.capabilities.allowFlying = false;
+                    player.capabilities.isFlying = false;
+                }
                 player.addChatComponentMessage(new ChatComponentText("Your clockwork's quality can't handle it's speed."));
                 return;
             }
@@ -47,6 +57,11 @@ public class ItemHourglassLunar extends ItemHourglass
             if(speed < 50)
             {
                 NBTHelper.setBoolean(is, NBTTags.ACTIVE, false);
+                if(!player.capabilities.isCreativeMode)
+                {
+                    player.capabilities.allowFlying = false;
+                    player.capabilities.isFlying = false;
+                }
                 player.addChatComponentMessage(new ChatComponentText("Your clockwork's speed is too slow to be of any use."));
                 return;
             }
@@ -69,7 +84,9 @@ public class ItemHourglassLunar extends ItemHourglass
                 NBTHelper.setDouble(is, NBTTags.Z_MOTION, z);
             }
 
-            player.setVelocity(x, y, z);
+            player.motionX = x;
+            player.motionY = y;
+            player.motionZ = z;
             player.fallDistance = 0;
             this.removeTension(is, tensionCost);
         }
@@ -83,6 +100,15 @@ public class ItemHourglassLunar extends ItemHourglass
         NBTHelper.setDouble(is, NBTTags.X_MOTION, player.motionX);
         NBTHelper.setDouble(is, NBTTags.Y_MOTION, player.motionY);
         NBTHelper.setDouble(is, NBTTags.Z_MOTION, player.motionZ);
+        if(isActive && !player.capabilities.isCreativeMode)
+        {
+            player.capabilities.allowFlying = false;
+            player.capabilities.isFlying = false;
+        }
+        else
+        {
+            player.capabilities.allowFlying = true;
+        }
         return true;
     }
 
@@ -93,6 +119,15 @@ public class ItemHourglassLunar extends ItemHourglass
         NBTHelper.setDouble(is, NBTTags.X_MOTION, player.motionX);
         NBTHelper.setDouble(is, NBTTags.Y_MOTION, player.motionY);
         NBTHelper.setDouble(is, NBTTags.Z_MOTION, player.motionZ);
+        if(isActive && !player.capabilities.isCreativeMode)
+        {
+            player.capabilities.allowFlying = false;
+            player.capabilities.isFlying = false;
+        }
+        else
+        {
+            player.capabilities.allowFlying = true;
+        }
         return is;
     }
 }

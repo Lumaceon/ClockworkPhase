@@ -1,13 +1,11 @@
 package lumaceon.mods.clockworkphase.block.tileentity;
 
-import com.jcraft.jogg.Packet;
 import cpw.mods.fml.common.network.NetworkRegistry;
 import lumaceon.mods.clockworkphase.init.ModBlocks;
 import lumaceon.mods.clockworkphase.lib.BlockPatterns;
 import lumaceon.mods.clockworkphase.lib.GlobalPhaseReference;
-import lumaceon.mods.clockworkphase.network.MessageBlockInTheWay;
+import lumaceon.mods.clockworkphase.network.MessageParticleSpawn;
 import lumaceon.mods.clockworkphase.network.PacketHandler;
-import lumaceon.mods.clockworkphase.util.Logger;
 import net.minecraft.init.Blocks;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
@@ -54,7 +52,7 @@ public class TileEntityCelestialCompass extends TileEntityClockworkPhase
                 }
                 else
                 {
-                    PacketHandler.INSTANCE.sendToAllAround(new MessageBlockInTheWay(x + 0.5F, y + 0.5F, z + 0.5F), new NetworkRegistry.TargetPoint(worldObj.provider.dimensionId, x + 0.5, y + 0.5, z + 0.5, 48));
+                    PacketHandler.INSTANCE.sendToAllAround(new MessageParticleSpawn(x + 0.5, y + 0.5, z + 0.5, 0), new NetworkRegistry.TargetPoint(worldObj.provider.dimensionId, x + 0.5, y + 0.5, z + 0.5, 48));
                 }
             }
         }

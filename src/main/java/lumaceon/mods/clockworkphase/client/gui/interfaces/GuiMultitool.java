@@ -1,25 +1,24 @@
 package lumaceon.mods.clockworkphase.client.gui.interfaces;
 
 import lumaceon.mods.clockworkphase.client.gui.components.GuiButtonItem;
-import lumaceon.mods.clockworkphase.client.gui.container.ContainerMultitool;
 import lumaceon.mods.clockworkphase.network.MessageMultitoolGui;
 import lumaceon.mods.clockworkphase.network.PacketHandler;
 import net.minecraft.client.gui.GuiButton;
-import net.minecraft.client.gui.inventory.GuiContainer;
+import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.renderer.entity.RenderItem;
 import net.minecraft.item.ItemStack;
-import org.lwjgl.opengl.GL11;
 
-public class GuiMultitool extends GuiContainer
+public class GuiMultitool extends GuiScreen
 {
     public ItemStack[] items;
     public RenderItem itemRenders;
+    public int guiLeft, guiTop, xSize, ySize;
 
     public GuiMultitool(ItemStack[] itemStacks)
     {
-        super(new ContainerMultitool());
-        itemRenders = new RenderItem();
+        super();
 
+        itemRenders = new RenderItem();
         if(itemStacks == null)
         {
             itemStacks = new ItemStack[0];
@@ -33,6 +32,9 @@ public class GuiMultitool extends GuiContainer
     public void initGui()
     {
         super.initGui();
+
+        this.guiLeft = (this.width - this.xSize) / 2;
+        this.guiTop = (this.height - this.ySize) / 2;
         buttonList.clear();
         int index = 0;
         for(int x = 0; x < 10; x++)
@@ -60,8 +62,17 @@ public class GuiMultitool extends GuiContainer
     }
 
     @Override
-    protected void drawGuiContainerBackgroundLayer(float p_146976_1_, int p_146976_2_, int p_146976_3_)
+    protected void keyTyped(char p_73869_1_, int p_73869_2_)
     {
-        GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
+        if (p_73869_2_ == 1 || p_73869_2_ == this.mc.gameSettings.keyBindInventory.getKeyCode())
+        {
+            this.mc.thePlayer.closeScreen();
+        }
+    }
+
+    @Override
+    public boolean doesGuiPauseGame()
+    {
+        return false;
     }
 }

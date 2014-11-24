@@ -46,7 +46,10 @@ public class ItemModuleDeathWalk extends ItemModule
 
                 NBTHelper.setInteger(is, NBTTags.MODULE_POWER, deathWalkPower);
             }
-            ClientProxy.setRenderNumberForItemStack(is, deathWalkPower / MechanicTweaker.DEATH_ATTACK_PER_HEALTH);
+            if(world.isRemote)
+            {
+                ClientProxy.setRenderNumberForItemStack(is, deathWalkPower / MechanicTweaker.DEATH_ATTACK_PER_HEALTH);
+            }
         }
     }
 

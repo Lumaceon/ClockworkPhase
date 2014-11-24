@@ -3,7 +3,6 @@ package lumaceon.mods.clockworkphase.block.blockitems;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import lumaceon.mods.clockworkphase.ClockworkPhase;
-import lumaceon.mods.clockworkphase.client.particle.entityfx.EntityElementalAttunementFX;
 import lumaceon.mods.clockworkphase.init.ModBlocks;
 import lumaceon.mods.clockworkphase.item.construct.abstracts.IElemental;
 import lumaceon.mods.clockworkphase.lib.NBTTags;
@@ -13,7 +12,6 @@ import lumaceon.mods.clockworkphase.lib.Textures;
 import lumaceon.mods.clockworkphase.proxy.ClientProxy;
 import lumaceon.mods.clockworkphase.util.NBTHelper;
 import net.minecraft.block.Block;
-import net.minecraft.client.particle.EntityFX;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
@@ -111,8 +109,7 @@ public class ItemBlockExtractor extends ItemBlock implements IElemental
         {
             if(item.worldObj.isRemote)
             {
-                EntityFX particle = new EntityElementalAttunementFX(item.worldObj, item.posX, item.posY, item.posZ);
-                ClientProxy.particleGenerator.spawnParticle(particle, 64.0F);
+                ClientProxy.particleGenerator.SPAWNER.spawnElementizeParticle(item.posX, item.posY, item.posZ);
             }
 
             if(NBTHelper.getInt(item.getEntityItem(), NBTTags.ELEMENTIZE_TIMER) > 200)
@@ -125,8 +122,7 @@ public class ItemBlockExtractor extends ItemBlock implements IElemental
         {
             if(item.worldObj.isRemote)
             {
-                EntityFX particle = new EntityElementalAttunementFX(item.worldObj, item.posX, item.posY, item.posZ);
-                ClientProxy.particleGenerator.spawnParticle(particle, 64.0F);
+                ClientProxy.particleGenerator.SPAWNER.spawnElementizeParticle(item.posX, item.posY, item.posZ);
             }
 
             if(NBTHelper.getInt(item.getEntityItem(), NBTTags.ELEMENTIZE_TIMER) > 200)
@@ -139,8 +135,7 @@ public class ItemBlockExtractor extends ItemBlock implements IElemental
         {
             if(item.worldObj.isRemote)
             {
-                EntityFX particle = new EntityElementalAttunementFX(item.worldObj, item.posX, item.posY, item.posZ);
-                ClientProxy.particleGenerator.spawnParticle(particle, 64.0F);
+                ClientProxy.particleGenerator.SPAWNER.spawnElementizeParticle(item.posX, item.posY, item.posZ);
             }
 
             if(NBTHelper.getInt(item.getEntityItem(), NBTTags.ELEMENTIZE_TIMER) > 200)
@@ -153,8 +148,7 @@ public class ItemBlockExtractor extends ItemBlock implements IElemental
         {
             if(item.worldObj.isRemote)
             {
-                EntityFX particle = new EntityElementalAttunementFX(item.worldObj, item.posX, item.posY, item.posZ);
-                ClientProxy.particleGenerator.spawnParticle(particle, 64.0F);
+                ClientProxy.particleGenerator.SPAWNER.spawnElementizeParticle(item.posX, item.posY, item.posZ);
             }
 
             if(NBTHelper.getInt(item.getEntityItem(), NBTTags.ELEMENTIZE_TIMER) > 200)
@@ -167,8 +161,7 @@ public class ItemBlockExtractor extends ItemBlock implements IElemental
         {
             if(item.worldObj.isRemote)
             {
-                EntityFX particle = new EntityElementalAttunementFX(item.worldObj, item.posX, item.posY, item.posZ);
-                ClientProxy.particleGenerator.spawnParticle(particle, 64.0F);
+                ClientProxy.particleGenerator.SPAWNER.spawnElementizeParticle(item.posX, item.posY, item.posZ);
             }
 
             if(NBTHelper.getInt(item.getEntityItem(), NBTTags.ELEMENTIZE_TIMER) > 200)
@@ -181,8 +174,7 @@ public class ItemBlockExtractor extends ItemBlock implements IElemental
         {
             if(item.worldObj.isRemote)
             {
-                EntityFX particle = new EntityElementalAttunementFX(item.worldObj, item.posX, item.posY, item.posZ);
-                ClientProxy.particleGenerator.spawnParticle(particle, 64.0F);
+                ClientProxy.particleGenerator.SPAWNER.spawnElementizeParticle(item.posX, item.posY, item.posZ);
             }
 
             if(NBTHelper.getInt(item.getEntityItem(), NBTTags.ELEMENTIZE_TIMER) > 200)
@@ -195,8 +187,7 @@ public class ItemBlockExtractor extends ItemBlock implements IElemental
         {
             if(item.worldObj.isRemote)
             {
-                EntityFX particle = new EntityElementalAttunementFX(item.worldObj, item.posX, item.posY, item.posZ);
-                ClientProxy.particleGenerator.spawnParticle(particle, 64.0F);
+                ClientProxy.particleGenerator.SPAWNER.spawnElementizeParticle(item.posX, item.posY, item.posZ);
             }
 
             if(NBTHelper.getInt(item.getEntityItem(), NBTTags.ELEMENTIZE_TIMER) > 200)
@@ -209,8 +200,7 @@ public class ItemBlockExtractor extends ItemBlock implements IElemental
         {
             if(item.worldObj.isRemote)
             {
-                EntityFX particle = new EntityElementalAttunementFX(item.worldObj, item.posX, item.posY, item.posZ);
-                ClientProxy.particleGenerator.spawnParticle(particle, 64.0F);
+                ClientProxy.particleGenerator.SPAWNER.spawnElementizeParticle(item.posX, item.posY, item.posZ);
             }
 
             if(NBTHelper.getInt(item.getEntityItem(), NBTTags.ELEMENTIZE_TIMER) > 200)

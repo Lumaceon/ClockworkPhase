@@ -2,9 +2,9 @@ package lumaceon.mods.clockworkphase.handler;
 
 import cpw.mods.fml.common.eventhandler.Event;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
+import cpw.mods.fml.common.network.NetworkRegistry;
 import lumaceon.mods.clockworkphase.block.extractor.ExtractorAreas;
 import lumaceon.mods.clockworkphase.block.tileentity.TileEntityExtractor;
-import lumaceon.mods.clockworkphase.client.particle.entityfx.EntityTimeSandExtractionFX;
 import lumaceon.mods.clockworkphase.extendeddata.ExtendedPlayerProperties;
 import lumaceon.mods.clockworkphase.init.ModItems;
 import lumaceon.mods.clockworkphase.item.component.base.memory.MemoryItemRegistry;
@@ -14,6 +14,8 @@ import lumaceon.mods.clockworkphase.item.construct.pocketwatch.ItemPocketWatch;
 import lumaceon.mods.clockworkphase.lib.MechanicTweaker;
 import lumaceon.mods.clockworkphase.lib.NBTTags;
 import lumaceon.mods.clockworkphase.lib.Phases;
+import lumaceon.mods.clockworkphase.network.MessageParticleSpawn;
+import lumaceon.mods.clockworkphase.network.PacketHandler;
 import lumaceon.mods.clockworkphase.proxy.ClientProxy;
 import lumaceon.mods.clockworkphase.util.InventorySearchHelper;
 import lumaceon.mods.clockworkphase.util.NBTHelper;
@@ -127,7 +129,7 @@ public class EntityHandler
                 {
                     ItemStack is = player.inventory.getCurrentItem();
                     int memory = NBTHelper.getInt(is, NBTTags.MEMORY);
-                    if(memory > 0)
+                    if(memory > 0 && !player.worldObj.isRemote)
                     {
                         int memoryWebPower = (int)(memory * Math.pow(player.experienceLevel + 1.0F, 2.0F));
                         int chance = MechanicTweaker.TIME_SAND_CHANCE_FACTOR;
@@ -140,14 +142,7 @@ public class EntityHandler
                         if(player.worldObj.rand.nextInt(chance) == 0)
                         {
                             ((ItemClockworkSaber)is.getItem()).addTimeSand(is, MechanicTweaker.SABER_TIME_SAND_INCREMENT_KILL);
-                            if(player.worldObj.isRemote)
-                            {
-                                for(int n = 0; n < 10; n++)
-                                {
-                                    EntityTimeSandExtractionFX particle = new EntityTimeSandExtractionFX(player.worldObj, event.entity.posX, event.entity.posY, event.entity.posZ);
-                                    ClientProxy.particleGenerator.spawnParticle(particle, 48);
-                                }
-                            }
+                            PacketHandler.INSTANCE.sendToAllAround(new MessageParticleSpawn(event.entity.posX, event.entity.posY, event.entity.posZ, 1), new NetworkRegistry.TargetPoint(player.worldObj.provider.dimensionId, event.entity.posX, event.entity.posY, event.entity.posZ, 64));
                         }
                     }
                     if(!player.worldObj.isRemote && is.getItem() instanceof ItemTemporalClockworkSaber)

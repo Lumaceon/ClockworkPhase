@@ -41,6 +41,7 @@ public class ItemTemporalClockworkShovel extends ItemClockworkShovel implements 
         {
             EntityPlayer player = (EntityPlayer)entity;
             int timeSand = getTimeSand(is);
+            timeSand += getTimeSandFromInventory(player.inventory);
             if(timeSand < MechanicTweaker.TIME_SAND_PER_BLOCK_BREAK_SHOVEL && player.inventory.getStackInSlot(player.inventory.currentItem) != null)
             {
                 if(player.inventory.getStackInSlot(player.inventory.currentItem).equals(is))

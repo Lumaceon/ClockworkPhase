@@ -2,7 +2,7 @@ package lumaceon.mods.clockworkphase.lib;
 
 public class MechanicTweaker
 {
-    public static final int MAINSPRING_TENSION_MUILTIPLIER = 5;
+    public static final int MAINSPRING_TENSION_MUILTIPLIER = 8;
 
     public static final int MAX_TENSION = 1000000;
     public static final int MAX_TS_DEFAULT = 1000000;
@@ -13,11 +13,11 @@ public class MechanicTweaker
     public static final int TIME_SAND_FROM_NATURAL_SPAWN = 5000; //Life
     public static final int TIME_SAND_FROM_LIGHT_SECOND = 100; //Light
     public static final int TIME_SAND_FROM_WATER_SECOND = 100; //Water
-    public static final int TIME_SAND_FROM_TREE_EXTRACTION = 100; //Earth
+    public static final int TIME_SAND_FROM_TREE_EXTRACTION = 500; //Earth
     public static final int TIME_SAND_FROM_AIR_SECOND = 100; //Air
-    public static final int TIME_SAND_FROM_ONE_FIRE_DAMAGE = 100; //Fire
+    public static final int TIME_SAND_FROM_ONE_FIRE_DAMAGE = 300; //Fire
     public static final int TIME_SAND_FROM_MOON_SECOND = 100; //Lunar
-    public static final int TIME_SAND_FROM_DEATH = 1000; //Death
+    public static final int TIME_SAND_FROM_DEATH = 2000; //Death
 
     public static final int PICKAXE_TIME_SAND_INCREMENT = 25;
     public static final int AXE_TIME_SAND_INCREMENT = 100;

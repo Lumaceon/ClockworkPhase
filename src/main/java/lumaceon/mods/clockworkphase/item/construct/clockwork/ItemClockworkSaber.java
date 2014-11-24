@@ -111,6 +111,12 @@ public class ItemClockworkSaber extends ItemTimeSandClockworkAbstract implements
     }
 
     @Override
+    public int getMaxTimeSand()
+    {
+        return MechanicTweaker.MAX_TIME_SAND_TOOLS;
+    }
+
+    @Override
     public void useTemporalAbility()
     {
         PacketHandler.INSTANCE.sendToServer(new MessageTemporalItemChange());
