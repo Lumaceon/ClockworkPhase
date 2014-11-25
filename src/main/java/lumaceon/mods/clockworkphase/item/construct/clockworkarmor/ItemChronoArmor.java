@@ -40,6 +40,44 @@ public class ItemChronoArmor extends ItemArmor implements IClockwork, IDisassemb
     @SideOnly(Side.CLIENT)
     public void addInformation(ItemStack is, EntityPlayer player, List list, boolean flag)
     {
+        ItemStack hat = player.inventory.armorItemInSlot(0);
+        ItemStack shirt = player.inventory.armorItemInSlot(1);
+        ItemStack pants = player.inventory.armorItemInSlot(2);
+        ItemStack shoes = player.inventory.armorItemInSlot(3);
+
+        float singleArmorDefense = 0;
+        float totalArmorDefense = 0;
+
+        if(is != null && is.getItem() instanceof ItemChronoArmor)
+        {
+            ArmorProperties hatProp = ((ItemChronoArmor) is.getItem()).getProperties(player, is, new DamageSource("mob"), 0, 0);
+            singleArmorDefense += hatProp.AbsorbRatio;
+        }
+
+        if(hat != null && hat.getItem() instanceof ItemChronoArmor)
+        {
+            ArmorProperties hatProp = ((ItemChronoArmor) hat.getItem()).getProperties(player, hat, new DamageSource("mob"), 0, 0);
+            totalArmorDefense += hatProp.AbsorbRatio;
+        }
+
+        if(shirt != null && shirt.getItem() instanceof ItemChronoArmor)
+        {
+            ArmorProperties hatProp = ((ItemChronoArmor) shirt.getItem()).getProperties(player, shirt, new DamageSource("mob"), 0, 0);
+            totalArmorDefense += hatProp.AbsorbRatio;
+        }
+
+        if(pants != null && pants.getItem() instanceof ItemChronoArmor)
+        {
+            ArmorProperties hatProp = ((ItemChronoArmor) pants.getItem()).getProperties(player, pants, new DamageSource("mob"), 0, 0);
+            totalArmorDefense += hatProp.AbsorbRatio;
+        }
+
+        if(shoes != null && shoes.getItem() instanceof ItemChronoArmor)
+        {
+            ArmorProperties hatProp = ((ItemChronoArmor) shoes.getItem()).getProperties(player, shoes, new DamageSource("mob"), 0, 0);
+            totalArmorDefense += hatProp.AbsorbRatio;
+        }
+
         list.add("Tension: " + "\u00a7e" + NBTHelper.getInt(is, NBTTags.TENSION_ENERGY) + "/" + "\u00a7e" + NBTHelper.getInt(is, NBTTags.MAX_TENSION));
 
         if(Keyboard.isKeyDown(Keyboard.KEY_LSHIFT) || Keyboard.isKeyDown(Keyboard.KEY_RSHIFT))
@@ -48,6 +86,8 @@ public class ItemChronoArmor extends ItemArmor implements IClockwork, IDisassemb
             list.add("Clockwork Quality: " + "\u00A7e" + NBTHelper.getInt(is, NBTTags.QUALITY));
             list.add("Clockwork Speed: " + "\u00A7e" + NBTHelper.getInt(is, NBTTags.SPEED));
             list.add("");
+            list.add("Defense (Item): " + "\u00A7e" + singleArmorDefense * 100 + "%");
+            list.add("Defense (Total): " + "\u00A7e" + totalArmorDefense * 100 + "%");
         }
         else
         {
@@ -192,14 +232,16 @@ public class ItemChronoArmor extends ItemArmor implements IClockwork, IDisassemb
         int quality = NBTHelper.getInt(is, NBTTags.QUALITY); if(quality <= 0) { return new ArmorProperties(0, 0.0, 0); }
         int speed = NBTHelper.getInt(is, NBTTags.SPEED);
 
-        if(speed >= 100)
+        if(speed >= 10)
         {
-            double fullSetDefenseFinal = 0.85 / (400.0 / speed);
-            if(fullSetDefenseFinal > 0.85) { fullSetDefenseFinal = 0.85; }
-            if(speed > 400)
+            double fullSetDefenseFinal = 0.92 / (300.0 / speed);
+            if(fullSetDefenseFinal > 0.92) { fullSetDefenseFinal = 0.92; }
+            if(speed > 300)
             {
-                fullSetDefenseFinal += 0.15 / (300 / (speed - 400));
+                fullSetDefenseFinal += 0.08 / (400 / (speed - 300));
             }
+            if(fullSetDefenseFinal > 1) { fullSetDefenseFinal = 1; }
+
             fullSetDefenseFinal += fullSetDefenseAdditions;
             return new ArmorProperties(0, fullSetDefenseFinal / 4.0, Integer.MAX_VALUE);
         }

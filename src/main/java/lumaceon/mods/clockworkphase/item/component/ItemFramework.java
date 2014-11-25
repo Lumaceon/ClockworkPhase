@@ -27,7 +27,7 @@ public class ItemFramework extends ItemBaseComponentGeneric
     @Override
     public int getGearQuality(ItemStack is)
     {
-        return 90;
+        return 80;
     }
 
     @Override
