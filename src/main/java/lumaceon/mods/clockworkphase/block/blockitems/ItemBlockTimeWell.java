@@ -17,6 +17,7 @@ public class ItemBlockTimeWell extends ItemBlock implements ITimeSandSupplier
     public ItemBlockTimeWell(Block block)
     {
         super(block);
+        this.setMaxStackSize(1);
     }
 
     @Override
