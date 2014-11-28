@@ -120,7 +120,7 @@ public class EntityHandler
     @SubscribeEvent
     public void onEntityAttacked(LivingAttackEvent event)
     {
-        if(event.source.getSourceOfDamage() instanceof EntityPlayer) //Attack was from player
+        if(event.source.getEntity() instanceof EntityPlayer) //Attack was from player
         {
             EntityPlayer player = (EntityPlayer)event.source.getEntity();
             if(event.entityLiving.getHealth() - event.ammount <= 0) //Attack is fatal
