@@ -16,7 +16,6 @@ import lumaceon.mods.clockworkphase.lib.NBTTags;
 import lumaceon.mods.clockworkphase.lib.Phases;
 import lumaceon.mods.clockworkphase.network.MessageParticleSpawn;
 import lumaceon.mods.clockworkphase.network.PacketHandler;
-import lumaceon.mods.clockworkphase.proxy.ClientProxy;
 import lumaceon.mods.clockworkphase.util.InventorySearchHelper;
 import lumaceon.mods.clockworkphase.util.NBTHelper;
 import net.minecraft.entity.item.EntityItem;
@@ -139,10 +138,11 @@ public class EntityHandler
                         }
 
                         if(chance < 1) { chance = 1; }
-                        if(player.worldObj.rand.nextInt(chance) == 0)
-                        {
-                            ((ItemClockworkSaber)is.getItem()).addTimeSand(is, MechanicTweaker.SABER_TIME_SAND_INCREMENT_KILL);
-                            PacketHandler.INSTANCE.sendToAllAround(new MessageParticleSpawn(event.entity.posX, event.entity.posY, event.entity.posZ, 1), new NetworkRegistry.TargetPoint(player.worldObj.provider.dimensionId, event.entity.posX, event.entity.posY, event.entity.posZ, 64));
+                        if(player.worldObj.rand.nextInt(chance) == 0) {
+                            if (player.worldObj.getWorldTime() % 20 == 0) {
+                                ((ItemClockworkSaber) is.getItem()).addTimeSand(is, MechanicTweaker.SABER_TIME_SAND_INCREMENT_KILL);
+                                PacketHandler.INSTANCE.sendToAllAround(new MessageParticleSpawn(event.entity.posX, event.entity.posY, event.entity.posZ, 1), new NetworkRegistry.TargetPoint(player.worldObj.provider.dimensionId, event.entity.posX, event.entity.posY, event.entity.posZ, 64));
+                            }
                         }
                     }
                     if(!player.worldObj.isRemote && is.getItem() instanceof ItemTemporalClockworkSaber)

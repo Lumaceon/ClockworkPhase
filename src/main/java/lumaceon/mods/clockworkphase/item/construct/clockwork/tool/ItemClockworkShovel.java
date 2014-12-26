@@ -147,10 +147,11 @@ public class ItemClockworkShovel extends ItemSpade implements IClockwork, IDisas
                             }
 
                             if(chance < 1) { chance = 1; }
-                            if(world.rand.nextInt(chance) == 0)
-                            {
-                                this.addTimeSand(is, MechanicTweaker.SHOVEL_TIME_SAND_INCREMENT);
-                                PacketHandler.INSTANCE.sendToAllAround(new MessageParticleSpawn(x + 0.5, y + 0.5, z + 0.5, 1), new NetworkRegistry.TargetPoint(world.provider.dimensionId, x + 0.5, y + 0.5, z + 0.5, 64));
+                            if(world.rand.nextInt(chance) == 0) {
+                                if (world.getWorldTime() % 20 == 0) {
+                                    this.addTimeSand(is, MechanicTweaker.SHOVEL_TIME_SAND_INCREMENT);
+                                    PacketHandler.INSTANCE.sendToAllAround(new MessageParticleSpawn(x + 0.5, y + 0.5, z + 0.5, 1), new NetworkRegistry.TargetPoint(world.provider.dimensionId, x + 0.5, y + 0.5, z + 0.5, 64));
+                                }
                             }
                         }
                     }
