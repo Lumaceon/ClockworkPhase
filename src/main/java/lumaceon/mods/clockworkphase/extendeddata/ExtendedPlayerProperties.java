@@ -6,8 +6,6 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
 import net.minecraftforge.common.IExtendedEntityProperties;
 
-import java.util.ArrayList;
-
 public class ExtendedPlayerProperties implements IExtendedEntityProperties
 {
     public static final String HANDLER_NAME = "clockwork_phase_player_data";

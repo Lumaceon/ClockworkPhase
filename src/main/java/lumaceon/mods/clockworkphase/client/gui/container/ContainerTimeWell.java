@@ -2,7 +2,6 @@ package lumaceon.mods.clockworkphase.client.gui.container;
 
 import lumaceon.mods.clockworkphase.block.tileentity.TileEntityTimeWell;
 import lumaceon.mods.clockworkphase.client.gui.components.SlotTimeSand;
-import lumaceon.mods.clockworkphase.lib.Phases;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Container;

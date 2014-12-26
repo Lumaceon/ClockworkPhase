@@ -1,7 +1,5 @@
 package lumaceon.mods.clockworkphase.proxy;
 
-import cpw.mods.fml.common.FMLCommonHandler;
-import lumaceon.mods.clockworkphase.handler.TickHandler;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.World;

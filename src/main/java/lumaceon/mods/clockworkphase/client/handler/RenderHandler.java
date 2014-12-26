@@ -1,9 +1,9 @@
 package lumaceon.mods.clockworkphase.client.handler;
 
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
-import lumaceon.mods.clockworkphase.util.OverlayRenderData;
 import lumaceon.mods.clockworkphase.lib.Textures;
 import lumaceon.mods.clockworkphase.proxy.ClientProxy;
+import lumaceon.mods.clockworkphase.util.OverlayRenderData;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.entity.RenderItem;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;

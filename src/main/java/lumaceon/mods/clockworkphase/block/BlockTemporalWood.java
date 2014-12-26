@@ -2,7 +2,6 @@ package lumaceon.mods.clockworkphase.block;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
-import lumaceon.mods.clockworkphase.ClockworkPhase;
 import lumaceon.mods.clockworkphase.init.ModItems;
 import lumaceon.mods.clockworkphase.lib.Textures;
 import net.minecraft.block.BlockOre;

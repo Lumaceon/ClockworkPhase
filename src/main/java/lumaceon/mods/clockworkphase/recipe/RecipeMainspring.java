@@ -3,7 +3,6 @@ package lumaceon.mods.clockworkphase.recipe;
 import lumaceon.mods.clockworkphase.init.ModItems;
 import lumaceon.mods.clockworkphase.lib.MechanicTweaker;
 import lumaceon.mods.clockworkphase.lib.NBTTags;
-import lumaceon.mods.clockworkphase.util.Logger;
 import lumaceon.mods.clockworkphase.util.NBTHelper;
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;

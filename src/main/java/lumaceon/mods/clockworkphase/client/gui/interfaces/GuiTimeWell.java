@@ -2,8 +2,6 @@ package lumaceon.mods.clockworkphase.client.gui.interfaces;
 
 import lumaceon.mods.clockworkphase.block.tileentity.TileEntityTimeWell;
 import lumaceon.mods.clockworkphase.client.gui.container.ContainerTimeWell;
-import lumaceon.mods.clockworkphase.init.ModItems;
-import lumaceon.mods.clockworkphase.lib.Phases;
 import lumaceon.mods.clockworkphase.lib.Textures;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.inventory.GuiContainer;
