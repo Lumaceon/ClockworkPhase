@@ -1,4 +1,4 @@
-package lumaceon.mods.clockworkphase.item.component.base.memory;
+package lumaceon.mods.clockworkphase.registry;
 
 import net.minecraft.item.Item;
 

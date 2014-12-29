@@ -15,6 +15,7 @@ import lumaceon.mods.clockworkphase.handler.*;
 import lumaceon.mods.clockworkphase.init.ModBlocks;
 import lumaceon.mods.clockworkphase.init.ModFluids;
 import lumaceon.mods.clockworkphase.init.ModItems;
+import lumaceon.mods.clockworkphase.init.PhaseEvents;
 import lumaceon.mods.clockworkphase.lib.ValidBlockLists;
 import lumaceon.mods.clockworkphase.recipe.Recipes;
 import lumaceon.mods.clockworkphase.lib.Reference;
@@ -44,6 +45,8 @@ public class ClockworkPhase
         ModBlocks.init();
 
         ModItems.init();
+
+        PhaseEvents.init();
 
         proxy.registerKeybindings();
     }

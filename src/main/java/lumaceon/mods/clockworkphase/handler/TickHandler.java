@@ -4,6 +4,11 @@ import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.common.gameevent.TickEvent;
 import lumaceon.mods.clockworkphase.block.extractor.ExtractorAreas;
 import lumaceon.mods.clockworkphase.block.tileentity.TileEntityExtractor;
+import lumaceon.mods.clockworkphase.extendeddata.ExtendedWorldData;
+import lumaceon.mods.clockworkphase.lib.MechanicTweaker;
+import lumaceon.mods.clockworkphase.phaseevent.PhaseEventAbstract;
+import lumaceon.mods.clockworkphase.registry.PhaseEventRegistry;
+import lumaceon.mods.clockworkphase.util.PhaseHelper;
 import net.minecraft.tileentity.TileEntity;
 
 public class TickHandler
@@ -48,7 +53,24 @@ public class TickHandler
                         }
                     }
                 }
+            }
+        }
 
+        if(MechanicTweaker.PHASE_EVENTS)
+        {
+            ExtendedWorldData worldData = ExtendedWorldData.get(event.world);
+            PhaseEventAbstract phaseEvent = worldData.phaseEvent;
+            if(phaseEvent != null)
+            {
+                phaseEvent.updatePhaseEvent(event.world);
+            }
+            else if(event.world.rand.nextInt(600) == 0)
+            {
+                phaseEvent = PhaseEventRegistry.getRandomEventForPhase(PhaseHelper.getPhaseForWorld(event.world), event.world.rand);
+                if(phaseEvent != null && PhaseHelper.getPhaseForWorldTime(event.world.getWorldTime() + phaseEvent.duration / 2).equals(phaseEvent.getPhase()))
+                {
+                    worldData.setWorldPhaseEvent(phaseEvent, event.world);
+                }
             }
         }
     }

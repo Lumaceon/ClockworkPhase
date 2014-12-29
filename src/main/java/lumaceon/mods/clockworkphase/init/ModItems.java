@@ -18,6 +18,7 @@ import lumaceon.mods.clockworkphase.item.construct.pocketwatch.ItemPocketWatch;
 import lumaceon.mods.clockworkphase.item.construct.pocketwatch.module.*;
 import lumaceon.mods.clockworkphase.lib.MechanicTweaker;
 import lumaceon.mods.clockworkphase.lib.Names;
+import lumaceon.mods.clockworkphase.registry.MemoryItemRegistry;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemArmor;

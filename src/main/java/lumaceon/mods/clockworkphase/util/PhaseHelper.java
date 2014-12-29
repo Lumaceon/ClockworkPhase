@@ -21,4 +21,11 @@ public class PhaseHelper
 
         return Phases.values()[id];
     }
+
+    public static Phases getPhaseForWorldTime(long time)
+    {
+        int allPhaseTime = (int)(time % (GlobalPhaseReference.phaseDuration * Phases.values().length));
+        int id = allPhaseTime / GlobalPhaseReference.phaseDuration;
+        return Phases.values()[id];
+    }
 }

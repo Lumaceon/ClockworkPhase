@@ -116,6 +116,11 @@ tile.clockworkphase:clockworkphase:extractorDeath.name=Death Fork Extractor
 itemGroup.ClockworkPhase=Clockwork Phase
 
 
+#Phase Event Localizations
+clockworkphase:phase_event.default=Default - (This should never show up)
+clockworkphase:phase_event.healthyatmosphere=Healthy Atmosphere
+
+
 #Key Localizations
 key.clockworkphase.category=Clockwork Phase
 key.clockworkphase.multitool=Multi-Tool

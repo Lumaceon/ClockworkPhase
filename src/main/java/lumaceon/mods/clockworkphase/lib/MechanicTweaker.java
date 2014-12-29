@@ -2,7 +2,9 @@ package lumaceon.mods.clockworkphase.lib;
 
 public class MechanicTweaker
 {
-    public static final int MAINSPRING_TENSION_MUILTIPLIER = 8;
+    public static boolean PHASE_EVENTS = true;
+
+    public static int MAINSPRING_TENSION_MUILTIPLIER = 8;
 
     public static final int MAX_TENSION = 1000000;
     public static final int MAX_TS_DEFAULT = 1000000;

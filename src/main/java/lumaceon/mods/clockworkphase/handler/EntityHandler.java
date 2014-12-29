@@ -6,8 +6,10 @@ import cpw.mods.fml.common.network.NetworkRegistry;
 import lumaceon.mods.clockworkphase.block.extractor.ExtractorAreas;
 import lumaceon.mods.clockworkphase.block.tileentity.TileEntityExtractor;
 import lumaceon.mods.clockworkphase.extendeddata.ExtendedPlayerProperties;
+import lumaceon.mods.clockworkphase.extendeddata.ExtendedWorldData;
 import lumaceon.mods.clockworkphase.init.ModItems;
-import lumaceon.mods.clockworkphase.item.component.base.memory.MemoryItemRegistry;
+import lumaceon.mods.clockworkphase.phaseevent.PhaseEventAbstract;
+import lumaceon.mods.clockworkphase.registry.MemoryItemRegistry;
 import lumaceon.mods.clockworkphase.item.construct.clockwork.ItemClockworkSaber;
 import lumaceon.mods.clockworkphase.item.construct.clockwork.ItemTemporalClockworkSaber;
 import lumaceon.mods.clockworkphase.item.construct.pocketwatch.ItemPocketWatch;
@@ -16,8 +18,8 @@ import lumaceon.mods.clockworkphase.lib.NBTTags;
 import lumaceon.mods.clockworkphase.lib.Phases;
 import lumaceon.mods.clockworkphase.network.MessageParticleSpawn;
 import lumaceon.mods.clockworkphase.network.PacketHandler;
-import lumaceon.mods.clockworkphase.proxy.ClientProxy;
 import lumaceon.mods.clockworkphase.util.InventorySearchHelper;
+import lumaceon.mods.clockworkphase.util.Logger;
 import lumaceon.mods.clockworkphase.util.NBTHelper;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
@@ -123,7 +125,7 @@ public class EntityHandler
         if(event.source.getEntity() instanceof EntityPlayer) //Attack was from player
         {
             EntityPlayer player = (EntityPlayer)event.source.getEntity();
-            if(event.entityLiving.getHealth() - event.ammount <= 0) //Attack is fatal
+            if(event.entityLiving.getHealth() > 0 && event.entityLiving.getHealth() - event.ammount <= 0) //Entity was not dead, but attack is fatal
             {
                 if(player.inventory.getCurrentItem() != null && player.inventory.getCurrentItem().getItem() instanceof ItemClockworkSaber)
                 {
@@ -252,20 +254,20 @@ public class EntityHandler
         }
     }
 
-    /**@SubscribeEvent
-    public void onPlayerUpdate(LivingEvent.LivingUpdateEvent event)
+    @SubscribeEvent
+    public void onEntityUpdate(LivingEvent.LivingUpdateEvent event)
     {
-        if(event.entityLiving instanceof EntityPlayer)
+        if(event.entityLiving != null)
         {
-            EntityPlayer player = (EntityPlayer)event.entityLiving;
-            ExtendedPlayerProperties properties = ExtendedPlayerProperties.get(player);
-            properties.prevPosX = properties.posX;
-            properties.prevPosY = properties.posY;
-            properties.prevPosZ = properties.posZ;
-            properties.posX = player.posX;
-            properties.posY = player.posY;
-            properties.posZ = player.posZ;
-            ItemStack[] armor = player.inventory.armorInventory;
+            if(MechanicTweaker.PHASE_EVENTS)
+            {
+                ExtendedWorldData ewd = ExtendedWorldData.get(event.entityLiving.worldObj);
+                PhaseEventAbstract phaseEvent = ewd.phaseEvent;
+                if(phaseEvent != null)
+                {
+                    phaseEvent.applyEntityEffects(event.entityLiving);
+                }
+            }
         }
-    }*/
+    }
 }
