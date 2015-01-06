@@ -7,7 +7,6 @@ import lumaceon.mods.clockworkphase.lib.Textures;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
-import net.minecraft.item.ItemStack;
 
 public abstract class BlockClockworkPhaseAbstract extends Block
 {

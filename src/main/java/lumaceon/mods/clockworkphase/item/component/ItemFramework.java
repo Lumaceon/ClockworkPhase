@@ -1,6 +1,5 @@
 package lumaceon.mods.clockworkphase.item.component;
 
-import lumaceon.mods.clockworkphase.item.ItemClockworkPhaseGeneric;
 import lumaceon.mods.clockworkphase.item.component.generic.ItemBaseComponentGeneric;
 import net.minecraft.item.ItemStack;
 

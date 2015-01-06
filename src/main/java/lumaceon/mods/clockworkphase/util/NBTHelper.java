@@ -1,6 +1,5 @@
 package lumaceon.mods.clockworkphase.util;
 
-import lumaceon.mods.clockworkphase.lib.NBTTags;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTBase;
 import net.minecraft.nbt.NBTTagCompound;
