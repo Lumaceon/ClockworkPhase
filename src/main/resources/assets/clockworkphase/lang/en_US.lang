@@ -87,6 +87,7 @@ item.clockworkphase:modulePartialGravity.name=Partial Gravity Module
 
 #Block Localizations
 tile.clockworkphase:brassBlock.name=Brass Block
+tile.clockworkphase:clockworkAssemblyTable.name=Clockwork Assembly Table
 tile.clockworkphase:windingBox.name=Winding Box
 tile.clockworkphase:growthExtractor.name=Growth Extractor
 tile.clockworkphase:timeSand.name=Time Sand

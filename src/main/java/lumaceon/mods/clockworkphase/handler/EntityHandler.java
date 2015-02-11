@@ -90,12 +90,8 @@ public class EntityHandler
                 {
                     for(float n = 0.0F; n < event.ammount; n++)
                     {
-                        if(((TileEntityExtractor) te).applyEffect(Phases.FIRE))
-                        {
-                            event.ammount -= 1.0F;
-                        }
+                        ((TileEntityExtractor) te).applyEffect(Phases.FIRE);
                     }
-
                 }
             }
         }
@@ -110,11 +106,7 @@ public class EntityHandler
             TileEntity te = event.entity.worldObj.getTileEntity(area.extractorX, area.extractorY, area.extractorZ);
             if(te != null && te instanceof TileEntityExtractor)
             {
-                if(((TileEntityExtractor) te).applyEffect(Phases.DEATH))
-                {
-                    event.setCanceled(true);
-                    event.entityLiving.setHealth(event.entityLiving.getMaxHealth());
-                }
+                ((TileEntityExtractor) te).applyEffect(Phases.DEATH);
             }
         }
     }

@@ -122,7 +122,7 @@ public class ClientProxy extends CommonProxy
     @Override
     public void registerModels()
     {
-        //ClientRegistry.bindTileEntitySpecialRenderer(TileEntityExtractor.class, new RenderExtractor());
+
     }
 
     public World getStaticWorld()

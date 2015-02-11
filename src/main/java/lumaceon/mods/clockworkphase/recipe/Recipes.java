@@ -22,8 +22,6 @@ public class Recipes
         initMiscRecipes();
         initClockworkComponentRecipes();
         initMetalRecipes();
-        initMainspringRecipes();
-        initSpecialRecipes();
     }
 
     public static void initMachineRecipes()
@@ -145,6 +143,9 @@ public class Recipes
     {
         ItemStack output;
 
+        output = new ItemStack(ModBlocks.clockworkAssemblyTable);
+        GameRegistry.addRecipe(new ShapedOreRecipe(output, "www", "wgw", "www", 'w', "plankWood", 'g', "gearIron"));
+
         output = new ItemStack(ModItems.temporalCoreActive);
         GameRegistry.addRecipe(new ShapedOreRecipe(output, "ttt", "rTr", "ttt",
                 'T', "ingotTemporal", 't', "nuggetTemporal", 'r', "dustRedstone"));
@@ -189,6 +190,11 @@ public class Recipes
         output = new ItemStack(ModItems.catalystElements[7]); //Death
         GameRegistry.addRecipe(new ShapedOreRecipe(output, "s g", "sTg", "s g",
                 's', Items.stone_sword, 'g', Items.golden_apple, 'T', "ingotTemporal"));
+
+        output = new ItemStack(ModItems.mainspring);
+        output.setItemDamage(output.getMaxDamage());
+        NBTHelper.setInteger(output, NBTTags.MAX_TENSION, 2000);
+        GameRegistry.addRecipe(new ShapedOreRecipe(output, "mmm", "msm", "mmm", 'm', "ingotIron", 's', "stickWood"));
     }
 
     public static void initClockworkComponentRecipes()
@@ -253,66 +259,5 @@ public class Recipes
         GameRegistry.addShapelessRecipe(output, chip, chip, chip, chip);
         output = new ItemStack(ModItems.brassIngot); output.stackSize = 3;
         GameRegistry.addRecipe(new ShapelessOreRecipe(output, "ingotIron", "ingotIron", "ingotIron", "ingotGold"));
-    }
-
-    public static void initMainspringRecipes()
-    {
-        ItemStack output;
-        int multiplier = MechanicTweaker.MAINSPRING_TENSION_MUILTIPLIER;
-
-        output = new ItemStack(ModItems.mainspring);
-        output.setItemDamage(output.getMaxDamage());
-        NBTHelper.setInteger(output, NBTTags.MAX_TENSION, 2000);
-        GameRegistry.addRecipe(new ShapedOreRecipe(output, "mmm", "msm", "mmm", 'm', "ingotIron", 's', "stickWood"));
-
-        GameRegistry.addRecipe(new RecipeMainspring(250 * multiplier, "iii", "imi", "iii", 'm', ModItems.mainspring, 'i', "ingotIron"));
-        GameRegistry.addRecipe(new RecipeMainspring(2250 * multiplier, "iii", "imi", "iii", 'm', ModItems.mainspring, 'i', "blockIron"));
-        GameRegistry.addRecipe(new RecipeMainspring(350 * multiplier, "iii", "imi", "iii", 'm', ModItems.mainspring, 'i', "ingotBrass"));
-        GameRegistry.addRecipe(new RecipeMainspring(3150 * multiplier, "iii", "imi", "iii", 'm', ModItems.mainspring, 'i', "blockBrass"));
-        GameRegistry.addRecipe(new RecipeMainspring(2500 * multiplier, "iii", "imi", "iii", 'm', ModItems.mainspring, 'i', "ingotTemporal"));
-        GameRegistry.addRecipe(new RecipeMainspring(100 * multiplier, "iii", "imi", "iii", 'm', ModItems.mainspring, 'i', "ingotGold"));
-        GameRegistry.addRecipe(new RecipeMainspring(700 * multiplier, "iii", "imi", "iii", 'm', ModItems.mainspring, 'i', "ingotThaumium"));
-        GameRegistry.addRecipe(new RecipeMainspring(750 * multiplier, "iii", "imi", "iii", 'm', ModItems.mainspring, 'i', "ingotSteel"));
-        GameRegistry.addRecipe(new RecipeMainspring(6750 * multiplier, "iii", "imi", "iii", 'm', ModItems.mainspring, 'i', "blockSteel"));
-        GameRegistry.addRecipe(new RecipeMainspring(200 * multiplier, "iii", "imi", "iii", 'm', ModItems.mainspring, 'i', "ingotLead"));
-        GameRegistry.addRecipe(new RecipeMainspring(1800 * multiplier, "iii", "imi", "iii", 'm', ModItems.mainspring, 'i', "blockLead"));
-        GameRegistry.addRecipe(new RecipeMainspring(100 * multiplier, "iii", "imi", "iii", 'm', ModItems.mainspring, 'i', "ingotCopper"));
-        GameRegistry.addRecipe(new RecipeMainspring(900 * multiplier, "iii", "imi", "iii", 'm', ModItems.mainspring, 'i', "blockCopper"));
-        GameRegistry.addRecipe(new RecipeMainspring(100 * multiplier, "iii", "imi", "iii", 'm', ModItems.mainspring, 'i', "ingotTin"));
-        GameRegistry.addRecipe(new RecipeMainspring(900 * multiplier, "iii", "imi", "iii", 'm', ModItems.mainspring, 'i', "blockTin"));
-        GameRegistry.addRecipe(new RecipeMainspring(300 * multiplier, "iii", "imi", "iii", 'm', ModItems.mainspring, 'i', "ingotBronze"));
-        GameRegistry.addRecipe(new RecipeMainspring(2700 * multiplier, "iii", "imi", "iii", 'm', ModItems.mainspring, 'i', "blockBronze"));
-        GameRegistry.addRecipe(new RecipeMainspring(300 * multiplier, "iii", "imi", "iii", 'm', ModItems.mainspring, 'i', "ingotSilver"));
-        GameRegistry.addRecipe(new RecipeMainspring(2700 * multiplier, "iii", "imi", "iii", 'm', ModItems.mainspring, 'i', "blockSilver"));
-        GameRegistry.addRecipe(new RecipeMainspring(500 * multiplier, "iii", "imi", "iii", 'm', ModItems.mainspring, 'i', "ingotCobalt"));
-        GameRegistry.addRecipe(new RecipeMainspring(4500 * multiplier, "iii", "imi", "iii", 'm', ModItems.mainspring, 'i', "blockCobalt"));
-        GameRegistry.addRecipe(new RecipeMainspring(700 * multiplier, "iii", "imi", "iii", 'm', ModItems.mainspring, 'i', "ingotArdite"));
-        GameRegistry.addRecipe(new RecipeMainspring(6300 * multiplier, "iii", "imi", "iii", 'm', ModItems.mainspring, 'i', "blockArdite"));
-        GameRegistry.addRecipe(new RecipeMainspring(1000 * multiplier, "iii", "imi", "iii", 'm', ModItems.mainspring, 'i', "ingotManyullyn"));
-        GameRegistry.addRecipe(new RecipeMainspring(9000 * multiplier, "iii", "imi", "iii", 'm', ModItems.mainspring, 'i', "blockManyullyn"));
-        GameRegistry.addRecipe(new RecipeMainspring(200 * multiplier, "iii", "imi", "iii", 'm', ModItems.mainspring, 'i', "ingotAluminium"));
-        GameRegistry.addRecipe(new RecipeMainspring(1800 * multiplier, "iii", "imi", "iii", 'm', ModItems.mainspring, 'i', "blockAluminium"));
-        GameRegistry.addRecipe(new RecipeMainspring(350 * multiplier, "iii", "imi", "iii", 'm', ModItems.mainspring, 'i', "ingotAluminiumBrass"));
-        GameRegistry.addRecipe(new RecipeMainspring(3150 * multiplier, "iii", "imi", "iii", 'm', ModItems.mainspring, 'i', "blockAluminiumBrass"));
-        GameRegistry.addRecipe(new RecipeMainspring(500 * multiplier, "iii", "imi", "iii", 'm', ModItems.mainspring, 'i', "ingotAlumite"));
-        GameRegistry.addRecipe(new RecipeMainspring(4500 * multiplier, "iii", "imi", "iii", 'm', ModItems.mainspring, 'i', "blockAlumite"));
-        GameRegistry.addRecipe(new RecipeMainspring(400 * multiplier, "iii", "imi", "iii", 'm', ModItems.mainspring, 'i', "ingotElectrum"));
-        GameRegistry.addRecipe(new RecipeMainspring(3600 * multiplier, "iii", "imi", "iii", 'm', ModItems.mainspring, 'i', "blockElectrum"));
-        GameRegistry.addRecipe(new RecipeMainspring(300 * multiplier, "iii", "imi", "iii", 'm', ModItems.mainspring, 'i', "ingotNickel"));
-        GameRegistry.addRecipe(new RecipeMainspring(2700 * multiplier, "iii", "imi", "iii", 'm', ModItems.mainspring, 'i', "blockNickel"));
-        GameRegistry.addRecipe(new RecipeMainspring(500 * multiplier, "iii", "imi", "iii", 'm', ModItems.mainspring, 'i', "ingotInvar"));
-        GameRegistry.addRecipe(new RecipeMainspring(4500 * multiplier, "iii", "imi", "iii", 'm', ModItems.mainspring, 'i', "blockInvar"));
-    }
-
-    public static void initSpecialRecipes()
-    {
-        //GameRegistry.addRecipe(new RecipeChronomancersHourglass());
-        //GameRegistry.addRecipe(new RecipeClockworkPickaxe());
-        //GameRegistry.addRecipe(new RecipeClockworkAxe());
-        //GameRegistry.addRecipe(new RecipeClockworkShovel());
-        GameRegistry.addRecipe(new RecipeConstructReassemble());
-        GameRegistry.addRecipe(new RecipeClockwork());
-        GameRegistry.addRecipe(new RecipeMultitoolAddition());
-        GameRegistry.addRecipe(new RecipePocketWatchModule());
     }
 }

@@ -31,6 +31,9 @@ public class Textures
                     new ResourceLocation(Reference.MOD_ID, "textures/gui/guiExtractorDeathActive.png")
             };
     public static final ResourceLocation TIME_WELL_GUI = new ResourceLocation(Reference.MOD_ID, "textures/gui/guiTimeWell.png");
+    public static final ResourceLocation ASSEMBLY_TABLE_GUI_CW = new ResourceLocation(Reference.MOD_ID, "textures/gui/guiAssemblyTableClockwork.png");
+    public static final ResourceLocation ASSEMBLY_TABLE_GUI_MS = new ResourceLocation(Reference.MOD_ID, "textures/gui/guiAssemblyTableMainspring.png");
+    public static final ResourceLocation ASSEMBLY_TABLE_GUI_ASSEMBLE = new ResourceLocation(Reference.MOD_ID, "textures/gui/guiAssemblyTableAssemble.png");
 
     /**
      * Default Vanilla Particles.

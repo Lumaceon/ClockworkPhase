@@ -5,6 +5,7 @@ import cpw.mods.fml.relauncher.SideOnly;
 import lumaceon.mods.clockworkphase.item.ItemClockworkPhaseGeneric;
 import lumaceon.mods.clockworkphase.lib.MechanicTweaker;
 import lumaceon.mods.clockworkphase.util.TimeSandHelper;
+import lumaceon.mods.clockworkphase.util.TimeSandParser;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
@@ -17,7 +18,11 @@ public abstract class ItemTimeSandAbstract extends ItemClockworkPhaseGeneric imp
     @SideOnly(Side.CLIENT)
     public void addInformation(ItemStack is, EntityPlayer player, List list, boolean flag)
     {
-        list.add("Time Sand: " + "\u00A7e" + getTimeSand(is));
+        int timeSand = getTimeSand(is);
+        if(timeSand > 0)
+        {
+            list.add(TimeSandParser.getStringForRenderingFromTimeSand(timeSand));
+        }
     }
 
     @Override

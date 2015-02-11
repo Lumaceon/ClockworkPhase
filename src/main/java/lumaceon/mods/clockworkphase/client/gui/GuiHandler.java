@@ -3,14 +3,11 @@ package lumaceon.mods.clockworkphase.client.gui;
 import cpw.mods.fml.common.network.IGuiHandler;
 import cpw.mods.fml.common.network.NetworkRegistry;
 import lumaceon.mods.clockworkphase.ClockworkPhase;
+import lumaceon.mods.clockworkphase.client.gui.container.*;
+import lumaceon.mods.clockworkphase.inventory.InventoryClockworkAssembly;
 import lumaceon.mods.clockworkphase.block.tileentity.TileEntityTimeWell;
 import lumaceon.mods.clockworkphase.block.tileentity.TileEntityExtractor;
-import lumaceon.mods.clockworkphase.client.gui.container.ContainerExtractor;
-import lumaceon.mods.clockworkphase.client.gui.container.ContainerTimeWell;
-import lumaceon.mods.clockworkphase.client.gui.interfaces.GuiExtractor;
-import lumaceon.mods.clockworkphase.client.gui.interfaces.GuiMultitool;
-import lumaceon.mods.clockworkphase.client.gui.interfaces.GuiPocketWatch;
-import lumaceon.mods.clockworkphase.client.gui.interfaces.GuiTimeWell;
+import lumaceon.mods.clockworkphase.client.gui.interfaces.*;
 import lumaceon.mods.clockworkphase.lib.NBTTags;
 import lumaceon.mods.clockworkphase.util.NBTHelper;
 import net.minecraft.entity.player.EntityPlayer;
@@ -43,6 +40,12 @@ public class GuiHandler implements IGuiHandler
                     return new ContainerTimeWell((TileEntityTimeWell)te, player.inventory);
                 }
                 break;
+            case 4:
+                return new ContainerClockworkAssemblyTableCW(player.inventory, world);
+            case 5:
+                return new ContainerClockworkAssemblyTableMainspring(player.inventory, world);
+            case 6:
+                return new ContainerClockworkAssemblyTableAssemble(player.inventory, world);
             default:
                 return null;
         }
@@ -73,6 +76,12 @@ public class GuiHandler implements IGuiHandler
                     return new GuiTimeWell((TileEntityTimeWell)te, player.inventory);
                 }
                 break;
+            case 4:
+                return new GuiClockworkAssemblyTableCW(player.inventory, world, x, y, z);
+            case 5:
+                return new GuiClockworkAssemblyTableMainspring(player.inventory, world, x, y, z);
+            case 6:
+                return new GuiClockworkAssemblyTableAssemble(player.inventory, world, x, y, z);
             default:
                 return null;
         }

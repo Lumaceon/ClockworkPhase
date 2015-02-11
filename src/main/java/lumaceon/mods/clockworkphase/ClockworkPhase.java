@@ -6,16 +6,12 @@ import cpw.mods.fml.common.SidedProxy;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
+import lumaceon.mods.clockworkphase.api.MainspringMetalDictionary;
 import lumaceon.mods.clockworkphase.client.gui.GuiHandler;
 import lumaceon.mods.clockworkphase.config.ConfigurationHandler;
 import lumaceon.mods.clockworkphase.creativetab.CreativeTabClockworkPhase;
 import lumaceon.mods.clockworkphase.handler.*;
-import lumaceon.mods.clockworkphase.init.ModBlocks;
-import lumaceon.mods.clockworkphase.init.ModFluids;
-import lumaceon.mods.clockworkphase.init.ModItems;
-import lumaceon.mods.clockworkphase.init.PhaseEvents;
+import lumaceon.mods.clockworkphase.init.*;
 import lumaceon.mods.clockworkphase.lib.ValidBlockLists;
 import lumaceon.mods.clockworkphase.recipe.Recipes;
 import lumaceon.mods.clockworkphase.lib.Reference;
@@ -32,6 +28,8 @@ public class ClockworkPhase
 
     @SidedProxy(clientSide = Reference.CLIENT_PROXY, serverSide = Reference.SERVER_PROXY)
     public static IProxy proxy;
+
+    public static final MainspringMetalDictionary MAINSPRING_METAL_DICTIONARY = new MainspringMetalDictionary();
 
     public CreativeTabClockworkPhase creativeTabClockworkPhase = new CreativeTabClockworkPhase(CreativeTabs.getNextID(), Reference.MOD_NAME);
 
@@ -61,6 +59,8 @@ public class ClockworkPhase
         proxy.registerModels();
 
         Recipes.init();
+
+        MAINSPRING_METAL_DICTIONARY.init();
 
         BucketHandler.INSTANCE.buckets.put(ModBlocks.timeSand, ModItems.timeSandBucket);
 

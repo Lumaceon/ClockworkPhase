@@ -18,5 +18,7 @@ public class PacketHandler
         INSTANCE.registerMessage(MessagePocketWatchGui.class, MessagePocketWatchGui.class, 4, Side.SERVER);
         INSTANCE.registerMessage(MessageParticleSpawn.class, MessageParticleSpawn.class, 5, Side.CLIENT);
         INSTANCE.registerMessage(MessageDoublePositionParticleSpawn.class, MessageDoublePositionParticleSpawn.class, 6, Side.CLIENT);
+        INSTANCE.registerMessage(MessageOpenGui.class, MessageOpenGui.class, 7, Side.SERVER);
+        INSTANCE.registerMessage(MessageMainspringAdditionButton.class, MessageMainspringAdditionButton.class, 8, Side.SERVER);
     }
 }

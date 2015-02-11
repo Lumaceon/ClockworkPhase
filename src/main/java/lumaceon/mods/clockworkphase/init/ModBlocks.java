@@ -6,6 +6,7 @@ import lumaceon.mods.clockworkphase.block.blockitems.ItemBlockExtractor;
 import lumaceon.mods.clockworkphase.block.blockitems.ItemBlockTimeWell;
 import lumaceon.mods.clockworkphase.block.extractor.*;
 import lumaceon.mods.clockworkphase.block.tileentity.TileEntityCelestialCompass;
+import lumaceon.mods.clockworkphase.inventory.InventoryClockworkAssembly;
 import lumaceon.mods.clockworkphase.block.tileentity.TileEntityTimeWell;
 import lumaceon.mods.clockworkphase.block.tileentity.TileEntityExtractor;
 import lumaceon.mods.clockworkphase.lib.Names;
@@ -16,6 +17,7 @@ import net.minecraftforge.oredict.OreDictionary;
 public class ModBlocks
 {
     public static Block brassBlock;
+    public static Block clockworkAssemblyTable;
     public static Block windingBox;
     public static Block disassembler;
     public static Block timeSand;
@@ -36,6 +38,9 @@ public class ModBlocks
         brassBlock = new BlockBrass(Material.iron).setBlockName(Names.BRASS_BLOCK);
         GameRegistry.registerBlock(brassBlock, Names.BRASS_BLOCK);
         OreDictionary.registerOre("blockBrass", brassBlock);
+
+        clockworkAssemblyTable = new BlockClockworkAssemblyTable(Material.rock).setBlockName(Names.ASSEMBLY_TABLE);
+        GameRegistry.registerBlock(clockworkAssemblyTable, Names.ASSEMBLY_TABLE);
 
         windingBox = new BlockWindingBox(Material.iron).setBlockName(Names.WINDING_BOX);
         GameRegistry.registerBlock(windingBox, Names.WINDING_BOX);

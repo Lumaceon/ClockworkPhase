@@ -58,6 +58,7 @@ public class Names
 
     //#*BLOCKS*#\\
     public static final String BRASS_BLOCK = "brassBlock";
+    public static final String ASSEMBLY_TABLE = "clockworkAssemblyTable";
     public static final String WINDING_BOX = "windingBox";
     public static final String EXTRACTOR = "extractor";
     public static final String TIME_SAND = "timeSand";

@@ -6,6 +6,7 @@ import lumaceon.mods.clockworkphase.lib.MechanicTweaker;
 import lumaceon.mods.clockworkphase.lib.NBTTags;
 import lumaceon.mods.clockworkphase.util.NBTHelper;
 import lumaceon.mods.clockworkphase.util.TimeSandHelper;
+import lumaceon.mods.clockworkphase.util.TimeSandParser;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
@@ -18,8 +19,11 @@ public abstract class ItemTimeSandElementalAbstract extends ItemElementalAbstrac
     @SideOnly(Side.CLIENT)
     public void addInformation(ItemStack is, EntityPlayer player, List list, boolean flag)
     {
-        int timeSand = NBTHelper.getInt(is, NBTTags.INTERNAL_TIME_SAND);
-        list.add("Time Sand: " + "\u00A7e" + timeSand);
+        int timeSand = getTimeSand(is);
+        if(timeSand > 0)
+        {
+            list.add(TimeSandParser.getStringForRenderingFromTimeSand(timeSand));
+        }
     }
 
     @Override

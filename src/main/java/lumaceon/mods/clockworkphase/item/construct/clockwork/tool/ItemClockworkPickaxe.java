@@ -22,6 +22,7 @@ import lumaceon.mods.clockworkphase.proxy.ClientProxy;
 import lumaceon.mods.clockworkphase.util.NBTHelper;
 import lumaceon.mods.clockworkphase.util.TensionHelper;
 import lumaceon.mods.clockworkphase.util.TimeSandHelper;
+import lumaceon.mods.clockworkphase.util.TimeSandParser;
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.EntityLivingBase;
@@ -186,7 +187,11 @@ public class ItemClockworkPickaxe extends ItemPickaxe implements IClockwork, IDi
     public void addInformation(ItemStack is, EntityPlayer player, List list, boolean flag)
     {
         list.add("Tension: " + "\u00a7e" + NBTHelper.getInt(is, NBTTags.TENSION_ENERGY) + "/" + "\u00a7e" + NBTHelper.getInt(is, NBTTags.MAX_TENSION));
-        list.add("Time Sand: " + "\u00A7e" + getTimeSand(is));
+        int timeSand = getTimeSand(is);
+        if(timeSand > 0)
+        {
+            list.add(TimeSandParser.getStringForRenderingFromTimeSand(timeSand));
+        }
 
         if(Keyboard.isKeyDown(Keyboard.KEY_LSHIFT) || Keyboard.isKeyDown(Keyboard.KEY_RSHIFT))
         {
