@@ -35,6 +35,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
+import net.minecraftforge.common.ForgeHooks;
 import org.lwjgl.input.Keyboard;
 
 import java.util.List;
@@ -100,10 +101,22 @@ public class ItemClockworkShovel extends ItemSpade implements IClockwork, IDisas
     public float func_150893_a(ItemStack is, Block block)
     {
         float efficiency = super.func_150893_a(is, block); if(efficiency == 1.0F) { return efficiency; }
-        int tension = NBTHelper.getInt(is, NBTTags.TENSION_ENERGY); if(tension <= 0) { return 0.0F; }
-        int speed = NBTHelper.getInt(is, NBTTags.SPEED); if(speed <= 0) { return 0.0F; }
+        int tension = NBTHelper.getInt(is, NBTTags.TENSION_ENERGY); if(tension <= 0) { return 1.0F; }
+        int speed = NBTHelper.getInt(is, NBTTags.SPEED); if(speed <= 0) { return 1.0F; }
 
         return (float)speed / 20;
+    }
+
+    @Override
+    public float getDigSpeed(ItemStack stack, Block block, int meta)
+    {
+        if(ForgeHooks.isToolEffective(stack, block, meta))
+        {
+            int tension = NBTHelper.getInt(stack, NBTTags.TENSION_ENERGY); if(tension <= 0) { return 1.0F; }
+            int speed = NBTHelper.getInt(stack, NBTTags.SPEED); if(speed <= 0) { return 1.0F; }
+            return (float)speed / 20;
+        }
+        return 1;
     }
 
     @Override
@@ -208,12 +221,6 @@ public class ItemClockworkShovel extends ItemSpade implements IClockwork, IDisas
         {
             list.add("-Hold shift for details-");
         }
-    }
-
-    @Override
-    public float getDigSpeed(ItemStack is, Block block, int meta)
-    {
-        return func_150893_a(is, block);
     }
 
     @Override
