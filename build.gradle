@@ -17,7 +17,7 @@ buildscript {
 
 apply plugin: 'forge'
 
-version = "1.7.10_1.0d"
+version = "1.7.10_1.0e"
 group= "lumaceon.mods.clockworkphase" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = "clockworkphase"
 

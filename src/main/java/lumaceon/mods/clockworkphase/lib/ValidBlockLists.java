@@ -1,6 +1,7 @@
 package lumaceon.mods.clockworkphase.lib;
 
 import net.minecraft.block.Block;
+import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.oredict.OreDictionary;
 
@@ -80,18 +81,10 @@ public class ValidBlockLists
                 }
             }
 
-            if(oreNames[n].contains("gravel") || oreNames[n].contains("sand") || oreNames[n].contains("grass") || oreNames[n].contains("dirt"))
-            {
-                ores = OreDictionary.getOres(oreNames[n]);
-                for(int i = 0; i < ores.size(); i++)
-                {
-                    currentOre = ores.get(i);
-                    if(Block.getBlockFromItem(currentOre.getItem()) != null)
-                    {
-                        BlockShovelables.validShovelables.add(Block.getBlockFromItem(currentOre.getItem()));
-                    }
-                }
-            }
+            BlockShovelables.validShovelables.add(Blocks.grass);
+            BlockShovelables.validShovelables.add(Blocks.dirt);
+            BlockShovelables.validShovelables.add(Blocks.sand);
+            BlockShovelables.validShovelables.add(Blocks.gravel);
 
             if(oreNames[n].contains("logWood"))
             {
