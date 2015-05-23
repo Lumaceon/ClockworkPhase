@@ -11,12 +11,14 @@ import lumaceon.mods.clockworkphase.util.NBTHelper;
 import lumaceon.mods.clockworkphase.util.TensionHelper;
 import net.minecraft.client.model.ModelBiped;
 import net.minecraft.client.renderer.texture.IIconRegister;
+import net.minecraft.enchantment.Enchantment;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemArmor;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.util.DamageSource;
 import net.minecraft.world.World;
@@ -158,15 +160,9 @@ public class ItemChronoArmor extends ItemArmor implements IClockwork, IDisassemb
     }
 
     @Override
-    public int getItemEnchantability()
-    {
-        return 0;
-    }
-
-    @Override
     public boolean isBookEnchantable(ItemStack stack, ItemStack book)
     {
-        return false;
+        return true;
     }
 
     @Override

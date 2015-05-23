@@ -149,7 +149,7 @@ public class ItemTemporalClockworkPickaxe extends ItemClockworkPickaxe implement
             int speed = NBTHelper.getInt(stack, NBTTags.SPEED); if(speed <= 0) { return 1.0F; }
             return super.getDigSpeed(stack, block, meta) * 3.0F;
         }
-        return 1;
+        return func_150893_a(stack, block);
     }
 
     @Override

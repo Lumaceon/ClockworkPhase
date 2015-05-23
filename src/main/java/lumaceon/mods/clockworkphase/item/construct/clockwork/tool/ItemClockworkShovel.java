@@ -116,7 +116,7 @@ public class ItemClockworkShovel extends ItemSpade implements IClockwork, IDisas
             int speed = NBTHelper.getInt(stack, NBTTags.SPEED); if(speed <= 0) { return 1.0F; }
             return (float)speed / 20;
         }
-        return 1;
+        return func_150893_a(stack, block);
     }
 
     @Override

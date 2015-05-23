@@ -19,10 +19,7 @@ import lumaceon.mods.clockworkphase.network.MessageParticleSpawn;
 import lumaceon.mods.clockworkphase.network.MessageTemporalItemChange;
 import lumaceon.mods.clockworkphase.network.PacketHandler;
 import lumaceon.mods.clockworkphase.proxy.ClientProxy;
-import lumaceon.mods.clockworkphase.util.NBTHelper;
-import lumaceon.mods.clockworkphase.util.TensionHelper;
-import lumaceon.mods.clockworkphase.util.TimeSandHelper;
-import lumaceon.mods.clockworkphase.util.TimeSandParser;
+import lumaceon.mods.clockworkphase.util.*;
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.EntityLivingBase;
@@ -136,7 +133,7 @@ public class ItemClockworkPickaxe extends ItemPickaxe implements IClockwork, IDi
             int speed = NBTHelper.getInt(stack, NBTTags.SPEED); if(speed <= 0) { return 1.0F; }
             return (float)speed / 20;
         }
-        return 1;
+        return func_150893_a(stack, block);
     }
 
     @Override

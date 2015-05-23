@@ -39,7 +39,7 @@ public class ModBlocks
         GameRegistry.registerBlock(brassBlock, Names.BRASS_BLOCK);
         OreDictionary.registerOre("blockBrass", brassBlock);
 
-        clockworkAssemblyTable = new BlockClockworkAssemblyTable(Material.rock).setBlockName(Names.ASSEMBLY_TABLE);
+        clockworkAssemblyTable = new BlockClockworkAssemblyTable(Material.wood).setBlockName(Names.ASSEMBLY_TABLE);
         GameRegistry.registerBlock(clockworkAssemblyTable, Names.ASSEMBLY_TABLE);
 
         windingBox = new BlockWindingBox(Material.iron).setBlockName(Names.WINDING_BOX);
