@@ -39,12 +39,12 @@ public class ContainerExtractor extends Container
     @Override
     public boolean canInteractWith(EntityPlayer player)
     {
-        return te.isUseableByPlayer(player);
+        return te.isUsableByPlayer(player);
     }
 
     @Override
     public ItemStack transferStackInSlot(EntityPlayer p_82846_1_, int p_82846_2_)
     {
-        return null;
+        return ItemStack.EMPTY;
     }
 }

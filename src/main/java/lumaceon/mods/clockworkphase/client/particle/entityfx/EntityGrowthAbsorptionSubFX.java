@@ -14,10 +14,11 @@ public class EntityGrowthAbsorptionSubFX extends EntityClockworkPhaseFX
         this.motionY = yMotion;
         this.motionZ = zMotion;
         this.particleMaxAge = 20;
-        this.noClip = true;
+        this.canCollide = false;
     }
 
-    public ResourceLocation getResourceLocation()
+    @Override
+	public ResourceLocation getResourceLocation()
     {
         return Textures.GROWTH_ABSORPTION;
     }

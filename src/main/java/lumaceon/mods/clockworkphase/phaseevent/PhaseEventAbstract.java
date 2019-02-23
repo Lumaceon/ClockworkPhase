@@ -9,7 +9,7 @@ import lumaceon.mods.clockworkphase.util.PhaseHelper;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.ChatComponentText;
+import net.minecraft.util.text.TextComponentString;
 import net.minecraft.world.World;
 
 public abstract class PhaseEventAbstract
@@ -17,7 +17,7 @@ public abstract class PhaseEventAbstract
     public int ID;
     public Phases phase;
 
-    public String EVENT_UNLOCALIZED_NAME = "clockworkphase:phase_event.default";
+    public String EVENT_UNLOCALIZED_NAME = "clockworkphase.phase_event.default";
     public String EVENT_WARNING_MESSAGE = "A developer suddenly forgets to extend default values and screws everything up: +50 derpy developer points.";
     public String EVENT_ACTIVATION_MESSAGE = "A developer suddenly forgets to extend default values and screws everything up: +50 derpy developer points.";
     public String EVENT_DEACTIVATION_MESSAGE = "A developer suddenly forgets to extend default values and screws everything up: +50 derpy developer points.";
@@ -56,7 +56,7 @@ public abstract class PhaseEventAbstract
                 {
                     for(int n = 0; n < world.playerEntities.size(); n++)
                     {
-                        ((EntityPlayer)world.playerEntities.get(n)).addChatComponentMessage(new ChatComponentText(this.getActivationMessage()));
+                        world.playerEntities.get(n).sendMessage(new TextComponentString(this.getActivationMessage()));
                     }
                 }
                 warmupTime--;
@@ -103,7 +103,7 @@ public abstract class PhaseEventAbstract
         return copy;
     }
 
-    public String getUnlocalizedName()
+    public String getTranslationKey()
     {
         return this.EVENT_UNLOCALIZED_NAME;
     }

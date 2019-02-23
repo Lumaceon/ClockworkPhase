@@ -3,13 +3,13 @@ package lumaceon.mods.clockworkphase.phaseevent;
 import lumaceon.mods.clockworkphase.lib.Phases;
 import lumaceon.mods.clockworkphase.util.Logger;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.potion.Potion;
+import net.minecraft.init.MobEffects;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.world.World;
 
 public class PhaseEventHealthyAtmosphere extends PhaseEventAbstract
 {
-    public String EVENT_UNLOCALIZED_NAME = "clockworkphase:phase_event.healthyatmosphere";
+    public String EVENT_UNLOCALIZED_NAME = "clockworkphase.phase_event.healthyatmosphere";
     public String EVENT_WARNING_MESSAGE = "";
     public String EVENT_ACTIVATION_MESSAGE = "You feel more healthy than usual.";
     public String EVENT_DEACTIVATION_MESSAGE = "You suddenly feel weaker.";
@@ -19,34 +19,34 @@ public class PhaseEventHealthyAtmosphere extends PhaseEventAbstract
     {
         if(warmupTime <= 0 && duration > 0)
         {
-            if(!entity.isPotionActive(Potion.regeneration))
+            if(!entity.isPotionActive(MobEffects.REGENERATION))
             {
-                entity.addPotionEffect(new PotionEffect(Potion.regeneration.getId(), 200, 2));
+                entity.addPotionEffect(new PotionEffect(MobEffects.REGENERATION, 200, 2));
             }
-            if(!entity.isPotionActive(Potion.damageBoost))
+            if(!entity.isPotionActive(MobEffects.STRENGTH))
             {
-                entity.addPotionEffect(new PotionEffect(Potion.damageBoost.getId(), 200, 0));
+                entity.addPotionEffect(new PotionEffect(MobEffects.STRENGTH, 200, 0));
             }
 
-            if(entity.isPotionActive(Potion.poison))
+            if(entity.isPotionActive(MobEffects.POISON))
             {
-                entity.removePotionEffect(Potion.poison.getId());
+                entity.removePotionEffect(MobEffects.POISON);
             }
-            if(entity.isPotionActive(Potion.wither))
+            if(entity.isPotionActive(MobEffects.WITHER))
             {
-                entity.removePotionEffect(Potion.wither.getId());
+                entity.removePotionEffect(MobEffects.WITHER);
             }
-            if(entity.isPotionActive(Potion.digSlowdown))
+            if(entity.isPotionActive(MobEffects.MINING_FATIGUE))
             {
-                entity.removePotionEffect(Potion.digSlowdown.getId());
+                entity.removePotionEffect(MobEffects.MINING_FATIGUE);
             }
-            if(entity.isPotionActive(Potion.hunger))
+            if(entity.isPotionActive(MobEffects.HUNGER))
             {
-                entity.removePotionEffect(Potion.hunger.getId());
+                entity.removePotionEffect(MobEffects.HUNGER);
             }
-            if(entity.isPotionActive(Potion.weakness))
+            if(entity.isPotionActive(MobEffects.WEAKNESS))
             {
-                entity.removePotionEffect(Potion.weakness.getId());
+                entity.removePotionEffect(MobEffects.WEAKNESS);
             }
         }
     }
@@ -58,7 +58,7 @@ public class PhaseEventHealthyAtmosphere extends PhaseEventAbstract
     }
 
     @Override
-    public String getUnlocalizedName()
+    public String getTranslationKey()
     {
         return this.EVENT_UNLOCALIZED_NAME;
     }

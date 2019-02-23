@@ -1,23 +1,28 @@
 package lumaceon.mods.clockworkphase.block.tileentity;
 
+import lumaceon.mods.clockworkphase.custom.IInventoryHelper;
 import lumaceon.mods.clockworkphase.item.construct.abstracts.ITimeSand;
 import lumaceon.mods.clockworkphase.lib.MechanicTweaker;
 import lumaceon.mods.clockworkphase.lib.NBTTags;
-import lumaceon.mods.clockworkphase.network.MessageTimeSandCapacitorSync;
-import lumaceon.mods.clockworkphase.network.PacketHandler;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.network.Packet;
+import net.minecraft.util.ITickable;
+import net.minecraft.util.NonNullList;
 
-public class TileEntityTimeWell extends TileEntityTimeSandCapacitor implements IInventory
+public class TileEntityTimeWell extends TileEntityTimeSandCapacitor implements IInventoryHelper, ITickable
 {
-    public ItemStack[] inventory;
+    public NonNullList<ItemStack> inventory;
+//    public ItemStack[] inventory;
 
     public TileEntityTimeWell()
     {
-        inventory = new ItemStack[2];
+        inventory = NonNullList.withSize(2, ItemStack.EMPTY);
+    }
+
+    @Override
+    public NonNullList<ItemStack> getInv() {
+        return inventory;
     }
 
     @Override
@@ -27,129 +32,56 @@ public class TileEntityTimeWell extends TileEntityTimeSandCapacitor implements I
     }
 
     @Override
-    public void updateEntity()
+    public void update()
     {
-        if(inventory[0] != null && inventory[0].getItem() instanceof ITimeSand)
+        if(!inventory.get(0).isEmpty() && inventory.get(0).getItem() instanceof ITimeSand)
         {
             if(getTimeSand() + 500 <= getMaxTimeSandCapacity()) //All time sand can be added
             {
-                addTimeSand(((ITimeSand)inventory[0].getItem()).removeTimeSand(inventory[0], 500));
+                addTimeSand(((ITimeSand) inventory.get(0).getItem()).removeTimeSand(inventory.get(0), 500));
             }
             else //Time sand addition goes over max capacity
             {
-                addTimeSand(((ITimeSand) inventory[0].getItem()).removeTimeSand(inventory[0], getMaxTimeSandCapacity() - getTimeSand())); //Add only enough to max.
+                addTimeSand(((ITimeSand) inventory.get(0).getItem()).removeTimeSand(inventory.get(0), getMaxTimeSandCapacity() - getTimeSand())); //Add only enough to max.
             }
         }
 
-        if(inventory[1] != null && inventory[1].getItem() instanceof ITimeSand && getTimeSand() > 0)
+        if(!inventory.get(1).isEmpty() && inventory.get(1).getItem() instanceof ITimeSand && getTimeSand() > 0)
         {
-            int timeSand = ((ITimeSand) inventory[1].getItem()).getMaxTimeSand() - ((ITimeSand) inventory[1].getItem()).getTimeSand(inventory[1]);
+            int timeSand = ((ITimeSand) inventory.get(1).getItem()).getMaxTimeSand() - ((ITimeSand) inventory.get(1).getItem()).getTimeSand(inventory.get(1));
             if(timeSand < 500)
             {
-                ((ITimeSand) inventory[1].getItem()).addTimeSand(inventory[1], removeTimeSand(timeSand));
+                ((ITimeSand) inventory.get(1).getItem()).addTimeSand(inventory.get(1), removeTimeSand(timeSand));
             }
             else
             {
-                ((ITimeSand) inventory[1].getItem()).addTimeSand(inventory[1], removeTimeSand(500));
+                ((ITimeSand) inventory.get(1).getItem()).addTimeSand(inventory.get(1), removeTimeSand(500));
             }
         }
     }
 
     @Override
-    public void writeToNBT(NBTTagCompound nbt)
+    public NBTTagCompound writeToNBT(NBTTagCompound nbt)
     {
         super.writeToNBT(nbt);
         NBTTagCompound compound = new NBTTagCompound();
-        if(inventory[0] != null) {inventory[0].writeToNBT(compound);}
+        if (!inventory.get(0).isEmpty())
+            inventory.get(0).writeToNBT(compound);
         nbt.setTag(NBTTags.INVENTORY_ARRAY, compound);
 
         compound = new NBTTagCompound();
-        if(inventory[1] != null) {inventory[1].writeToNBT(compound);}
+        if (!inventory.get(1).isEmpty())
+            inventory.get(1).writeToNBT(compound);
         nbt.setTag(NBTTags.INVENTORY_ARRAY + "1", compound);
+        return nbt;
     }
 
     @Override
     public void readFromNBT(NBTTagCompound nbt)
     {
         super.readFromNBT(nbt);
-        inventory[0] = ItemStack.loadItemStackFromNBT(nbt.getCompoundTag(NBTTags.INVENTORY_ARRAY));
-        inventory[1] = ItemStack.loadItemStackFromNBT(nbt.getCompoundTag(NBTTags.INVENTORY_ARRAY + "1"));
-    }
-
-    @Override
-    public Packet getDescriptionPacket()
-    {
-        return PacketHandler.INSTANCE.getPacketFrom(new MessageTimeSandCapacitorSync(this));
-    }
-
-    @Override
-    public int getSizeInventory()
-    {
-        return 2;
-    }
-
-    @Override
-    public ItemStack getStackInSlot(int slotIndex)
-    {
-        return inventory[slotIndex];
-    }
-
-    @Override
-    public ItemStack decrStackSize(int index, int lossCount)
-    {
-        ItemStack is = getStackInSlot(index);
-        if (is != null)
-        {
-            if (lossCount >= is.stackSize)
-            {
-                setInventorySlotContents(index, null);
-            }
-            else
-            {
-                is = is.splitStack(lossCount);
-                if (is.stackSize == 0)
-                {
-                    setInventorySlotContents(index, null);
-                }
-            }
-        }
-        return is;
-    }
-
-    @Override
-    public ItemStack getStackInSlotOnClosing(int index)
-    {
-        if (inventory[index] != null)
-        {
-            ItemStack itemStack = inventory[index];
-            inventory[index] = null;
-            return itemStack;
-        }
-        return null;
-    }
-
-    @Override
-    public void setInventorySlotContents(int index, ItemStack is)
-    {
-        inventory[index] = is;
-
-        if (is != null && is.stackSize > this.getInventoryStackLimit())
-        {
-            is.stackSize = this.getInventoryStackLimit();
-        }
-        this.markDirty();
-    }
-
-    @Override
-    public String getInventoryName()
-    {
-        return null;
-    }
-
-    @Override
-    public boolean hasCustomInventoryName()
-    {
-        return false;
+        inventory.set(0, new ItemStack(nbt.getCompoundTag(NBTTags.INVENTORY_ARRAY)));
+        inventory.set(1, new ItemStack(nbt.getCompoundTag(NBTTags.INVENTORY_ARRAY + "1")));
     }
 
     @Override
@@ -159,16 +91,10 @@ public class TileEntityTimeWell extends TileEntityTimeSandCapacitor implements I
     }
 
     @Override
-    public boolean isUseableByPlayer(EntityPlayer player)
+    public boolean isUsableByPlayer(EntityPlayer player)
     {
         return true;
     }
-
-    @Override
-    public void openInventory() { }
-
-    @Override
-    public void closeInventory() { }
 
     @Override
     public boolean isItemValidForSlot(int p_94041_1_, ItemStack is)

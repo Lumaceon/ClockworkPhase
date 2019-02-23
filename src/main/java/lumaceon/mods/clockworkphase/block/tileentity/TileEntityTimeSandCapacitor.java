@@ -1,12 +1,16 @@
 package lumaceon.mods.clockworkphase.block.tileentity;
 
-import cpw.mods.fml.common.network.NetworkRegistry;
-import cpw.mods.fml.common.network.simpleimpl.IMessage;
+import net.minecraft.network.NetworkManager;
+import net.minecraft.network.play.server.SPacketUpdateTileEntity;
+import net.minecraftforge.fml.common.network.NetworkRegistry;
+import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import lumaceon.mods.clockworkphase.lib.MechanicTweaker;
 import lumaceon.mods.clockworkphase.network.MessageTimeSandCapacitorSync;
 import lumaceon.mods.clockworkphase.network.PacketHandler;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.Packet;
+
+import javax.annotation.Nullable;
 
 public class TileEntityTimeSandCapacitor extends TileEntityClockworkPhase implements ITimeSandTile
 {
@@ -32,7 +36,7 @@ public class TileEntityTimeSandCapacitor extends TileEntityClockworkPhase implem
     @Override
     public int addTimeSand(int amount)
     {
-        if(this.worldObj.isRemote)
+        if(this.world.isRemote)
         {
             return 0;
         }
@@ -42,7 +46,7 @@ public class TileEntityTimeSandCapacitor extends TileEntityClockworkPhase implem
             int overflow = (timeSandStored + amount) - getMaxTimeSandCapacity();
             timeSandStored = getMaxTimeSandCapacity();
             markDirty();
-            PacketHandler.INSTANCE.sendToAllAround(getCustomMessage(), new NetworkRegistry.TargetPoint(this.worldObj.provider.dimensionId, this.xCoord, this.yCoord, this.zCoord, 256));
+            PacketHandler.INSTANCE.sendToAllAround(getCustomMessage(), new NetworkRegistry.TargetPoint(this.world.provider.getDimension(), getPos().getX(), getPos().getY(), getPos().getZ(), 256));
             return overflow;
         }
         else if(amount <= 0)
@@ -53,7 +57,7 @@ public class TileEntityTimeSandCapacitor extends TileEntityClockworkPhase implem
         {
             timeSandStored += amount;
             markDirty();
-            PacketHandler.INSTANCE.sendToAllAround(getCustomMessage(), new NetworkRegistry.TargetPoint(this.worldObj.provider.dimensionId, this.xCoord, this.yCoord, this.zCoord, 256));
+            PacketHandler.INSTANCE.sendToAllAround(getCustomMessage(), new NetworkRegistry.TargetPoint(this.world.provider.getDimension(), getPos().getX(), getPos().getY(), getPos().getZ(), 256));
             return 0;
         }
     }
@@ -66,7 +70,7 @@ public class TileEntityTimeSandCapacitor extends TileEntityClockworkPhase implem
     @Override
     public int removeTimeSand(int amount)
     {
-        if(this.worldObj.isRemote)
+        if(this.world.isRemote)
         {
             return 0;
         }
@@ -80,14 +84,14 @@ public class TileEntityTimeSandCapacitor extends TileEntityClockworkPhase implem
             int amountRemoved = timeSandStored;
             timeSandStored = 0;
             markDirty();
-            PacketHandler.INSTANCE.sendToAllAround(getCustomMessage(), new NetworkRegistry.TargetPoint(this.worldObj.provider.dimensionId, this.xCoord, this.yCoord, this.zCoord, 256));
+            PacketHandler.INSTANCE.sendToAllAround(getCustomMessage(), new NetworkRegistry.TargetPoint(this.world.provider.getDimension(), getPos().getX(), getPos().getY(), getPos().getZ(), 256));
             return amountRemoved;
         }
         else
         {
             timeSandStored -= amount;
             markDirty();
-            PacketHandler.INSTANCE.sendToAllAround(getCustomMessage(), new NetworkRegistry.TargetPoint(this.worldObj.provider.dimensionId, this.xCoord, this.yCoord, this.zCoord, 256));
+            PacketHandler.INSTANCE.sendToAllAround(getCustomMessage(), new NetworkRegistry.TargetPoint(this.world.provider.getDimension(), getPos().getX(), getPos().getY(), getPos().getZ(), 256));
             return amount;
         }
     }
@@ -112,10 +116,11 @@ public class TileEntityTimeSandCapacitor extends TileEntityClockworkPhase implem
     }
 
     @Override
-    public void writeToNBT(NBTTagCompound nbt)
+    public NBTTagCompound writeToNBT(NBTTagCompound nbt)
     {
         super.writeToNBT(nbt);
         nbt.setInteger("time_sand_storage", this.timeSandStored);
+        return nbt;
     }
 
     @Override
@@ -125,9 +130,16 @@ public class TileEntityTimeSandCapacitor extends TileEntityClockworkPhase implem
         this.timeSandStored = nbt.getInteger("time_sand_storage");
     }
 
+    @Nullable
     @Override
-    public Packet getDescriptionPacket()
-    {
-        return PacketHandler.INSTANCE.getPacketFrom(getCustomMessage());
+    public SPacketUpdateTileEntity getUpdatePacket() {
+        NBTTagCompound tag = new NBTTagCompound();
+        tag.setInteger("time_sand_storage", this.timeSandStored);
+        return new SPacketUpdateTileEntity(getPos(), -1, tag);
+    }
+
+    @Override
+    public void onDataPacket(NetworkManager net, SPacketUpdateTileEntity pkt) {
+        timeSandStored = pkt.getNbtCompound().getInteger("time_sand_storage");
     }
 }

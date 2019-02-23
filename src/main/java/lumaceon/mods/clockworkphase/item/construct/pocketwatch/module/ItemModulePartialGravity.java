@@ -1,15 +1,17 @@
 package lumaceon.mods.clockworkphase.item.construct.pocketwatch.module;
 
-import lumaceon.mods.clockworkphase.extendeddata.ExtendedPlayerProperties;
+import lumaceon.mods.clockworkphase.extendeddata.PlayerCapability;
 import lumaceon.mods.clockworkphase.lib.MechanicTweaker;
 import lumaceon.mods.clockworkphase.lib.NBTTags;
 import lumaceon.mods.clockworkphase.util.NBTHelper;
 import lumaceon.mods.clockworkphase.util.TimeSandHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.MobEffects;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 public class ItemModulePartialGravity extends ItemModule
@@ -29,25 +31,23 @@ public class ItemModulePartialGravity extends ItemModule
 
             player.fallDistance = 0;
 
-            if(!player.isPotionActive(Potion.jump))
+            if(!player.isPotionActive(MobEffects.JUMP_BOOST))
             {
-                player.addPotionEffect(new PotionEffect(Potion.jump.getId(), 100, 5));
+                player.addPotionEffect(new PotionEffect(MobEffects.JUMP_BOOST, 100, 5));
             }
 
-            ExtendedPlayerProperties properties = ExtendedPlayerProperties.get(player);
+            PlayerCapability.IPlayerHandler cap = player.getCapability(PlayerCapability.CAPABILITY_PLAYER, null);
             if(player.motionY < 0)
             {
-                player.motionY -= (player.motionY - properties.prevMotionY) / 1.2;
+                player.motionY -= (player.motionY - cap.getPrevMotion().getY()) / 1.2;
             }
-            properties.prevMotionX = player.motionX;
-            properties.prevMotionY = player.motionY;
-            properties.prevMotionZ = player.motionZ;
+            cap.setPrevMotion(new BlockPos(player.motionX, player.motionY, player.motionZ));
         }
         else if(entity instanceof EntityPlayer)
         {
             EntityPlayer player = (EntityPlayer)entity;
-            ExtendedPlayerProperties properties = ExtendedPlayerProperties.get(player);
-            properties.prevMotionX = properties.prevMotionY = properties.prevMotionZ = 0;
+            PlayerCapability.IPlayerHandler cap = player.getCapability(PlayerCapability.CAPABILITY_PLAYER, null);
+            cap.setPrevMotion(new BlockPos(0, 0, 0));
         }
     }
 

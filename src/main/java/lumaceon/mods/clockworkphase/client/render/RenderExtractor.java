@@ -17,7 +17,7 @@ public class RenderExtractor extends TileEntitySpecialRenderer
     }
 
     @Override
-    public void renderTileEntityAt(TileEntity te, double x, double y, double z, float p_147500_8_)
+    public void render(TileEntity te, double x, double y, double z, float p, int destroyStage, float alpha)
     {
         GL11.glPushMatrix();
         this.bindTexture(Textures.EXTRACTOR);

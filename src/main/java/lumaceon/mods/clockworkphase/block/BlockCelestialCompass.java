@@ -1,22 +1,15 @@
 package lumaceon.mods.clockworkphase.block;
 
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
-import lumaceon.mods.clockworkphase.ClockworkPhase;
 import lumaceon.mods.clockworkphase.block.tileentity.TileEntityCelestialCompass;
-import lumaceon.mods.clockworkphase.util.PhaseHelper;
-import net.minecraft.block.Block;
 import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.material.Material;
-import net.minecraft.client.renderer.texture.IIconRegister;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.IIcon;
-import net.minecraft.world.IBlockAccess;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 public class BlockCelestialCompass extends BlockClockworkPhaseAbstract implements ITileEntityProvider
 {
-    public IIcon[] icons = new IIcon[8];
 
     public BlockCelestialCompass(Material material)
     {
@@ -24,39 +17,40 @@ public class BlockCelestialCompass extends BlockClockworkPhaseAbstract implement
         this.setResistance(1000000.0F);
     }
 
+//    @Override
+//    @SideOnly(Side.CLIENT)
+//    public void registerBlockIcons() {
+//        super.registerBlockIcons();
+//        ModelLoader.setCustomStateMapper(this, block -> CustomEvents.MODELS_COMPASS);
+//    }
+//
+//    @Override
+//    public int getMetaFromState(IBlockState state) {
+//        return 0;
+//    }
+//
+//    @Override
+//    public IBlockState getActualState(IBlockState state1, IBlockAccess blockAccess, BlockPos pos) {
+//        return FMLCommonHandler.instance().getEffectiveSide().isClient() ? getActualState() : CustomEvents.STATES_COMPASS[0];
+//    }
+//
+//    @SideOnly(Side.CLIENT)
+//    private IBlockState getActualState() {
+//        int index = PhaseHelper.getPhaseForWorld(ClockworkPhase.proxy.getStaticWorld()).ordinal();
+//        System.out.println("+" + index);
+//        return CustomEvents.STATES_COMPASS[index];
+//    }
+
     @Override
-    public void breakBlock(World world, int x, int y, int z, Block block, int meta)
+    public void breakBlock(World world, BlockPos pos, IBlockState state)
     {
-        TileEntityCelestialCompass.destroyCompass(world, x, y, z);
-        super.breakBlock(world, x, y, z, block, meta);
+        TileEntityCelestialCompass.destroyCompass(world, pos.getX(), pos.getY(), pos.getZ());
+        super.breakBlock(world, pos, state);
     }
 
     @Override
     public TileEntity createNewTileEntity(World p_149915_1_, int p_149915_2_)
     {
         return new TileEntityCelestialCompass();
-    }
-
-    @Override
-    public IIcon getIcon(IBlockAccess blockAccess, int x, int y, int z, int meta)
-    {
-        if(meta != 0 && meta != 1)
-        {
-            return this.blockIcon;
-        }
-
-        return this.icons[PhaseHelper.getPhaseForWorld(ClockworkPhase.proxy.getStaticWorld()).ordinal()];
-    }
-
-    @Override
-    @SideOnly(Side.CLIENT)
-    public void registerBlockIcons(IIconRegister registry)
-    {
-        this.blockIcon = registry.registerIcon(this.getUnlocalizedName().substring(this.getUnlocalizedName().indexOf(".") + 1));
-
-        for(int n = 0; n < 8; n++)
-        {
-            this.icons[n] = registry.registerIcon(this.getUnlocalizedName().substring(this.getUnlocalizedName().indexOf(".") + 1) + "/" + n);
-        }
     }
 }

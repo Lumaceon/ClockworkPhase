@@ -3,6 +3,7 @@ package lumaceon.mods.clockworkphase.lib;
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.NonNullList;
 import net.minecraftforge.oredict.OreDictionary;
 
 import java.util.ArrayList;
@@ -63,7 +64,7 @@ public class ValidBlockLists
     public static void initValidBlocks()
     {
         String[] oreNames = OreDictionary.getOreNames();
-        ArrayList<ItemStack> ores;
+        NonNullList<ItemStack> ores;
         ItemStack currentOre;
 
         for(int n = 0; n < oreNames.length; n++)
@@ -74,17 +75,17 @@ public class ValidBlockLists
                 for(int i = 0; i < ores.size(); i++)
                 {
                     currentOre = ores.get(i);
-                    if(Block.getBlockFromItem(currentOre.getItem()) != null)
+                    if(Block.getBlockFromItem(currentOre.getItem()) != Blocks.AIR)
                     {
                         BlockOres.validOres.add(Block.getBlockFromItem(currentOre.getItem()));
                     }
                 }
             }
 
-            BlockShovelables.validShovelables.add(Blocks.grass);
-            BlockShovelables.validShovelables.add(Blocks.dirt);
-            BlockShovelables.validShovelables.add(Blocks.sand);
-            BlockShovelables.validShovelables.add(Blocks.gravel);
+            BlockShovelables.validShovelables.add(Blocks.GRASS);
+            BlockShovelables.validShovelables.add(Blocks.DIRT);
+            BlockShovelables.validShovelables.add(Blocks.SAND);
+            BlockShovelables.validShovelables.add(Blocks.GRAVEL);
 
             if(oreNames[n].contains("logWood"))
             {
@@ -92,7 +93,7 @@ public class ValidBlockLists
                 for(int i = 0; i < ores.size(); i++)
                 {
                     currentOre = ores.get(i);
-                    if(Block.getBlockFromItem(currentOre.getItem()) != null)
+                    if(Block.getBlockFromItem(currentOre.getItem()) != Blocks.AIR)
                     {
                         BlockLogs.validLogs.add(Block.getBlockFromItem(currentOre.getItem()));
                     }

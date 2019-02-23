@@ -15,7 +15,7 @@ public class TimeSandHelper
         for(int n = 0; n < inventory.getSizeInventory(); n++)
         {
             is = inventory.getStackInSlot(n);
-            if(is != null && is.getItem() instanceof ITimeSandSupplier)
+            if(!is.isEmpty() && is.getItem() instanceof ITimeSandSupplier)
             {
                 amountRemoved = ((ITimeSandSupplier)is.getItem()).removeTimeSand(is, timeSand);
                 timeSand -= amountRemoved;
@@ -36,7 +36,7 @@ public class TimeSandHelper
         for(int n = 0; n < inventory.getSizeInventory(); n++)
         {
             is = inventory.getStackInSlot(n);
-            if(is != null && is.getItem() instanceof ITimeSandSupplier)
+            if(!is.isEmpty() && is.getItem() instanceof ITimeSandSupplier)
             {
                 amountAvailable += ((ITimeSandSupplier)is.getItem()).getTimeSandAvailable(is);
             }

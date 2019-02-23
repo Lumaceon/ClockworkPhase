@@ -11,7 +11,12 @@ import lumaceon.mods.clockworkphase.util.NBTHelper;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.ChatComponentText;
+import net.minecraft.util.ActionResult;
+import net.minecraft.util.EnumActionResult;
+import net.minecraft.util.EnumFacing;
+import net.minecraft.util.EnumHand;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.text.TextComponentString;
 import net.minecraft.world.World;
 
 import java.util.Collection;
@@ -25,30 +30,30 @@ public class ItemBugSwatter extends ItemClockworkPhaseGeneric
     }
 
     @Override
-    public ItemStack onItemRightClick(ItemStack is, World world, EntityPlayer player)
+    public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player, EnumHand hand)
     {
         Logger.info(Phases.values().length + "  " + (((int)(world.getWorldTime() % (GlobalPhaseReference.phaseDuration * Phases.values().length))) / GlobalPhaseReference.phaseDuration));
-        return is;
+        return new ActionResult<ItemStack>(EnumActionResult.PASS, player.getHeldItem(hand));
     }
 
     @Override
-    public boolean onItemUse(ItemStack itemStack, EntityPlayer player, World world, int x, int y, int z, int meta, float fX, float fY, float fZ)
+    public EnumActionResult onItemUse(EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ)
     {
         if(player.isSneaking())
         {
-            TileEntity te = world.getTileEntity(x, y, z);
-            if(te != null && te instanceof TileEntityTimeSandCapacitor)
+            TileEntity te = world.getTileEntity(pos);
+            if(te instanceof TileEntityTimeSandCapacitor)
             {
                 if(!world.isRemote)
                 {
-                    player.addChatComponentMessage(new ChatComponentText("Internal Time Sand (Server): \u00A76" + ((TileEntityTimeSandCapacitor) te).getTimeSand()));
+                    player.sendMessage(new TextComponentString("Internal Time Sand (Server): \u00A76" + ((TileEntityTimeSandCapacitor) te).getTimeSand()));
                 }
                 else
                 {
-                    player.addChatComponentMessage(new ChatComponentText("Internal Time Sand (Client): \u00A76" + ((TileEntityTimeSandCapacitor) te).getTimeSand()));
+                    player.sendMessage(new TextComponentString("Internal Time Sand (Client): \u00A76" + ((TileEntityTimeSandCapacitor) te).getTimeSand()));
                 }
             }
-            return true;
+            return EnumActionResult.SUCCESS;
         }
 
         for(int n = 0; n < ExtractorAreas.EXTRACTORS.length; n++)
@@ -71,7 +76,7 @@ public class ItemBugSwatter extends ItemClockworkPhaseGeneric
                 }
             }
         }
-        return true;
+        return EnumActionResult.SUCCESS;
     }
 
 }

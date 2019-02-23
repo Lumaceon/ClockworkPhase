@@ -4,7 +4,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.renderer.OpenGlHelper;
-import net.minecraft.client.renderer.entity.RenderItem;
+import net.minecraft.client.renderer.RenderItem;
 import net.minecraft.item.ItemStack;
 import org.lwjgl.opengl.GL11;
 
@@ -24,21 +24,21 @@ public class GuiButtonItem extends GuiButton
     }
 
     @Override
-    public void drawButton(Minecraft p_146112_1_, int p_146112_2_, int p_146112_3_)
+    public void drawButton(Minecraft p_146112_1_, int p_146112_2_, int p_146112_3_, float partialTicks)
     {
         if (this.visible)
         {
             FontRenderer fontrenderer = p_146112_1_.fontRenderer;
-            p_146112_1_.getTextureManager().bindTexture(buttonTextures);
+            p_146112_1_.getTextureManager().bindTexture(BUTTON_TEXTURES);
             GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
             GL11.glDisable(GL11.GL_LIGHTING);
-            this.field_146123_n = p_146112_2_ >= this.xPosition && p_146112_3_ >= this.yPosition && p_146112_2_ < this.xPosition + this.width && p_146112_3_ < this.yPosition + this.height;
-            int k = this.getHoverState(this.field_146123_n);
+            this.hovered = p_146112_2_ >= this.x && p_146112_3_ >= this.y && p_146112_2_ < this.x + this.width && p_146112_3_ < this.y + this.height;
+            int k = this.getHoverState(this.hovered);
             GL11.glEnable(GL11.GL_BLEND);
             OpenGlHelper.glBlendFunc(770, 771, 1, 0);
             GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
-            this.drawTexturedModalRect(this.xPosition, this.yPosition, 0, 46 + k * 20, this.width / 2, this.height);
-            this.drawTexturedModalRect(this.xPosition + this.width / 2, this.yPosition, 200 - this.width / 2, 46 + k * 20, this.width / 2, this.height);
+            this.drawTexturedModalRect(this.x, this.y, 0, 46 + k * 20, this.width / 2, this.height);
+            this.drawTexturedModalRect(this.x + this.width / 2, this.y, 200 - this.width / 2, 46 + k * 20, this.width / 2, this.height);
             this.mouseDragged(p_146112_1_, p_146112_2_, p_146112_3_);
             int l = 14737632;
 
@@ -50,14 +50,14 @@ public class GuiButtonItem extends GuiButton
             {
                 l = 10526880;
             }
-            else if (this.field_146123_n)
+            else if (this.hovered)
             {
                 l = 16777120;
             }
 
-            if(item != null)
+            if(!item.isEmpty())
             {
-                this.drawItemStack(item, this.xPosition + 2, this.yPosition + 2, this.displayString);
+                this.drawItemStack(item, this.x + 2, this.y + 2, this.displayString);
             }
         }
     }
@@ -69,9 +69,9 @@ public class GuiButtonItem extends GuiButton
         this.zLevel = 200.0F;
         itemRender.zLevel = 200.0F;
         FontRenderer font = null;
-        if (is != null) font = is.getItem().getFontRenderer(is);
+        if (!is.isEmpty()) font = is.getItem().getFontRenderer(is);
         if (font == null) font = fontRenderer;
-        itemRender.renderItemAndEffectIntoGUI(font, this.mc.getTextureManager(), is, x, y);
+        itemRender.renderItemAndEffectIntoGUI(is, x, y);
         //itemRender.renderItemOverlayIntoGUI(font, this.mc.getTextureManager(), is, x, y);
         this.zLevel = zLevelOrigin;
         itemRender.zLevel = 0.0F;

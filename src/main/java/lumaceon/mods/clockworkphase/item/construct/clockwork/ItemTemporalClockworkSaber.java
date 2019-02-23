@@ -1,7 +1,8 @@
 package lumaceon.mods.clockworkphase.item.construct.clockwork;
 
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
+import net.minecraft.client.util.ITooltipFlag;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import lumaceon.mods.clockworkphase.init.ModItems;
 import lumaceon.mods.clockworkphase.item.construct.abstracts.IClockwork;
 import lumaceon.mods.clockworkphase.lib.MechanicTweaker;
@@ -37,12 +38,12 @@ public class ItemTemporalClockworkSaber extends ItemClockworkSaber
             EntityPlayer player = (EntityPlayer)entity;
             int timeSand = getTimeSand(is);
             timeSand += getTimeSandFromInventory(player.inventory);
-            if(timeSand < MechanicTweaker.TIME_SAND_PER_ENTITY_HIT && player.inventory.getStackInSlot(player.inventory.currentItem) != null)
+            if(timeSand < MechanicTweaker.TIME_SAND_PER_ENTITY_HIT && !player.inventory.getStackInSlot(player.inventory.currentItem).isEmpty())
             {
                 if(player.inventory.getStackInSlot(player.inventory.currentItem).equals(is))
                 {
                     ItemStack newItem = new ItemStack(this.getItemChangeTo());
-                    newItem.setTagCompound(is.stackTagCompound);
+                    newItem.setTagCompound(is.getTagCompound());
                     newItem.setItemDamage(is.getItemDamage());
                     player.inventory.setInventorySlotContents(player.inventory.currentItem, newItem);
                 }
@@ -52,7 +53,7 @@ public class ItemTemporalClockworkSaber extends ItemClockworkSaber
 
     @Override
     @SideOnly(Side.CLIENT)
-    public void addInformation(ItemStack is, EntityPlayer player, List list, boolean flag)
+    public void addInformation(ItemStack is, World worldIn, List<String> list, ITooltipFlag flagIn)
     {
         list.add("Tension: " + "\u00a7e" + NBTHelper.getInt(is, NBTTags.TENSION_ENERGY) + "/" + "\u00a7e" + NBTHelper.getInt(is, NBTTags.MAX_TENSION));
         int timeSand = getTimeSand(is);
@@ -106,7 +107,7 @@ public class ItemTemporalClockworkSaber extends ItemClockworkSaber
                 if(amountToRemove > 0) //Change item back to non-temporal if the player can't meet the TS requirements
                 {
                     ItemStack newItem = new ItemStack(this.getItemChangeTo());
-                    newItem.setTagCompound(is.stackTagCompound);
+                    newItem.setTagCompound(is.getTagCompound());
                     newItem.setItemDamage(is.getItemDamage());
                     if(player.inventory.getStackInSlot(player.inventory.currentItem).equals(is))
                     {

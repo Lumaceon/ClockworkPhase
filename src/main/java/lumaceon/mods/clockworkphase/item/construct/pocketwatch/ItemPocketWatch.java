@@ -1,7 +1,7 @@
 package lumaceon.mods.clockworkphase.item.construct.pocketwatch;
 
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import lumaceon.mods.clockworkphase.client.handler.KeyHandler;
 import lumaceon.mods.clockworkphase.item.ItemClockworkPhaseGeneric;
 import lumaceon.mods.clockworkphase.item.construct.IKeybindAbility;
@@ -22,7 +22,7 @@ public class ItemPocketWatch extends ItemClockworkPhaseGeneric implements IKeybi
             ItemStack[] items = NBTHelper.getInventoryFromNBTTag(is, NBTTags.POCKET_WATCH_MODULES);
             for(int n = 0; n < items.length; n++)
             {
-                if(items[n] != null)
+                if(!items[n].isEmpty())
                 {
                     items[n].getItem().onUpdate(items[n], world, entity, p_77663_4_, p_77663_5_);
                 }
@@ -40,18 +40,18 @@ public class ItemPocketWatch extends ItemClockworkPhaseGeneric implements IKeybi
     public static boolean doesActiveItemModuleExist(ItemStack[] pocketWatches, ItemModule module)
     {
         ItemStack is = getItemModuleFromMultiple(pocketWatches, module);
-        return is != null && NBTHelper.getBoolean(is, NBTTags.ACTIVE);
+        return !is.isEmpty() && NBTHelper.getBoolean(is, NBTTags.ACTIVE);
     }
 
     public static boolean doesItemModuleExist(ItemStack[] pocketWatches, ItemModule module)
     {
-        return getItemModuleFromMultiple(pocketWatches, module) != null;
+        return !getItemModuleFromMultiple(pocketWatches, module).isEmpty();
     }
 
     public static ItemStack getItemModuleFromMultiple(ItemStack[] pocketWatches, ItemModule module)
     {
-        ItemStack result = null;
-        for(int n = 0; n < pocketWatches.length && result == null; n++)
+        ItemStack result = ItemStack.EMPTY;
+        for(int n = 0; n < pocketWatches.length && result.isEmpty(); n++)
         {
             result = getItemModuleIfExists(pocketWatches[n], module);
         }
@@ -67,11 +67,11 @@ public class ItemPocketWatch extends ItemClockworkPhaseGeneric implements IKeybi
      */
     public static ItemStack getItemModuleIfExists(ItemStack pocketWatch, ItemModule module)
     {
-        ItemStack result = null;
+        ItemStack result = ItemStack.EMPTY;
         if(NBTHelper.hasTag(pocketWatch, NBTTags.POCKET_WATCH_MODULES))
         {
             ItemStack[] items = NBTHelper.getInventoryFromNBTTag(pocketWatch, NBTTags.POCKET_WATCH_MODULES);
-            for(int n = 0; n < items.length && result == null; n++)
+            for(int n = 0; n < items.length && result.isEmpty(); n++)
             {
                 if(items[n].getItem().equals(module))
                 {

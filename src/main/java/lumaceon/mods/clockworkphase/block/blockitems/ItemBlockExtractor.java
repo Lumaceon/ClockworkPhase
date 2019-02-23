@@ -1,28 +1,34 @@
 package lumaceon.mods.clockworkphase.block.blockitems;
 
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
+import net.minecraft.block.state.IBlockState;
+import net.minecraft.client.util.ITooltipFlag;
+import net.minecraft.item.Item;
+import net.minecraft.util.EnumFacing;
+import net.minecraft.util.math.BlockPos;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import lumaceon.mods.clockworkphase.ClockworkPhase;
 import lumaceon.mods.clockworkphase.init.ModBlocks;
 import lumaceon.mods.clockworkphase.item.construct.abstracts.IElemental;
 import lumaceon.mods.clockworkphase.lib.NBTTags;
 import lumaceon.mods.clockworkphase.lib.Phases;
 import lumaceon.mods.clockworkphase.lib.Ranges;
-import lumaceon.mods.clockworkphase.lib.Textures;
 import lumaceon.mods.clockworkphase.proxy.ClientProxy;
 import lumaceon.mods.clockworkphase.util.NBTHelper;
 import net.minecraft.block.Block;
-import net.minecraft.client.renderer.texture.IIconRegister;
+import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
-import net.minecraftforge.common.util.ForgeDirection;
+import net.minecraftforge.client.model.ModelLoader;
 
 import java.util.List;
 
-public class ItemBlockExtractor extends ItemBlock implements IElemental
+import lumaceon.mods.clockworkphase.custom.IHasModel;
+
+public class ItemBlockExtractor extends ItemBlock implements IElemental, IHasModel
 {
     public ItemBlockExtractor(Block block)
     {
@@ -33,7 +39,7 @@ public class ItemBlockExtractor extends ItemBlock implements IElemental
 
     @Override
     @SideOnly(Side.CLIENT)
-    public void addInformation(ItemStack is, EntityPlayer player, List list, boolean flag)
+    public void addInformation(ItemStack is, World worldIn, List<String> list, ITooltipFlag flagIn)
     {
 
     }
@@ -58,42 +64,34 @@ public class ItemBlockExtractor extends ItemBlock implements IElemental
         int y = (int)Math.floor(entityItem.posY - 1);
         int z = (int)Math.floor(entityItem.posZ);
 
-        Block targetBlock = entityItem.worldObj.getBlock(x, y, z);
+        Block targetBlock = entityItem.world.getBlockState(new BlockPos(x, y, z)).getBlock();
         boolean flag = true;
-
-        if(targetBlock == null)
-        {
-            return false;
-        }
 
         if(!targetBlock.equals(ModBlocks.celestialCompass) && !targetBlock.equals(ModBlocks.celestialCompassSub))
         {
             return false;
         }
 
-        int meta = entityItem.worldObj.getBlockMetadata(x, y, z);
-        ForgeDirection direction = ForgeDirection.getOrientation(meta);
+        IBlockState state = entityItem.world.getBlockState(new BlockPos(x, y, z));
+        int meta = state.getBlock().getMetaFromState(state);
+        EnumFacing direction = EnumFacing.byHorizontalIndex(meta);
 
         for(int n = 0; n < 10 && flag; n++)
         {
-            //Block is null, return false
-            if(entityItem.worldObj.getBlock(x, y, z) == null)
-            {
-                return false;
-            }
             //Celestial Compass was found, exit out of the loop
-            else if(entityItem.worldObj.getBlock(x, y, z).equals(ModBlocks.celestialCompass))
+            if(entityItem.world.getBlockState(new BlockPos(x, y, z)).getBlock().equals(ModBlocks.celestialCompass))
             {
                 flag = false;
             }
             //Continue searching by way of metadata
             else
             {
-                x += direction.offsetX;
-                z += direction.offsetZ;
+                x += direction.getDirectionVec().getX();
+                z += direction.getDirectionVec().getZ();
 
-                meta = entityItem.worldObj.getBlockMetadata(x, y, z);
-                direction = ForgeDirection.getOrientation(meta);
+                state = entityItem.world.getBlockState(new BlockPos(x, y, z));
+                meta = state.getBlock().getMetaFromState(state);
+                direction = EnumFacing.byHorizontalIndex(meta);
             }
         }
         handleElementization(entityItem, x, y, z);
@@ -107,12 +105,12 @@ public class ItemBlockExtractor extends ItemBlock implements IElemental
 
         if(Ranges.CELESTIAL_LIFE[0].isValueInclusivelyWithinRange(xDifference) && Ranges.CELESTIAL_LIFE[1].isValueInclusivelyWithinRange(zDifference))
         {
-            if(item.worldObj.isRemote)
+            if(item.world.isRemote)
             {
                 ClientProxy.particleGenerator.SPAWNER.spawnElementizeParticle(item.posX, item.posY, item.posZ);
             }
 
-            if(NBTHelper.getInt(item.getEntityItem(), NBTTags.ELEMENTIZE_TIMER) > 200)
+            if(NBTHelper.getInt(item.getItem(), NBTTags.ELEMENTIZE_TIMER) > 200)
             {
                 elementize(Phases.LIFE, item);
                 return;
@@ -120,12 +118,12 @@ public class ItemBlockExtractor extends ItemBlock implements IElemental
         }
         else if(Ranges.CELESTIAL_LIGHT[0].isValueInclusivelyWithinRange(xDifference) && Ranges.CELESTIAL_LIGHT[1].isValueInclusivelyWithinRange(zDifference))
         {
-            if(item.worldObj.isRemote)
+            if(item.world.isRemote)
             {
                 ClientProxy.particleGenerator.SPAWNER.spawnElementizeParticle(item.posX, item.posY, item.posZ);
             }
 
-            if(NBTHelper.getInt(item.getEntityItem(), NBTTags.ELEMENTIZE_TIMER) > 200)
+            if(NBTHelper.getInt(item.getItem(), NBTTags.ELEMENTIZE_TIMER) > 200)
             {
                 elementize(Phases.LIGHT, item);
                 return;
@@ -133,12 +131,12 @@ public class ItemBlockExtractor extends ItemBlock implements IElemental
         }
         else if(Ranges.CELESTIAL_WATER[0].isValueInclusivelyWithinRange(xDifference) && Ranges.CELESTIAL_WATER[1].isValueInclusivelyWithinRange(zDifference))
         {
-            if(item.worldObj.isRemote)
+            if(item.world.isRemote)
             {
                 ClientProxy.particleGenerator.SPAWNER.spawnElementizeParticle(item.posX, item.posY, item.posZ);
             }
 
-            if(NBTHelper.getInt(item.getEntityItem(), NBTTags.ELEMENTIZE_TIMER) > 200)
+            if(NBTHelper.getInt(item.getItem(), NBTTags.ELEMENTIZE_TIMER) > 200)
             {
                 elementize(Phases.WATER, item);
                 return;
@@ -146,12 +144,12 @@ public class ItemBlockExtractor extends ItemBlock implements IElemental
         }
         else if(Ranges.CELESTIAL_EARTH[0].isValueInclusivelyWithinRange(xDifference) && Ranges.CELESTIAL_EARTH[1].isValueInclusivelyWithinRange(zDifference))
         {
-            if(item.worldObj.isRemote)
+            if(item.world.isRemote)
             {
                 ClientProxy.particleGenerator.SPAWNER.spawnElementizeParticle(item.posX, item.posY, item.posZ);
             }
 
-            if(NBTHelper.getInt(item.getEntityItem(), NBTTags.ELEMENTIZE_TIMER) > 200)
+            if(NBTHelper.getInt(item.getItem(), NBTTags.ELEMENTIZE_TIMER) > 200)
             {
                 elementize(Phases.EARTH, item);
                 return;
@@ -159,12 +157,12 @@ public class ItemBlockExtractor extends ItemBlock implements IElemental
         }
         else if(Ranges.CELESTIAL_AIR[0].isValueInclusivelyWithinRange(xDifference) && Ranges.CELESTIAL_AIR[1].isValueInclusivelyWithinRange(zDifference))
         {
-            if(item.worldObj.isRemote)
+            if(item.world.isRemote)
             {
                 ClientProxy.particleGenerator.SPAWNER.spawnElementizeParticle(item.posX, item.posY, item.posZ);
             }
 
-            if(NBTHelper.getInt(item.getEntityItem(), NBTTags.ELEMENTIZE_TIMER) > 200)
+            if(NBTHelper.getInt(item.getItem(), NBTTags.ELEMENTIZE_TIMER) > 200)
             {
                 elementize(Phases.AIR, item);
                 return;
@@ -172,12 +170,12 @@ public class ItemBlockExtractor extends ItemBlock implements IElemental
         }
         else if(Ranges.CELESTIAL_FIRE[0].isValueInclusivelyWithinRange(xDifference) && Ranges.CELESTIAL_FIRE[1].isValueInclusivelyWithinRange(zDifference))
         {
-            if(item.worldObj.isRemote)
+            if(item.world.isRemote)
             {
                 ClientProxy.particleGenerator.SPAWNER.spawnElementizeParticle(item.posX, item.posY, item.posZ);
             }
 
-            if(NBTHelper.getInt(item.getEntityItem(), NBTTags.ELEMENTIZE_TIMER) > 200)
+            if(NBTHelper.getInt(item.getItem(), NBTTags.ELEMENTIZE_TIMER) > 200)
             {
                 elementize(Phases.FIRE, item);
                 return;
@@ -185,12 +183,12 @@ public class ItemBlockExtractor extends ItemBlock implements IElemental
         }
         else if(Ranges.CELESTIAL_DARKNESS[0].isValueInclusivelyWithinRange(xDifference) && Ranges.CELESTIAL_DARKNESS[1].isValueInclusivelyWithinRange(zDifference))
         {
-            if(item.worldObj.isRemote)
+            if(item.world.isRemote)
             {
                 ClientProxy.particleGenerator.SPAWNER.spawnElementizeParticle(item.posX, item.posY, item.posZ);
             }
 
-            if(NBTHelper.getInt(item.getEntityItem(), NBTTags.ELEMENTIZE_TIMER) > 200)
+            if(NBTHelper.getInt(item.getItem(), NBTTags.ELEMENTIZE_TIMER) > 200)
             {
                 elementize(Phases.LUNAR, item);
                 return;
@@ -198,12 +196,12 @@ public class ItemBlockExtractor extends ItemBlock implements IElemental
         }
         else if(Ranges.CELESTIAL_DEATH[0].isValueInclusivelyWithinRange(xDifference) && Ranges.CELESTIAL_DEATH[1].isValueInclusivelyWithinRange(zDifference))
         {
-            if(item.worldObj.isRemote)
+            if(item.world.isRemote)
             {
                 ClientProxy.particleGenerator.SPAWNER.spawnElementizeParticle(item.posX, item.posY, item.posZ);
             }
 
-            if(NBTHelper.getInt(item.getEntityItem(), NBTTags.ELEMENTIZE_TIMER) > 200)
+            if(NBTHelper.getInt(item.getItem(), NBTTags.ELEMENTIZE_TIMER) > 200)
             {
                 elementize(Phases.DEATH, item);
                 return;
@@ -214,20 +212,20 @@ public class ItemBlockExtractor extends ItemBlock implements IElemental
             return;
         }
 
-        NBTHelper.setInteger(item.getEntityItem(), NBTTags.ELEMENTIZE_TIMER, NBTHelper.getInt(item.getEntityItem(), NBTTags.ELEMENTIZE_TIMER) + 1);
+        NBTHelper.setInteger(item.getItem(), NBTTags.ELEMENTIZE_TIMER, NBTHelper.getInt(item.getItem(), NBTTags.ELEMENTIZE_TIMER) + 1);
     }
 
     @Override
     public void elementize(Phases phase, EntityItem item)
     {
-        NBTHelper.setInteger(item.getEntityItem(), NBTTags.ELEMENTIZE_TIMER, 0);
+        NBTHelper.setInteger(item.getItem(), NBTTags.ELEMENTIZE_TIMER, 0);
         int id = phase.ordinal();
-        if(!item.getEntityItem().getItem().equals(ModBlocks.extractorsElements[id]))
+        if(!item.getItem().getItem().equals(Item.getItemFromBlock(ModBlocks.extractorsElements[id])))
         {
             ItemStack newItem = new ItemStack(ModBlocks.extractorsElements[id]);
-            newItem.setTagCompound(item.getEntityItem().stackTagCompound);
-            newItem.setItemDamage(item.getEntityItem().getItemDamage());
-            item.setEntityItemStack(newItem);
+            newItem.setTagCompound(item.getItem().getTagCompound());
+            newItem.setItemDamage(item.getItem().getItemDamage());
+            item.setItem(newItem);
         }
     }
 
@@ -238,21 +236,10 @@ public class ItemBlockExtractor extends ItemBlock implements IElemental
     }
 
     @Override
-    public String getUnlocalizedName()
-    {
-        return String.format("tile.%s%s", Textures.RESOURCE_PREFIX, this.field_150939_a.getUnlocalizedName().substring(this.field_150939_a.getUnlocalizedName().indexOf('.') + 1));
-    }
-
-    @Override
-    public String getUnlocalizedName(ItemStack is)
-    {
-        return String.format("tile.%s%s", Textures.RESOURCE_PREFIX, this.field_150939_a.getUnlocalizedName().substring(this.field_150939_a.getUnlocalizedName().indexOf('.') + 1));
-    }
-
-    @Override
     @SideOnly(Side.CLIENT)
-    public void registerIcons(IIconRegister registry)
+    public void registerIcons()
     {
-        this.itemIcon = registry.registerIcon(this.field_150939_a.getUnlocalizedName().substring(this.field_150939_a.getUnlocalizedName().indexOf(".") + 1));
+        ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(block), 0, new ModelResourceLocation(block.getRegistryName(), "inventory"));
+//        this.itemIcon = registry.registerIcon(this.block.getTranslationKey().substring(this.block.getTranslationKey().indexOf(".") + 1));
     }
 }

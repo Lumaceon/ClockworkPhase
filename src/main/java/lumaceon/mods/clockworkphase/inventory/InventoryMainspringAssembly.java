@@ -1,51 +1,50 @@
 package lumaceon.mods.clockworkphase.inventory;
 
+import lumaceon.mods.clockworkphase.custom.IInventoryHelper;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Container;
-import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.NonNullList;
+import net.minecraft.util.text.ITextComponent;
 
-public class InventoryMainspringAssembly implements IInventory
+public class InventoryMainspringAssembly implements IInventoryHelper
 {
-    private ItemStack[] inventory;
+
+    private NonNullList<ItemStack> inventory;
     private Container eventHandler;
 
     public InventoryMainspringAssembly(Container eventHandler)
     {
-        this.inventory = new ItemStack[8];
+        inventory = NonNullList.withSize(8, ItemStack.EMPTY);
         this.eventHandler = eventHandler;
     }
 
     @Override
-    public int getSizeInventory() { return this.inventory.length; }
-
-    @Override
-    public ItemStack getStackInSlot(int p_70301_1_)
-    {
-        return p_70301_1_ >= this.getSizeInventory() ? null : this.inventory[p_70301_1_];
+    public NonNullList<ItemStack> getInv() {
+        return inventory;
     }
 
     @Override
-    public ItemStack decrStackSize(int p_70298_1_, int p_70298_2_)
+    public ItemStack decrStackSize(int index, int lossCount)
     {
-        if (this.inventory[p_70298_1_] != null)
+        if (!inventory.get(index).isEmpty())
         {
             ItemStack itemstack;
 
-            if (this.inventory[p_70298_1_].stackSize <= p_70298_2_)
+            if (inventory.get(index).getCount() <= lossCount)
             {
-                itemstack = this.inventory[p_70298_1_];
-                this.inventory[p_70298_1_] = null;
+                itemstack = inventory.get(index);
+                inventory.set(index, ItemStack.EMPTY);
                 this.eventHandler.onCraftMatrixChanged(this);
                 return itemstack;
             }
             else
             {
-                itemstack = this.inventory[p_70298_1_].splitStack(p_70298_2_);
+                itemstack = inventory.get(index).splitStack(lossCount);
 
-                if (this.inventory[p_70298_1_].stackSize == 0)
+                if (inventory.get(index).getCount() == 0)
                 {
-                    this.inventory[p_70298_1_] = null;
+                    inventory.set(index, ItemStack.EMPTY);
                 }
 
                 this.eventHandler.onCraftMatrixChanged(this);
@@ -54,37 +53,16 @@ public class InventoryMainspringAssembly implements IInventory
         }
         else
         {
-            return null;
-        }
-    }
-
-    @Override
-    public ItemStack getStackInSlotOnClosing(int slot)
-    {
-        if(this.inventory[slot] != null)
-        {
-            ItemStack itemstack = this.inventory[slot];
-            this.inventory[slot] = null;
-            return itemstack;
-        }
-        else
-        {
-            return null;
+            return ItemStack.EMPTY;
         }
     }
 
     @Override
     public void setInventorySlotContents(int p_70299_1_, ItemStack p_70299_2_)
     {
-        this.inventory[p_70299_1_] = p_70299_2_;
+        inventory.set(p_70299_1_, p_70299_2_);
         this.eventHandler.onCraftMatrixChanged(this);
     }
-
-    @Override
-    public String getInventoryName() { return null; }
-
-    @Override
-    public boolean hasCustomInventoryName() { return false; }
 
     @Override
     public int getInventoryStackLimit() { return 64; }
@@ -93,14 +71,13 @@ public class InventoryMainspringAssembly implements IInventory
     public void markDirty() {}
 
     @Override
-    public boolean isUseableByPlayer(EntityPlayer p_70300_1_) { return true; }
-
-    @Override
-    public void openInventory() {}
-
-    @Override
-    public void closeInventory() {}
+    public boolean isUsableByPlayer(EntityPlayer p_70300_1_) { return true; }
 
     @Override
     public boolean isItemValidForSlot(int p_94041_1_, ItemStack p_94041_2_) { return false; }
+
+    @Override
+    public ITextComponent getDisplayName() {
+        return null;
+    }
 }

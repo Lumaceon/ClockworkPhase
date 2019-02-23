@@ -1,17 +1,18 @@
 package lumaceon.mods.clockworkphase.block;
 
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
-import lumaceon.mods.clockworkphase.ClockworkPhase;
+import lumaceon.mods.clockworkphase.custom.IHasModel;
+import net.minecraft.block.state.IBlockState;
+import net.minecraft.client.renderer.block.model.ModelResourceLocation;
+import net.minecraftforge.client.model.ModelLoader;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import lumaceon.mods.clockworkphase.init.ModItems;
-import lumaceon.mods.clockworkphase.lib.Textures;
 import net.minecraft.block.BlockOre;
-import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.item.Item;
 
 import java.util.Random;
 
-public class BlockTemporalOre extends BlockOre
+public class BlockTemporalOre extends BlockOre implements IHasModel
 {
     public BlockTemporalOre()
     {
@@ -21,7 +22,7 @@ public class BlockTemporalOre extends BlockOre
     }
 
     @Override
-    public Item getItemDropped(int p_149650_1_, Random p_149650_2_, int p_149650_3_)
+    public Item getItemDropped(IBlockState state, Random rand, int fortune)
     {
         return ModItems.nuggetTemporal;
     }
@@ -36,15 +37,10 @@ public class BlockTemporalOre extends BlockOre
     }
 
     @Override
-    public String getUnlocalizedName()
-    {
-        return String.format("tile.%s%s", Textures.RESOURCE_PREFIX, super.getUnlocalizedName().substring(super.getUnlocalizedName().indexOf('.') + 1));
-    }
-
-    @Override
     @SideOnly(Side.CLIENT)
-    public void registerBlockIcons(IIconRegister registry)
+    public void registerBlockIcons()
     {
-        this.blockIcon = registry.registerIcon(this.getUnlocalizedName().substring(this.getUnlocalizedName().indexOf(".") + 1));
+        ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(this), 0, new ModelResourceLocation(getRegistryName(), "inventory"));
+//        this.blockIcon = registry.registerIcon(this.getTranslationKey().substring(this.getTranslationKey().indexOf(".") + 1));
     }
 }

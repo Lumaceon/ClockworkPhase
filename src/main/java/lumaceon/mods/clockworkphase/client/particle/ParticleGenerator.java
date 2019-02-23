@@ -1,10 +1,11 @@
 package lumaceon.mods.clockworkphase.client.particle;
 
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
+import lumaceon.mods.clockworkphase.client.particle.entityfx.EntityClockworkPhaseFX;
 import lumaceon.mods.clockworkphase.client.particle.sequence.ParticleSequence;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.particle.EntityFX;
+import net.minecraft.client.particle.Particle;
 import net.minecraft.world.World;
 
 import java.util.ArrayList;
@@ -32,8 +33,8 @@ public class ParticleGenerator
 
     public void initWorldAndRandom()
     {
-        this.world = mc.theWorld;
-        this.random = mc.theWorld.rand;
+        this.world = mc.world;
+        this.random = mc.world.rand;
     }
 
     public void updateParticleSequences()
@@ -47,9 +48,9 @@ public class ParticleGenerator
         }
     }
 
-    public EntityFX spawnParticle(EntityFX particle, double cutoff)
+    public Particle spawnParticle(EntityClockworkPhaseFX particle, double cutoff)
     {
-        if(canSpawnParticle(particle.posX, particle.posY, particle.posZ, cutoff))
+        if(canSpawnParticle(particle, cutoff))
         {
             mc.effectRenderer.addEffect(particle);
             return particle;
@@ -60,10 +61,10 @@ public class ParticleGenerator
         }
     }
 
-    private boolean canSpawnParticle(double x, double y, double z, double maxDistance)
+    private boolean canSpawnParticle(EntityClockworkPhaseFX particle, double maxDistance)
     {
         //Null checks
-        if(mc == null || Minecraft.getMinecraft().theWorld == null || mc.renderViewEntity == null || mc.effectRenderer == null)
+        if(mc == null || Minecraft.getMinecraft().world == null || mc.getRenderViewEntity() == null || mc.effectRenderer == null)
         {
             return false;
         }
@@ -77,9 +78,9 @@ public class ParticleGenerator
         }
 
         //Calculates distance to the particle generation, and returns false if it's too far away.
-        double xDistance = mc.renderViewEntity.posX - x;
-        double yDistance = mc.renderViewEntity.posY - y;
-        double zDistance = mc.renderViewEntity.posZ - z;
+        double xDistance = mc.getRenderViewEntity().posX - particle.getPoss().getX();
+        double yDistance = mc.getRenderViewEntity().posY - particle.getPoss().getY();
+        double zDistance = mc.getRenderViewEntity().posZ - particle.getPoss().getZ();
         double cutoffDistance = maxDistance;
 
         if (xDistance * xDistance + yDistance * yDistance + zDistance * zDistance > cutoffDistance * cutoffDistance)
@@ -89,7 +90,7 @@ public class ParticleGenerator
 
         if(world == null)
         {
-            world = mc.theWorld;
+            world = mc.world;
         }
         return true;
     }

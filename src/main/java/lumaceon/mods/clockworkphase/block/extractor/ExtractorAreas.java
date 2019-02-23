@@ -3,6 +3,7 @@ package lumaceon.mods.clockworkphase.block.extractor;
 import lumaceon.mods.clockworkphase.block.tileentity.TileEntityExtractor;
 import lumaceon.mods.clockworkphase.lib.Phases;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 import java.util.HashMap;
@@ -47,8 +48,8 @@ public class ExtractorAreas
 
         if(found)
         {
-            TileEntity te = world.getTileEntity(area.extractorX, area.extractorY, area.extractorZ);
-            if(te != null && te instanceof TileEntityExtractor)
+            TileEntity te = world.getTileEntity(new BlockPos(area.extractorX, area.extractorY, area.extractorZ));
+            if(te instanceof TileEntityExtractor)
             {
                 return area;
             }
@@ -77,7 +78,7 @@ public class ExtractorAreas
     {
         for(int n = 0; n < ExtractorAreas.EXTRACTORS.length; n++) //For every element.
         {
-            ExtractorAreas areas = (ExtractorAreas) ExtractorAreas.EXTRACTORS[n].get(world.provider.dimensionId); //Gets the areas for the world.
+            ExtractorAreas areas = (ExtractorAreas) ExtractorAreas.EXTRACTORS[n].get(world.provider.getDimension()); //Gets the areas for the world.
             if (areas != null)
             {
                 for(int g = 0; g < areas.areas.size(); g++) //For each area.
@@ -122,7 +123,7 @@ public class ExtractorAreas
 
     public static ExtractorAreas getAreasFromWorld(World world, Phases phase)
     {
-        return getAreasFromWorldId(world.provider.dimensionId, phase);
+        return getAreasFromWorldId(world.provider.getDimension(), phase);
     }
 
     public static ExtractorAreas getAreasFromWorldId(int id, Phases phase)

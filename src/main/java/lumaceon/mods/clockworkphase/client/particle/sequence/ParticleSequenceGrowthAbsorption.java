@@ -1,9 +1,10 @@
 package lumaceon.mods.clockworkphase.client.particle.sequence;
 
 import lumaceon.mods.clockworkphase.client.particle.ParticleGenerator;
+import lumaceon.mods.clockworkphase.client.particle.entityfx.EntityClockworkPhaseFX;
 import lumaceon.mods.clockworkphase.client.particle.entityfx.EntityGrowthAbsorptionFX;
 import lumaceon.mods.clockworkphase.util.Range2I;
-import net.minecraft.client.particle.EntityFX;
+import net.minecraft.client.particle.Particle;
 
 public class ParticleSequenceGrowthAbsorption extends ParticleSequence
 {
@@ -44,7 +45,7 @@ public class ParticleSequenceGrowthAbsorption extends ParticleSequence
     @Override
     public boolean updateParticleSequence()
     {
-        EntityFX particle;
+        EntityClockworkPhaseFX particle;
         double x = from[0] * random.nextFloat();
         double y = from[1] * random.nextFloat();
         double z = from[2] * random.nextFloat();

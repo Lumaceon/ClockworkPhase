@@ -1,8 +1,8 @@
 package lumaceon.mods.clockworkphase.network;
 
-import cpw.mods.fml.common.network.simpleimpl.IMessage;
-import cpw.mods.fml.common.network.simpleimpl.IMessageHandler;
-import cpw.mods.fml.common.network.simpleimpl.MessageContext;
+import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
+import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
+import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 import io.netty.buffer.ByteBuf;
 import lumaceon.mods.clockworkphase.lib.NBTTags;
 import lumaceon.mods.clockworkphase.util.NBTHelper;
@@ -35,11 +35,11 @@ public class MessageMultitoolGui implements IMessageHandler<MessageMultitoolGui,
     @Override
     public IMessage onMessage(MessageMultitoolGui message, MessageContext ctx)
     {
-        if(ctx.side.isServer() && ctx.getServerHandler().playerEntity != null)
+        if(ctx.side.isServer() && ctx.getServerHandler().player != null)
         {
-            EntityPlayer player = ctx.getServerHandler().playerEntity;
+            EntityPlayer player = ctx.getServerHandler().player;
             ItemStack is = player.inventory.getCurrentItem().copy();
-            if(is != null)
+            if(!is.isEmpty())
             {
                 if(NBTHelper.hasTag(is, NBTTags.TEMPORAL_ITEMS))
                 {

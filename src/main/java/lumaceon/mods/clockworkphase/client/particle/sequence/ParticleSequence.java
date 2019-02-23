@@ -1,7 +1,7 @@
 package lumaceon.mods.clockworkphase.client.particle.sequence;
 
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import lumaceon.mods.clockworkphase.client.particle.ParticleGenerator;
 import lumaceon.mods.clockworkphase.util.Range2I;
 

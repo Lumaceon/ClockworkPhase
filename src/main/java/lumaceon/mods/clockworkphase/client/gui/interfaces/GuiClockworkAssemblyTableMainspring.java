@@ -11,7 +11,7 @@ import lumaceon.mods.clockworkphase.network.PacketHandler;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.inventory.GuiContainer;
-import net.minecraft.client.renderer.entity.RenderItem;
+import net.minecraft.client.renderer.RenderItem;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
@@ -29,7 +29,6 @@ public class GuiClockworkAssemblyTableMainspring extends GuiContainer
     public GuiClockworkAssemblyTableMainspring(InventoryPlayer ip, World world, int x, int y, int z)
     {
         super(new ContainerClockworkAssemblyTableMainspring(ip, world));
-        itemRenders = new RenderItem();
         this.world = world;
         this.x = x;
         this.y = y;
@@ -39,14 +38,22 @@ public class GuiClockworkAssemblyTableMainspring extends GuiContainer
     }
 
     @Override
+    public void drawScreen(int mouseX, int mouseY, float partialTicks){
+        this.drawDefaultBackground();
+        super.drawScreen(mouseX, mouseY, partialTicks);
+        this.renderHoveredToolTip(mouseX, mouseY);
+    }
+
+    @Override
     public void initGui()
     {
         super.initGui();
 
+        itemRenders = mc.getRenderItem();
         buttonList.clear();
-        buttonList.add(new GuiButtonItem(clockwork, 0, guiLeft + 24 - 9, guiTop + 211 - 9, "", itemRenders, fontRendererObj));
-        buttonList.add(new GuiButtonItem(hourglass, 1, guiLeft + 231 - 9, guiTop + 211 - 9, "", itemRenders, fontRendererObj));
-        buttonList.add(new GuiButtonItem(mainspring, 2, guiLeft + (xSize / 2) - 9, guiTop + 137 - 10, "", itemRenders, fontRendererObj));
+        buttonList.add(new GuiButtonItem(clockwork, 0, guiLeft + 24 - 9, guiTop + 211 - 9, "", itemRenders, fontRenderer));
+        buttonList.add(new GuiButtonItem(hourglass, 1, guiLeft + 231 - 9, guiTop + 211 - 9, "", itemRenders, fontRenderer));
+        buttonList.add(new GuiButtonItem(mainspring, 2, guiLeft + (xSize / 2) - 9, guiTop + 137 - 10, "", itemRenders, fontRenderer));
     }
 
     @Override
@@ -55,11 +62,11 @@ public class GuiClockworkAssemblyTableMainspring extends GuiContainer
         switch(button.id)
         {
             case 0:
-                mc.thePlayer.closeScreen();
+//                mc.player.closeScreen();
                 PacketHandler.INSTANCE.sendToServer(new MessageOpenGui(4, x, y, z));
                 break;
             case 1:
-                mc.thePlayer.closeScreen();
+//                mc.player.closeScreen();
                 PacketHandler.INSTANCE.sendToServer(new MessageOpenGui(6, x, y, z));
                 break;
             case 2:

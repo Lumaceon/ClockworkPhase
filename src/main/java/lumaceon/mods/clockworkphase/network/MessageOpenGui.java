@@ -1,8 +1,8 @@
 package lumaceon.mods.clockworkphase.network;
 
-import cpw.mods.fml.common.network.simpleimpl.IMessage;
-import cpw.mods.fml.common.network.simpleimpl.IMessageHandler;
-import cpw.mods.fml.common.network.simpleimpl.MessageContext;
+import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
+import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
+import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 import io.netty.buffer.ByteBuf;
 import lumaceon.mods.clockworkphase.ClockworkPhase;
 import net.minecraft.entity.player.EntityPlayer;
@@ -45,12 +45,12 @@ public class MessageOpenGui implements IMessageHandler<MessageOpenGui, IMessage>
     @Override
     public IMessage onMessage(MessageOpenGui message, MessageContext ctx)
     {
-        if(ctx.side.isServer() && ctx.getServerHandler().playerEntity != null)
+        if(ctx.side.isServer() && ctx.getServerHandler().player != null)
         {
-            EntityPlayer player = ctx.getServerHandler().playerEntity;
+            EntityPlayer player = ctx.getServerHandler().player;
             if(player.getDistance((double)message.x, (double)message.y, (double)message.z) < 10 && message.id >= 4 && message.id <= 6)
             {
-                player.openGui(ClockworkPhase.instance, message.id, player.worldObj, message.x, message.y, message.z);
+                player.openGui(ClockworkPhase.instance, message.id, player.world, message.x, message.y, message.z);
             }
         }
         return null;

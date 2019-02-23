@@ -1,46 +1,44 @@
 package lumaceon.mods.clockworkphase.block;
 
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
-import lumaceon.mods.clockworkphase.lib.Textures;
+import lumaceon.mods.clockworkphase.custom.IHasModel;
+import lumaceon.mods.clockworkphase.ClockworkPhase;
+import lumaceon.mods.clockworkphase.lib.Names;
+import lumaceon.mods.clockworkphase.lib.Reference;
 import net.minecraft.block.material.Material;
-import net.minecraft.client.renderer.texture.IIconRegister;
-import net.minecraft.util.IIcon;
+import net.minecraft.block.state.IBlockState;
+import net.minecraft.client.renderer.block.model.ModelBakery;
+import net.minecraft.client.renderer.block.model.ModelResourceLocation;
+import net.minecraft.client.renderer.block.statemap.StateMapperBase;
+import net.minecraft.item.Item;
+import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.fluids.BlockFluidClassic;
 import net.minecraftforge.fluids.Fluid;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class BlockTimeSand extends BlockFluidClassic
+public class BlockTimeSand extends BlockFluidClassic implements IHasModel
 {
-    @SideOnly(Side.CLIENT)
-    protected IIcon stillIcon;
-
-    @SideOnly(Side.CLIENT)
-    protected IIcon flowingIcon;
-
     public BlockTimeSand(Fluid fluid, Material material)
     {
         super(fluid, material);
         this.setLightLevel(15);
         this.setLightOpacity(0);
+        setCreativeTab(ClockworkPhase.instance.creativeTabClockworkPhase);
     }
 
     @SideOnly(Side.CLIENT)
     @Override
-    public IIcon getIcon(int side, int meta) {
-        return (side == 0 || side == 1)? stillIcon : flowingIcon;
-    }
+    public void registerBlockIcons() {
+        ModelResourceLocation milkLocation = new ModelResourceLocation(new ResourceLocation(Reference.MOD_ID, "fluid"), Names.TIME_SAND);
+        Item milk = Item.getItemFromBlock(this);
 
-    @SideOnly(Side.CLIENT)
-    @Override
-    public void registerBlockIcons(IIconRegister iconRegister)
-    {
-        stillIcon = iconRegister.registerIcon(Textures.STILL_TIME_SAND);
-        flowingIcon = iconRegister.registerIcon(Textures.FLOWING_TIME_SAND);
-    }
-
-    @Override
-    public String getUnlocalizedName()
-    {
-        return String.format("tile.%s%s", Textures.RESOURCE_PREFIX, super.getUnlocalizedName().substring(super.getUnlocalizedName().indexOf('.') + 1));
+        ModelBakery.registerItemVariants(milk);
+        ModelLoader.setCustomMeshDefinition(milk, stack -> milkLocation);
+        ModelLoader.setCustomStateMapper(this, new StateMapperBase() {
+            protected ModelResourceLocation getModelResourceLocation(IBlockState state) {
+                return milkLocation;
+            }
+        });
     }
 }

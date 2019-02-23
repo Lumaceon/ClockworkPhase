@@ -7,7 +7,7 @@ import lumaceon.mods.clockworkphase.network.PacketHandler;
 import lumaceon.mods.clockworkphase.util.NBTHelper;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
-import net.minecraft.client.renderer.entity.RenderItem;
+import net.minecraft.client.renderer.RenderItem;
 import net.minecraft.item.ItemStack;
 
 public class GuiPocketWatch extends GuiScreen
@@ -20,7 +20,6 @@ public class GuiPocketWatch extends GuiScreen
     {
         super();
 
-        itemRenders = new RenderItem();
         if(itemStacks == null)
         {
             itemStacks = new ItemStack[0];
@@ -35,6 +34,7 @@ public class GuiPocketWatch extends GuiScreen
     {
         super.initGui();
 
+        itemRenders = mc.getRenderItem();
         this.guiLeft = (this.width - this.xSize) / 2;
         this.guiTop = (this.height - this.ySize) / 2;
         buttonList.clear();
@@ -43,13 +43,13 @@ public class GuiPocketWatch extends GuiScreen
         {
             for(int y = 0; y < 2; y++)
             {
-                if(items.length > index && items[index] != null)
+                if(items.length > index && !items[index].isEmpty())
                 {
-                    buttonList.add(new GuiButtonItemActive(items[index], index, guiLeft + (x % 10) * 30, guiTop + y * 30, "", itemRenders, fontRendererObj, NBTHelper.getBoolean(items[index], NBTTags.ACTIVE)));
+                    buttonList.add(new GuiButtonItemActive(items[index], index, guiLeft + (x % 10) * 30, guiTop + y * 30, "", itemRenders, fontRenderer, NBTHelper.getBoolean(items[index], NBTTags.ACTIVE)));
                 }
                 else
                 {
-                    buttonList.add(new GuiButtonItemActive(null, index, guiLeft + (x % 10) * 30, guiTop + y * 30, "", itemRenders, fontRendererObj, false));
+                    buttonList.add(new GuiButtonItemActive(ItemStack.EMPTY, index, guiLeft + (x % 10) * 30, guiTop + y * 30, "", itemRenders, fontRenderer, false));
                 }
                 index++;
             }
@@ -68,7 +68,7 @@ public class GuiPocketWatch extends GuiScreen
     {
         if (p_73869_2_ == 1 || p_73869_2_ == this.mc.gameSettings.keyBindInventory.getKeyCode())
         {
-            this.mc.thePlayer.closeScreen();
+            this.mc.player.closeScreen();
         }
     }
 

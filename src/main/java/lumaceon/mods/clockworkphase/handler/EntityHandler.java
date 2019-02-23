@@ -1,11 +1,12 @@
 package lumaceon.mods.clockworkphase.handler;
 
-import cpw.mods.fml.common.eventhandler.Event;
-import cpw.mods.fml.common.eventhandler.SubscribeEvent;
-import cpw.mods.fml.common.network.NetworkRegistry;
+import net.minecraft.util.NonNullList;
+import net.minecraft.util.math.BlockPos;
+import net.minecraftforge.fml.common.eventhandler.Event;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.common.network.NetworkRegistry;
 import lumaceon.mods.clockworkphase.block.extractor.ExtractorAreas;
 import lumaceon.mods.clockworkphase.block.tileentity.TileEntityExtractor;
-import lumaceon.mods.clockworkphase.extendeddata.ExtendedPlayerProperties;
 import lumaceon.mods.clockworkphase.extendeddata.ExtendedWorldData;
 import lumaceon.mods.clockworkphase.init.ModItems;
 import lumaceon.mods.clockworkphase.phaseevent.PhaseEventAbstract;
@@ -35,12 +36,12 @@ public class EntityHandler
     @SubscribeEvent
     public void onEntityHurt(LivingHurtEvent event)
     {
-        if(event.entityLiving instanceof EntityPlayer) //Player was attacked
+        if(event.getEntityLiving() instanceof EntityPlayer) //Player was attacked
         {
-            EntityPlayer player = (EntityPlayer)event.entityLiving;
-            ItemStack[] armor = player.inventory.armorInventory;
+            EntityPlayer player = (EntityPlayer)event.getEntityLiving();
+            NonNullList<ItemStack> armor = player.inventory.armorInventory;
             ItemStack[] pocketWatches = InventorySearchHelper.getPocketWatches(player.inventory);
-            float newAmount = ISpecialArmor.ArmorProperties.ApplyArmor(event.entityLiving, armor, event.source, event.ammount); //Applies armor to the damage.
+            float newAmount = ISpecialArmor.ArmorProperties.applyArmor(event.getEntityLiving(), armor, event.getSource(), event.getAmount()); //Applies armor to the damage.
             if(newAmount <= 0) { return; }
 
             if(pocketWatches != null && ItemPocketWatch.doesActiveItemModuleExist(pocketWatches, ModItems.moduleLifeWalk)) //Player has a pocket watch with life step.
@@ -60,13 +61,13 @@ public class EntityHandler
                         newAmount -= lifeModulePower / MechanicTweaker.LIFE_DEFENSE_PER_HEALTH;
                     }
                 }
-                event.ammount = newAmount;
+                event.setAmount(newAmount);
             }
         }
 
-        if(event.source.getEntity() != null && event.source.getEntity() instanceof EntityPlayer) //Attack was from player
+        if(event.getSource().getTrueSource() != null && event.getSource().getTrueSource() instanceof EntityPlayer) //Attack was from player
         {
-            EntityPlayer player = (EntityPlayer)event.source.getEntity();
+            EntityPlayer player = (EntityPlayer)event.getSource().getTrueSource();
             ItemStack[] pocketWatches = InventorySearchHelper.getPocketWatches(player.inventory);
             if(pocketWatches != null && ItemPocketWatch.doesActiveItemModuleExist(pocketWatches, ModItems.moduleDeathWalk)) //Player has a pocket watch with death step.
             {
@@ -75,20 +76,20 @@ public class EntityHandler
                 if(deathModulePower >= MechanicTweaker.DEATH_ATTACK_PER_HEALTH) //Enough power is present to increase damage
                 {
                     NBTHelper.setInteger(deathWalk, NBTTags.MODULE_POWER, 0);
-                    event.ammount += deathModulePower / MechanicTweaker.DEATH_ATTACK_PER_HEALTH;
+                    event.setAmount((float) (event.getAmount() + (deathModulePower / MechanicTweaker.DEATH_ATTACK_PER_HEALTH)));
                 }
             }
         }
 
-        if(event.source.isFireDamage()) //For fire extractor.
+        if(event.getSource().isFireDamage()) //For fire extractor.
         {
-            ExtractorAreas.ExtractorArea area = ExtractorAreas.getAreasFromWorld(event.entity.worldObj, Phases.FIRE).getValidArea(event.entity.worldObj, (int) event.entityLiving.posX, (int) event.entityLiving.posY, (int) event.entityLiving.posZ);
+            ExtractorAreas.ExtractorArea area = ExtractorAreas.getAreasFromWorld(event.getEntity().world, Phases.FIRE).getValidArea(event.getEntity().world, (int) event.getEntityLiving().posX, (int) event.getEntityLiving().posY, (int) event.getEntityLiving().posZ);
             if(area != null)
             {
-                TileEntity te = event.entity.worldObj.getTileEntity(area.extractorX, area.extractorY, area.extractorZ);
-                if(te != null && te instanceof TileEntityExtractor)
+                TileEntity te = event.getEntity().world.getTileEntity(new BlockPos(area.extractorX, area.extractorY, area.extractorZ));
+                if(te instanceof TileEntityExtractor)
                 {
-                    for(float n = 0.0F; n < event.ammount; n++)
+                    for(float n = 0.0F; n < event.getAmount(); n++)
                     {
                         ((TileEntityExtractor) te).applyEffect(Phases.FIRE);
                     }
@@ -100,11 +101,11 @@ public class EntityHandler
     @SubscribeEvent
     public void onEntityDeath(LivingDeathEvent event)
     {
-        ExtractorAreas.ExtractorArea area = ExtractorAreas.getAreasFromWorld(event.entity.worldObj, Phases.DEATH).getValidArea(event.entity.worldObj, (int)event.entityLiving.posX, (int)event.entityLiving.posY, (int)event.entityLiving.posZ);
+        ExtractorAreas.ExtractorArea area = ExtractorAreas.getAreasFromWorld(event.getEntity().world, Phases.DEATH).getValidArea(event.getEntity().world, (int)event.getEntityLiving().posX, (int)event.getEntityLiving().posY, (int)event.getEntityLiving().posZ);
         if(area != null)
         {
-            TileEntity te = event.entity.worldObj.getTileEntity(area.extractorX, area.extractorY, area.extractorZ);
-            if(te != null && te instanceof TileEntityExtractor)
+            TileEntity te = event.getEntity().world.getTileEntity(new BlockPos(area.extractorX, area.extractorY, area.extractorZ));
+            if(te instanceof TileEntityExtractor)
             {
                 ((TileEntityExtractor) te).applyEffect(Phases.DEATH);
             }
@@ -114,16 +115,16 @@ public class EntityHandler
     @SubscribeEvent
     public void onEntityAttacked(LivingAttackEvent event)
     {
-        if(event.source.getEntity() instanceof EntityPlayer) //Attack was from player
+        if(event.getSource().getTrueSource() instanceof EntityPlayer) //Attack was from player
         {
-            EntityPlayer player = (EntityPlayer)event.source.getEntity();
-            if(event.entityLiving.getHealth() > 0 && event.entityLiving.getHealth() - event.ammount <= 0) //Entity was not dead, but attack is fatal
+            EntityPlayer player = (EntityPlayer)event.getSource().getTrueSource();
+            if(event.getEntityLiving().getHealth() > 0 && event.getEntityLiving().getHealth() - event.getAmount() <= 0) //Entity was not dead, but attack is fatal
             {
-                if(player.inventory.getCurrentItem() != null && player.inventory.getCurrentItem().getItem() instanceof ItemClockworkSaber)
+                if(!player.inventory.getCurrentItem().isEmpty() && player.inventory.getCurrentItem().getItem() instanceof ItemClockworkSaber)
                 {
                     ItemStack is = player.inventory.getCurrentItem();
                     int memory = NBTHelper.getInt(is, NBTTags.MEMORY);
-                    if(memory > 0 && !player.worldObj.isRemote)
+                    if(memory > 0 && !player.world.isRemote)
                     {
                         int memoryWebPower = (int)(memory * Math.pow(player.experienceLevel + 1.0F, 2.0F));
                         int chance = MechanicTweaker.TIME_SAND_CHANCE_FACTOR;
@@ -133,22 +134,22 @@ public class EntityHandler
                         }
 
                         if(chance < 1) { chance = 1; }
-                        if(player.worldObj.rand.nextInt(chance) == 0)
+                        if(player.world.rand.nextInt(chance) == 0)
                         {
                             ((ItemClockworkSaber)is.getItem()).addTimeSand(is, MechanicTweaker.SABER_TIME_SAND_INCREMENT_KILL);
-                            PacketHandler.INSTANCE.sendToAllAround(new MessageParticleSpawn(event.entity.posX, event.entity.posY, event.entity.posZ, 1), new NetworkRegistry.TargetPoint(player.worldObj.provider.dimensionId, event.entity.posX, event.entity.posY, event.entity.posZ, 64));
+                            PacketHandler.INSTANCE.sendToAllAround(new MessageParticleSpawn(event.getEntity().posX, event.getEntity().posY, event.getEntity().posZ, 1), new NetworkRegistry.TargetPoint(player.world.provider.getDimension(), event.getEntity().posX, event.getEntity().posY, event.getEntity().posZ, 64));
                         }
                     }
-                    if(!player.worldObj.isRemote && is.getItem() instanceof ItemTemporalClockworkSaber)
+                    if(!player.world.isRemote && is.getItem() instanceof ItemTemporalClockworkSaber)
                     {
                         ItemStack result = new ItemStack(ModItems.nuggetTemporal);
                         float f = 0.7F;
-                        double d0 = (double)(player.worldObj.rand.nextFloat() * f) + (double)(1.0F - f) * 0.5D;
-                        double d1 = (double)(player.worldObj.rand.nextFloat() * f) + (double)(1.0F - f) * 0.5D;
-                        double d2 = (double)(player.worldObj.rand.nextFloat() * f) + (double)(1.0F - f) * 0.5D;
-                        EntityItem entityitem = new EntityItem(player.worldObj, event.entity.posX + d0, event.entity.posY + d1, event.entity.posZ + d2, result);
-                        entityitem.delayBeforeCanPickup = 10;
-                        player.worldObj.spawnEntityInWorld(entityitem);
+                        double d0 = (double)(player.world.rand.nextFloat() * f) + (double)(1.0F - f) * 0.5D;
+                        double d1 = (double)(player.world.rand.nextFloat() * f) + (double)(1.0F - f) * 0.5D;
+                        double d2 = (double)(player.world.rand.nextFloat() * f) + (double)(1.0F - f) * 0.5D;
+                        EntityItem entityitem = new EntityItem(player.world, event.getEntity().posX + d0, event.getEntity().posY + d1, event.getEntity().posZ + d2, result);
+                        entityitem.setPickupDelay(10);
+                        player.world.spawnEntity(entityitem);
                     }
                 }
             }
@@ -159,13 +160,13 @@ public class EntityHandler
     @SubscribeEvent
     public void onEntitySpawn(LivingSpawnEvent.CheckSpawn event)
     {
-        if(!(event.entityLiving instanceof EntityPlayer))
+        if(!(event.getEntityLiving() instanceof EntityPlayer))
         {
-            ExtractorAreas.ExtractorArea area = ExtractorAreas.getAreasFromWorld(event.entity.worldObj, Phases.LIFE).getValidArea(event.entity.worldObj, (int)event.entity.posX, (int)event.entity.posY, (int)event.entity.posZ);
+            ExtractorAreas.ExtractorArea area = ExtractorAreas.getAreasFromWorld(event.getEntity().world, Phases.LIFE).getValidArea(event.getEntity().world, (int)event.getEntity().posX, (int)event.getEntity().posY, (int)event.getEntity().posZ);
             if(area != null)
             {
-                TileEntity te = event.entity.worldObj.getTileEntity(area.extractorX, area.extractorY, area.extractorZ);
-                if(te != null && te instanceof TileEntityExtractor)
+                TileEntity te = event.getEntity().world.getTileEntity(new BlockPos(area.extractorX, area.extractorY, area.extractorZ));
+                if(te instanceof TileEntityExtractor)
                 {
                     ((TileEntityExtractor) te).addTimeSand(MechanicTweaker.TIME_SAND_FROM_NATURAL_SPAWN);
                     event.setResult(Event.Result.DENY);
@@ -175,24 +176,15 @@ public class EntityHandler
     }
 
     @SubscribeEvent
-    public void onEntityConstruction(EntityEvent.EntityConstructing event)
-    {
-        if(event.entity instanceof EntityPlayer && ExtendedPlayerProperties.get((EntityPlayer) event.entity) == null)
-        {
-            ExtendedPlayerProperties.register((EntityPlayer) event.entity);
-        }
-    }
-
-    @SubscribeEvent
     public void onEntityItemDrop(LivingDropsEvent event)
     {
-        if(event.entityLiving.worldObj != null)
+        if(event.getEntityLiving().world != null)
         {
-            if(event.entityLiving.worldObj.rand.nextInt(99) == 0)
+            if(event.getEntityLiving().world.rand.nextInt(99) == 0)
             {
                 if(MemoryItemRegistry.memoryItemDrops.size() == 1)
                 {
-                    event.drops.add(new EntityItem(event.entityLiving.worldObj, event.entityLiving.posX, event.entityLiving.posY, event.entityLiving.posZ, new ItemStack(MemoryItemRegistry.memoryItemDrops.get(0))));
+                    event.getDrops().add(new EntityItem(event.getEntityLiving().world, event.getEntityLiving().posX, event.getEntityLiving().posY, event.getEntityLiving().posZ, new ItemStack(MemoryItemRegistry.memoryItemDrops.get(0))));
                 }
                 else if(MemoryItemRegistry.memoryItemDrops.size() <= 0)
                 {
@@ -200,13 +192,13 @@ public class EntityHandler
                 }
                 else
                 {
-                    event.drops.add(new EntityItem(event.entityLiving.worldObj, event.entityLiving.posX, event.entityLiving.posY, event.entityLiving.posZ, new ItemStack(MemoryItemRegistry.memoryItemDrops.get(event.entity.worldObj.rand.nextInt(MemoryItemRegistry.memoryItemDrops.size())))));
+                    event.getDrops().add(new EntityItem(event.getEntityLiving().world, event.getEntityLiving().posX, event.getEntityLiving().posY, event.getEntityLiving().posZ, new ItemStack(MemoryItemRegistry.memoryItemDrops.get(event.getEntity().world.rand.nextInt(MemoryItemRegistry.memoryItemDrops.size())))));
                 }
             }
 
-            if(event.entityLiving.worldObj.rand.nextInt(1000) == 0)
+            if(event.getEntityLiving().world.rand.nextInt(1000) == 0)
             {
-                event.drops.add(new EntityItem(event.entityLiving.worldObj, event.entityLiving.posX, event.entityLiving.posY, event.entityLiving.posZ, new ItemStack(ModItems.gearChronosphere)));
+                event.getDrops().add(new EntityItem(event.getEntityLiving().world, event.getEntityLiving().posX, event.getEntityLiving().posY, event.getEntityLiving().posZ, new ItemStack(ModItems.gearChronosphere)));
             }
         }
     }
@@ -214,7 +206,7 @@ public class EntityHandler
     @SubscribeEvent
     public void onItemDestroyed(PlayerDestroyItemEvent event)
     {
-        ItemStack is = event.original;
+        ItemStack is = event.getOriginal();
         if(NBTHelper.hasTag(is, NBTTags.TEMPORAL_ITEMS))
         {
             ItemStack[] items = NBTHelper.getInventoryFromNBTTag(is, NBTTags.TEMPORAL_ITEMS);
@@ -224,24 +216,24 @@ public class EntityHandler
 
             for(int n = 0; n < newItems.length; n++)
             {
-                if(items[n] != null)
+                if(!items[n].isEmpty())
                 {
                     newItems[n] = items[amountInNew];
                     amountInNew++;
                 }
             }
             NBTHelper.setNBTTagListFromInventory(newItem, NBTTags.TEMPORAL_ITEMS, newItems);
-            if(event.entityPlayer.inventory.getCurrentItem() == null)
+            if(event.getEntityPlayer().inventory.getCurrentItem().isEmpty())
             {
-                event.entityPlayer.inventory.setInventorySlotContents(event.entityPlayer.inventory.currentItem, newItem);
+                event.getEntityPlayer().inventory.setInventorySlotContents(event.getEntityPlayer().inventory.currentItem, newItem);
             }
-            else if(event.entityPlayer.inventory.addItemStackToInventory(newItem))
+            else if(event.getEntityPlayer().inventory.addItemStackToInventory(newItem))
             {
                 return;
             }
             else
             {
-                event.entityPlayer.worldObj.spawnEntityInWorld(new EntityItem(event.entityPlayer.worldObj, event.entity.posX, event.entity.posY, event.entity.posZ, newItem));
+                event.getEntityPlayer().world.spawnEntity(new EntityItem(event.getEntityPlayer().world, event.getEntity().posX, event.getEntity().posY, event.getEntity().posZ, newItem));
             }
         }
     }
@@ -249,15 +241,15 @@ public class EntityHandler
     @SubscribeEvent
     public void onEntityUpdate(LivingEvent.LivingUpdateEvent event)
     {
-        if(event.entityLiving != null)
+        if(event.getEntityLiving() != null)
         {
             if(MechanicTweaker.PHASE_EVENTS)
             {
-                ExtendedWorldData ewd = ExtendedWorldData.get(event.entityLiving.worldObj);
+                ExtendedWorldData ewd = ExtendedWorldData.get(event.getEntityLiving().world);
                 PhaseEventAbstract phaseEvent = ewd.phaseEvent;
                 if(phaseEvent != null)
                 {
-                    phaseEvent.applyEntityEffects(event.entityLiving);
+                    phaseEvent.applyEntityEffects(event.getEntityLiving());
                 }
             }
         }

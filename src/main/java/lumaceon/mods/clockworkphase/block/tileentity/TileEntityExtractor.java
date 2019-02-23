@@ -1,6 +1,11 @@
 package lumaceon.mods.clockworkphase.block.tileentity;
 
-import cpw.mods.fml.common.network.NetworkRegistry;
+import lumaceon.mods.clockworkphase.custom.IInventoryHelper;
+import net.minecraft.util.EnumFacing;
+import net.minecraft.util.ITickable;
+import net.minecraft.util.NonNullList;
+import net.minecraft.util.math.BlockPos;
+import net.minecraftforge.fml.common.network.NetworkRegistry;
 import lumaceon.mods.clockworkphase.block.extractor.ExtractorAreas;
 import lumaceon.mods.clockworkphase.init.ModItems;
 import lumaceon.mods.clockworkphase.item.ItemCatalyst;
@@ -11,12 +16,11 @@ import lumaceon.mods.clockworkphase.network.MessageDoublePositionParticleSpawn;
 import lumaceon.mods.clockworkphase.network.PacketHandler;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
-import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 
-public class TileEntityExtractor extends TileEntityTimeSandCapacitor implements IInventory
+public class TileEntityExtractor extends TileEntityTimeSandCapacitor implements IInventoryHelper, ITickable
 {
     public Phases phase;
     public boolean extractorAreaReady = false;
@@ -24,7 +28,14 @@ public class TileEntityExtractor extends TileEntityTimeSandCapacitor implements 
 
     public int timeWellX, timeWellY, timeWellZ;
 
-    protected ItemStack inventory;
+    protected NonNullList<ItemStack> invv;
+//    protected ItemStack inventory;
+
+
+    @Override
+    public NonNullList<ItemStack> getInv() {
+        return invv;
+    }
 
     public TileEntityExtractor()
     {
@@ -35,6 +46,7 @@ public class TileEntityExtractor extends TileEntityTimeSandCapacitor implements 
     {
         super();
         this.phase = phase;
+        invv = NonNullList.withSize(1, ItemStack.EMPTY);
     }
 
     /**
@@ -50,143 +62,139 @@ public class TileEntityExtractor extends TileEntityTimeSandCapacitor implements 
             return false;
         }
 
-        if(inventory != null && inventory.getItem() instanceof ItemCatalyst)
+        if(getInv().get(0).getItem() instanceof ItemCatalyst)
         {
-            if(inventory.getItem().equals(ModItems.catalystElements[phase.ordinal()]))
+            if(getInv().get(0).getItem().equals(ModItems.catalystElements[phase.ordinal()]))
             {
                 int newDamage, timeSandToAdd;
                 switch(phase.ordinal())
                 {
                     case 0: //Life
                         addTimeSand(MechanicTweaker.TIME_SAND_FROM_NATURAL_SPAWN);
-                        newDamage = inventory.getItemDamage() + 1;
-                        if(newDamage > inventory.getMaxDamage())
+                        newDamage = getInv().get(0).getItemDamage() + 1;
+                        if(newDamage > getInv().get(0).getMaxDamage())
                         {
                             decrStackSize(0, 1);
                         }
                         else
                         {
-                            inventory.setItemDamage(newDamage);
+                            getInv().get(0).setItemDamage(newDamage);
                             markDirty();
                         }
                         break;
                     case 1: //Light
                         int lightLevels = 0;
-                        lightLevels += worldObj.getBlockLightValue(xCoord + 1, yCoord, zCoord);
-                        lightLevels += worldObj.getBlockLightValue(xCoord, yCoord, zCoord + 1);
-                        lightLevels += worldObj.getBlockLightValue(xCoord, yCoord + 1, zCoord);
-                        lightLevels += worldObj.getBlockLightValue(xCoord - 1, yCoord, zCoord);
-                        lightLevels += worldObj.getBlockLightValue(xCoord, yCoord, zCoord - 1);
-                        lightLevels += worldObj.getBlockLightValue(xCoord, yCoord - 1, zCoord);
+                        for (EnumFacing facing : EnumFacing.VALUES)
+                            lightLevels += world.getLightFromNeighbors(getPos().offset(facing));
 
                         timeSandToAdd = (int)((lightLevels / 75.0) * MechanicTweaker.TIME_SAND_FROM_LIGHT_SECOND);
                         if(timeSandToAdd <= 0) { return false; }
                         if(timeSandToAdd > MechanicTweaker.TIME_SAND_FROM_LIGHT_SECOND) { timeSandToAdd = MechanicTweaker.TIME_SAND_FROM_LIGHT_SECOND; }
                         addTimeSand(timeSandToAdd);
-                        newDamage = inventory.getItemDamage() + 1;
-                        if(newDamage > inventory.getMaxDamage())
+                        newDamage = getInv().get(0).getItemDamage() + 1;
+                        if(newDamage > getInv().get(0).getMaxDamage())
                         {
                             decrStackSize(0, 1);
                         }
                         else
                         {
-                            inventory.setItemDamage(newDamage);
+                            getInv().get(0).setItemDamage(newDamage);
                             markDirty();
                         }
                         break;
                     case 2: //Water
                         int waterBlocks = 0;
-                        for(int x = xCoord - 1; x <= xCoord + 1; x++)
+                        for(int x = getPos().getX() - 1; x <= getPos().getX() + 1; x++)
                         {
-                            for(int y = yCoord - 1; y <= yCoord + 1; y++)
+                            for(int y = getPos().getY() - 1; y <= getPos().getY() + 1; y++)
                             {
-                                for(int z = zCoord - 1; z <= zCoord + 1; z++)
+                                for(int z = getPos().getZ() - 1; z <= getPos().getZ() + 1; z++)
                                 {
-                                    if(worldObj.getBlock(x, y, z).equals(Blocks.water)) {waterBlocks++;}
+                                    if(world.getBlockState(new BlockPos(x, y, z)).getBlock().equals(Blocks.WATER)) {waterBlocks++;}
                                 }
                             }
                         }
                         timeSandToAdd = (int)((waterBlocks / 26.0) * MechanicTweaker.TIME_SAND_FROM_WATER_SECOND);
                         if(timeSandToAdd <= 0) { return false; }
                         addTimeSand(timeSandToAdd);
-                        newDamage = inventory.getItemDamage() + 1;
-                        if(newDamage > inventory.getMaxDamage())
+                        newDamage = getInv().get(0).getItemDamage() + 1;
+                        if(newDamage > getInv().get(0).getMaxDamage())
                         {
                             decrStackSize(0, 1);
                         }
                         else
                         {
-                            inventory.setItemDamage(newDamage);
+                            getInv().get(0).setItemDamage(newDamage);
                             markDirty();
                         }
                         break;
                     case 3: //Earth
                         addTimeSand(MechanicTweaker.TIME_SAND_FROM_TREE_EXTRACTION);
-                        newDamage = inventory.getItemDamage() + 1;
-                        if(newDamage > inventory.getMaxDamage())
+                        newDamage = getInv().get(0).getItemDamage() + 1;
+                        if(newDamage > getInv().get(0).getMaxDamage())
                         {
                             decrStackSize(0, 1);
                         }
                         else
                         {
-                            inventory.setItemDamage(newDamage);
+                            getInv().get(0).setItemDamage(newDamage);
                             markDirty();
                         }
                         return true;
                     case 4: //Air
-                        timeSandToAdd = (int)((this.yCoord / 255.0) * MechanicTweaker.TIME_SAND_FROM_AIR_SECOND);
+                        timeSandToAdd = (int)((this.getPos().getY() / 255.0) * MechanicTweaker.TIME_SAND_FROM_AIR_SECOND);
                         if(timeSandToAdd <= 0) { return false; }
                         addTimeSand(timeSandToAdd);
-                        newDamage = inventory.getItemDamage() + 1;
-                        if(newDamage > inventory.getMaxDamage())
+                        newDamage = getInv().get(0).getItemDamage() + 1;
+                        if(newDamage > getInv().get(0).getMaxDamage())
                         {
                             decrStackSize(0, 1);
                         }
                         else
                         {
-                            inventory.setItemDamage(newDamage);
+                            getInv().get(0).setItemDamage(newDamage);
                             markDirty();
                         }
                         break;
                     case 5: //Fire
                         addTimeSand(MechanicTweaker.TIME_SAND_FROM_ONE_FIRE_DAMAGE);
-                        newDamage = inventory.getItemDamage() + 1;
-                        if(newDamage > inventory.getMaxDamage())
+                        newDamage = getInv().get(0).getItemDamage() + 1;
+                        if(newDamage > getInv().get(0).getMaxDamage())
                         {
                             decrStackSize(0, 1);
                         }
                         else
                         {
-                            inventory.setItemDamage(newDamage);
+                            getInv().get(0).setItemDamage(newDamage);
                             markDirty();
                         }
                         break;
                     case 6: //Lunar
-                        if(worldObj.getWorldTime() % 24000 > 12000 && worldObj.getWorldTime() % 24000 < 24000)
+                        if(world.getWorldTime() % 24000 > 12000 && world.getWorldTime() % 24000 < 24000)
                         {
                             addTimeSand(MechanicTweaker.TIME_SAND_FROM_MOON_SECOND);
-                            newDamage = inventory.getItemDamage() + 1;
-                            if(newDamage > inventory.getMaxDamage())
+                            newDamage = getInv().get(0).getItemDamage() + 1;
+                            if(newDamage > getInv().get(0).getMaxDamage())
                             {
                                 decrStackSize(0, 1);
                             }
                             else
                             {
-                                inventory.setItemDamage(newDamage);
+                                getInv().get(0).setItemDamage(newDamage);
                                 markDirty();
                             }
                         }
                         break;
                     case 7: //Death
                         addTimeSand(MechanicTweaker.TIME_SAND_FROM_DEATH);
-                        newDamage = inventory.getItemDamage() + 1;
-                        if(newDamage > inventory.getMaxDamage())
+                        newDamage = getInv().get(0).getItemDamage() + 1;
+                        if(newDamage > getInv().get(0).getMaxDamage())
                         {
                             decrStackSize(0, 1);
                         }
                         else
                         {
-                            inventory.setItemDamage(newDamage);
+                            getInv().get(0).setItemDamage(newDamage);
                             markDirty();
                         }
                         return true;
@@ -205,18 +213,18 @@ public class TileEntityExtractor extends TileEntityTimeSandCapacitor implements 
     }
 
     @Override
-    public void updateEntity()
+    public void update()
     {
-        if(worldObj != null)
+        if(world != null)
         {
-            if(!extractorAreaReady && phase != null && !worldObj.isRemote)
+            if(!extractorAreaReady && phase != null && !world.isRemote)
             {
-                if(!ExtractorAreas.doesAreaExist(worldObj, xCoord, yCoord, zCoord))
+                if(!ExtractorAreas.doesAreaExist(world, getPos().getX(), getPos().getY(), getPos().getZ()))
                 {
                     if(phase.equals(Phases.FIRE) || phase.equals(Phases.EARTH) || phase.equals(Phases.LIFE) || phase.equals(Phases.DEATH))
                     {
                         int radius = 7;
-                        ExtractorAreas.getAreasFromWorld(worldObj, phase).addArea(xCoord, yCoord, zCoord, xCoord - radius, yCoord - radius, zCoord - radius, xCoord + radius, yCoord + radius, zCoord + radius);
+                        ExtractorAreas.getAreasFromWorld(world, phase).addArea(getPos().getX(), getPos().getY(), getPos().getZ(), getPos().getX() - radius, getPos().getY() - radius, getPos().getZ() - radius, getPos().getX() + radius, getPos().getY() + radius, getPos().getZ() + radius);
                     }
                 }
                 this.extractorAreaReady = true;
@@ -228,10 +236,10 @@ public class TileEntityExtractor extends TileEntityTimeSandCapacitor implements 
                 timeSandToRemove = getTimeSand() / 10;
             }
 
-            if(worldObj.getWorldTime() % 100 == 0 && getTimeSand() >= timeSandToRemove)
+            if(world.getWorldTime() % 100 == 0 && getTimeSand() >= timeSandToRemove)
             {
-                TileEntity te = worldObj.getTileEntity(timeWellX, timeWellY, timeWellZ);
-                if(te != null && te instanceof TileEntityTimeWell)
+                TileEntity te = world.getTileEntity(new BlockPos(timeWellX, timeWellY, timeWellZ));
+                if(te instanceof TileEntityTimeWell)
                 {
                     TileEntityTimeWell timeWell = (TileEntityTimeWell)te;
                     if(timeWell.getTimeSand() + timeSandToRemove <= timeWell.getMaxTimeSandCapacity()) //All time sand can be added
@@ -243,14 +251,14 @@ public class TileEntityExtractor extends TileEntityTimeSandCapacitor implements 
                         timeWell.addTimeSand(removeTimeSand(timeWell.getMaxTimeSandCapacity() - timeWell.getTimeSand())); //Add only enough to max.
                     }
 
-                    if(!worldObj.isRemote)
+                    if(!world.isRemote)
                     {
-                        PacketHandler.INSTANCE.sendToAllAround(new MessageDoublePositionParticleSpawn(xCoord + 0.5, yCoord + 0.5, zCoord + 0.5, timeWellX + 0.5, timeWellY + 0.5, timeWellZ + 0.5, 1), new NetworkRegistry.TargetPoint(worldObj.provider.dimensionId, xCoord + 0.5, yCoord + 0.5, zCoord + 0.5, 64));
+                        PacketHandler.INSTANCE.sendToAllAround(new MessageDoublePositionParticleSpawn(getPos().getX() + 0.5, getPos().getY() + 0.5, getPos().getZ() + 0.5, timeWellX + 0.5, timeWellY + 0.5, timeWellZ + 0.5, 1), new NetworkRegistry.TargetPoint(world.provider.getDimension(), getPos().getX() + 0.5, getPos().getY() + 0.5, getPos().getZ() + 0.5, 64));
                     }
                 }
             }
 
-            if(this.phase != null && worldObj.getWorldTime() % 20 == 0)
+            if(this.phase != null && world.getWorldTime() % 20 == 0)
             {
                 if(phase.equals(Phases.AIR) || phase.equals(Phases.WATER) || phase.equals(Phases.LUNAR) || phase.equals(Phases.LIGHT))
                 {
@@ -261,17 +269,18 @@ public class TileEntityExtractor extends TileEntityTimeSandCapacitor implements 
     }
 
     @Override
-    public void writeToNBT(NBTTagCompound nbt)
+    public NBTTagCompound writeToNBT(NBTTagCompound nbt)
     {
         super.writeToNBT(nbt);
         nbt.setInteger("phase_element", this.phase.ordinal());
         NBTTagCompound compound = new NBTTagCompound();
-        if(inventory != null) {inventory.writeToNBT(compound);}
+        if(!getInv().get(0).isEmpty()) {getInv().get(0).writeToNBT(compound);}
         nbt.setTag(NBTTags.INVENTORY_ARRAY, compound);
 
         nbt.setInteger(NBTTags.CLOCKWORK_PHASE_X, timeWellX);
         nbt.setInteger(NBTTags.CLOCKWORK_PHASE_Y, timeWellY);
         nbt.setInteger(NBTTags.CLOCKWORK_PHASE_Z, timeWellZ);
+        return nbt;
     }
 
     @Override
@@ -279,82 +288,12 @@ public class TileEntityExtractor extends TileEntityTimeSandCapacitor implements 
     {
         super.readFromNBT(nbt);
         this.phase = Phases.values()[nbt.getInteger("phase_element")];
-        inventory = ItemStack.loadItemStackFromNBT(nbt.getCompoundTag(NBTTags.INVENTORY_ARRAY));
+        invv = NonNullList.withSize(getSizeInventory(), ItemStack.EMPTY);
+        invv.set(0, new ItemStack(nbt.getCompoundTag(NBTTags.INVENTORY_ARRAY)));
 
         timeWellX = nbt.getInteger(NBTTags.CLOCKWORK_PHASE_X);
         timeWellY = nbt.getInteger(NBTTags.CLOCKWORK_PHASE_Y);
         timeWellZ = nbt.getInteger(NBTTags.CLOCKWORK_PHASE_Z);
-    }
-
-    @Override
-    public int getSizeInventory()
-    {
-        return 1;
-    }
-
-    @Override
-    public ItemStack getStackInSlot(int slotIndex)
-    {
-        return inventory;
-    }
-
-    @Override
-    public ItemStack decrStackSize(int index, int lossCount)
-    {
-        ItemStack is = getStackInSlot(index);
-        if (is != null)
-        {
-            if (lossCount >= is.stackSize)
-            {
-                setInventorySlotContents(index, null);
-            }
-            else
-            {
-                is = is.splitStack(lossCount);
-                if (is.stackSize == 0)
-                {
-                    setInventorySlotContents(index, null);
-                }
-            }
-        }
-        markDirty();
-        return is;
-    }
-
-    @Override
-    public ItemStack getStackInSlotOnClosing(int index)
-    {
-        if (inventory != null)
-        {
-            ItemStack itemStack = inventory;
-            inventory = null;
-            return itemStack;
-        }
-        return null;
-    }
-
-    @Override
-    public void setInventorySlotContents(int index, ItemStack is)
-    {
-        inventory = is;
-
-        if (is != null && is.stackSize > this.getInventoryStackLimit())
-        {
-            is.stackSize = this.getInventoryStackLimit();
-        }
-        this.markDirty();
-    }
-
-    @Override
-    public String getInventoryName()
-    {
-        return null;
-    }
-
-    @Override
-    public boolean hasCustomInventoryName()
-    {
-        return false;
     }
 
     @Override
@@ -364,16 +303,10 @@ public class TileEntityExtractor extends TileEntityTimeSandCapacitor implements 
     }
 
     @Override
-    public boolean isUseableByPlayer(EntityPlayer player)
+    public boolean isUsableByPlayer(EntityPlayer player)
     {
         return true;
     }
-
-    @Override
-    public void openInventory() { }
-
-    @Override
-    public void closeInventory() { }
 
     @Override
     public boolean isItemValidForSlot(int p_94041_1_, ItemStack is)

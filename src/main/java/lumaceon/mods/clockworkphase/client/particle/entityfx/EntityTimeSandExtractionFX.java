@@ -13,7 +13,7 @@ public class EntityTimeSandExtractionFX extends EntityClockworkPhaseFX
         this.motionY = (-0.5F + world.rand.nextFloat()) * 0.2F;
         this.motionZ = (-0.5F + world.rand.nextFloat()) * 0.2F;
         this.particleMaxAge = 25;
-        this.noClip = true;
+        this.canCollide = false;
     }
 
     @Override

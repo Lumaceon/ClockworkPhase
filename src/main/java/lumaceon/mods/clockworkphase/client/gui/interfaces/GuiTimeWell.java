@@ -24,10 +24,17 @@ public class GuiTimeWell extends GuiContainer
     }
 
     @Override
+    public void drawScreen(int mouseX, int mouseY, float partialTicks){
+        this.drawDefaultBackground();
+        super.drawScreen(mouseX, mouseY, partialTicks);
+        this.renderHoveredToolTip(mouseX, mouseY);
+    }
+
+    @Override
     protected void drawGuiContainerForegroundLayer(int p_146979_1_, int p_146979_2_)
     {
         GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-        this.drawCenteredString(this.fontRendererObj, TimeSandParser.getStringForRenderingFromTimeSand(timeWell.getTimeSand()), 61, 14 - this.fontRendererObj.FONT_HEIGHT / 2, 16777215);
+        this.drawCenteredString(this.fontRenderer, TimeSandParser.getStringForRenderingFromTimeSand(timeWell.getTimeSand()), 61, 14 - this.fontRenderer.FONT_HEIGHT / 2, 16777215);
     }
 
     @Override

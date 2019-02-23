@@ -1,0 +1,14 @@
+{
+  "parent": "item/generated",
+  "textures": {
+    "layer0": "clockworkphase:items/hourglass_death"
+  },
+  "overrides": [
+    {
+      "predicate": {
+        "active": 1
+      },
+      "model": "clockworkphase:item/hourglass_death_active"
+    }
+  ]
+}

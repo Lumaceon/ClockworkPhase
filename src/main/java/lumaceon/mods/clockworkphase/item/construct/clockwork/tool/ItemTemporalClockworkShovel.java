@@ -1,7 +1,14 @@
 package lumaceon.mods.clockworkphase.item.construct.clockwork.tool;
 
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
+import lumaceon.mods.clockworkphase.custom.CustomUtils;
+import net.minecraft.block.state.IBlockState;
+import net.minecraft.client.util.ITooltipFlag;
+import net.minecraft.util.EnumActionResult;
+import net.minecraft.util.EnumFacing;
+import net.minecraft.util.EnumHand;
+import net.minecraft.util.math.BlockPos;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import lumaceon.mods.clockworkphase.init.ModBlocks;
 import lumaceon.mods.clockworkphase.init.ModItems;
 import lumaceon.mods.clockworkphase.item.construct.IKeybindAbility;
@@ -11,19 +18,14 @@ import lumaceon.mods.clockworkphase.lib.NBTTags;
 import lumaceon.mods.clockworkphase.lib.ValidBlockLists;
 import lumaceon.mods.clockworkphase.network.MessageTemporalItemChange;
 import lumaceon.mods.clockworkphase.network.PacketHandler;
-import lumaceon.mods.clockworkphase.util.Logger;
 import lumaceon.mods.clockworkphase.util.NBTHelper;
 import lumaceon.mods.clockworkphase.util.TimeSandParser;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockOre;
-import net.minecraft.block.BlockRedstoneOre;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
-import net.minecraftforge.common.ForgeHooks;
 import org.lwjgl.input.Keyboard;
 
 import java.util.List;
@@ -44,12 +46,12 @@ public class ItemTemporalClockworkShovel extends ItemClockworkShovel implements 
             EntityPlayer player = (EntityPlayer)entity;
             int timeSand = getTimeSand(is);
             timeSand += getTimeSandFromInventory(player.inventory);
-            if(timeSand < MechanicTweaker.TIME_SAND_PER_BLOCK_BREAK_SHOVEL && player.inventory.getStackInSlot(player.inventory.currentItem) != null)
+            if(timeSand < MechanicTweaker.TIME_SAND_PER_BLOCK_BREAK_SHOVEL && !player.inventory.getStackInSlot(player.inventory.currentItem).isEmpty())
             {
                 if(player.inventory.getStackInSlot(player.inventory.currentItem).equals(is))
                 {
                     ItemStack newItem = new ItemStack(this.getItemChangeTo());
-                    newItem.setTagCompound(is.stackTagCompound);
+                    newItem.setTagCompound(is.getTagCompound());
                     newItem.setItemDamage(is.getItemDamage());
                     player.inventory.setInventorySlotContents(player.inventory.currentItem, newItem);
                 }
@@ -59,7 +61,7 @@ public class ItemTemporalClockworkShovel extends ItemClockworkShovel implements 
 
     @Override
     @SideOnly(Side.CLIENT)
-    public void addInformation(ItemStack is, EntityPlayer player, List list, boolean flag)
+    public void addInformation(ItemStack is, World worldIn, List<String> list, ITooltipFlag flagIn)
     {
         list.add("Tension: " + "\u00a7e" + NBTHelper.getInt(is, NBTTags.TENSION_ENERGY) + "/" + "\u00a7e" + NBTHelper.getInt(is, NBTTags.MAX_TENSION));
         int timeSand = getTimeSand(is);
@@ -83,33 +85,33 @@ public class ItemTemporalClockworkShovel extends ItemClockworkShovel implements 
     }
 
     @Override
-    public boolean onItemUse(ItemStack is, EntityPlayer player, World world, int x, int y, int z, int meta, float f1, float f2, float f3)
+    public EnumActionResult onItemUse(EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ)
     {
-        if(ValidBlockLists.BlockShovelables.isBlockValidShovelable(world.getBlock(x, y, z)))
+        if(ValidBlockLists.BlockShovelables.isBlockValidShovelable(world.getBlockState(pos).getBlock()))
         {
-            if(world.canMineBlock(player, x, y, z))
+            if(world.isBlockModifiable(player, pos))
             {
                 int amountToRemove = MechanicTweaker.TIME_SAND_COST_TEMPORAL_SHOVEL;
-                if(this.getTimeSandFromInventory(player.inventory) >= amountToRemove || this.getTimeSand(is) >= amountToRemove)
+                if(this.getTimeSandFromInventory(player.inventory) >= amountToRemove || this.getTimeSand(player.getHeldItem(hand)) >= amountToRemove)
                 {
                     amountToRemove -= this.removeTimeSandFromInventory(player.inventory, amountToRemove);
-                    this.removeTimeSand(is, amountToRemove);
-                    world.setBlock(x, y, z, ModBlocks.sandTemporal);
-                    world.func_147480_a(x, y, z, true);
-                    world.notifyBlocksOfNeighborChange(x, y, z, world.getBlock(x, y, z));
+                    this.removeTimeSand(player.getHeldItem(hand), amountToRemove);
+                    world.setBlockState(pos, ModBlocks.sandTemporal.getDefaultState());
+                    world.destroyBlock(pos, true);
+                    world.updateObservingBlocksAt(pos, world.getBlockState(pos).getBlock());
                 }
             }
         }
-        return false;
+        return EnumActionResult.PASS;
     }
 
     @Override
-    public boolean onBlockDestroyed(ItemStack is, World world, Block block, int x, int y, int z, EntityLivingBase entity)
+    public boolean onBlockDestroyed(ItemStack is, World world, IBlockState state, BlockPos pos, EntityLivingBase entity)
     {
-        super.onBlockDestroyed(is, world, block, x, y, z, entity);
-        if(entity != null && entity instanceof EntityPlayer)
+        super.onBlockDestroyed(is, world, state, pos, entity);
+        if(entity instanceof EntityPlayer)
         {
-            if(this.func_150893_a(is, block) <= 1.0F)
+            if(this.getDestroySpeed(is, state) <= 1.0F)
             {
                 return true;
             }
@@ -120,7 +122,7 @@ public class ItemTemporalClockworkShovel extends ItemClockworkShovel implements 
             if(amountToRemove > 0) //Change item back to non-temporal if the player can't meet the TS requirements
             {
                 ItemStack newItem = new ItemStack(this.getItemChangeTo());
-                newItem.setTagCompound(is.stackTagCompound);
+                newItem.setTagCompound(is.getTagCompound());
                 newItem.setItemDamage(is.getItemDamage());
                 if(player.inventory.getStackInSlot(player.inventory.currentItem).equals(is))
                 {
@@ -132,25 +134,15 @@ public class ItemTemporalClockworkShovel extends ItemClockworkShovel implements 
     }
 
     @Override
-    public float func_150893_a(ItemStack is, Block block)
+    public float getDestroySpeed(ItemStack stack, IBlockState state)
     {
-        float efficiency = super.func_150893_a(is, block); if(efficiency == 1.0F) { return efficiency; }
-        int tension = NBTHelper.getInt(is, NBTTags.TENSION_ENERGY); if(tension <= 0) { return 1.0F; }
-        int speed = NBTHelper.getInt(is, NBTTags.SPEED); if(speed <= 0) { return 1.0F; }
-
-        return super.func_150893_a(is, block) * 3.0F;
-    }
-
-    @Override
-    public float getDigSpeed(ItemStack stack, Block block, int meta)
-    {
-        if(ForgeHooks.isToolEffective(stack, block, meta))
+        if(CustomUtils.isToolEffective(stack, state))
         {
             int tension = NBTHelper.getInt(stack, NBTTags.TENSION_ENERGY); if(tension <= 0) { return 1.0F; }
             int speed = NBTHelper.getInt(stack, NBTTags.SPEED); if(speed <= 0) { return 1.0F; }
-            return super.getDigSpeed(stack, block, meta) * 3.0F;
+            return super.getDestroySpeed(stack, state) * 3.0F;
         }
-        return func_150893_a(stack, block);
+        return getDestroySpeed(stack, state);
     }
 
     @Override

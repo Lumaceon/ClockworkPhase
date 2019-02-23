@@ -72,13 +72,13 @@ public class ContainerClockworkAssemblyTableCW extends Container
         for(int i = 0; i < 9; i++)
         {
             ItemStack is = matrix.getStackInSlot(i);
-            if(is != null && is.getItem() instanceof IBaseComponent)
+            if(!is.isEmpty() && is.getItem() instanceof IBaseComponent)
             {
                 found = true;
                 components.add(is);
             }
         }
-        if(!found) { return null; }
+        if(!found) { return ItemStack.EMPTY; }
 
         IBaseComponent componentData;
         ItemStack tempItem;
@@ -131,27 +131,28 @@ public class ContainerClockworkAssemblyTableCW extends Container
 
         if (!this.world.isRemote)
         {
-            for (int i = 0; i < 9; ++i)
-            {
-                ItemStack itemstack = this.matrix.getStackInSlotOnClosing(i);
-
-                if (itemstack != null)
-                {
-                    p_75134_1_.dropPlayerItemWithRandomChoice(itemstack, false);
-                }
-            }
+            this.clearContainer(p_75134_1_, this.world, this.matrix);
+//            for (int i = 0; i < 9; ++i)
+//            {
+//                ItemStack itemstack = this.matrix.getStackInSlotOnClosing(i);
+//
+//                if (!itemstack.isEmpty())
+//                {
+//                    p_75134_1_.dropPlayerItemWithRandomChoice(itemstack, false);
+//                }
+//            }
         }
     }
 
     @Override
     public boolean canInteractWith(EntityPlayer player)
     {
-        return matrix.isUseableByPlayer(player);
+        return matrix.isUsableByPlayer(player);
     }
 
     @Override
     public ItemStack transferStackInSlot(EntityPlayer p_82846_1_, int p_82846_2_)
     {
-        return null;
+        return ItemStack.EMPTY;
     }
 }

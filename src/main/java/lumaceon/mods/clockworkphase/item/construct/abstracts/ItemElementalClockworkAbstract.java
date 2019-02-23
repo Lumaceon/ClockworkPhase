@@ -1,7 +1,8 @@
 package lumaceon.mods.clockworkphase.item.construct.abstracts;
 
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
+import net.minecraft.client.util.ITooltipFlag;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import lumaceon.mods.clockworkphase.init.ModItems;
 import lumaceon.mods.clockworkphase.lib.NBTTags;
 import lumaceon.mods.clockworkphase.util.NBTHelper;
@@ -19,7 +20,7 @@ public abstract class ItemElementalClockworkAbstract extends ItemElementalAbstra
 {
     @Override
     @SideOnly(Side.CLIENT)
-    public void addInformation(ItemStack is, EntityPlayer player, List list, boolean flag)
+    public void addInformation(ItemStack is, World worldIn, List<String> list, ITooltipFlag flagIn)
     {
         list.add("Tension: " + "\u00a7e" + NBTHelper.getInt(is, NBTTags.TENSION_ENERGY) + "/" + "\u00a7e" + NBTHelper.getInt(is, NBTTags.MAX_TENSION));
 
@@ -64,7 +65,7 @@ public abstract class ItemElementalClockworkAbstract extends ItemElementalAbstra
             NBTHelper.setInteger(mainspring, NBTTags.MAX_TENSION, maxTension);
             NBTHelper.setInteger(mainspring, NBTTags.TENSION_ENERGY, 0);
 
-            world.spawnEntityInWorld(new EntityItem(world, x, y, z, mainspring));
+            world.spawnEntity(new EntityItem(world, x, y, z, mainspring));
         }
 
         if(NBTHelper.hasTag(is, NBTTags.CLOCKWORK))
@@ -72,8 +73,8 @@ public abstract class ItemElementalClockworkAbstract extends ItemElementalAbstra
             NBTTagList tagList = NBTHelper.getTagList(is, NBTTags.CLOCKWORK);
             if(tagList.tagCount() > 0)
             {
-                ItemStack clockwork = ItemStack.loadItemStackFromNBT(tagList.getCompoundTagAt(0));
-                world.spawnEntityInWorld(new EntityItem(world, x, y, z, clockwork));
+                ItemStack clockwork = new ItemStack(tagList.getCompoundTagAt(0));
+                world.spawnEntity(new EntityItem(world, x, y, z, clockwork));
             }
         }
 

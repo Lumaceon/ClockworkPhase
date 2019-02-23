@@ -1,10 +1,11 @@
 package lumaceon.mods.clockworkphase.proxy;
 
-import cpw.mods.fml.client.registry.ClientRegistry;
-import cpw.mods.fml.common.FMLCommonHandler;
+import net.minecraft.util.math.RayTraceResult;
+import net.minecraftforge.fml.client.registry.ClientRegistry;
+import net.minecraftforge.fml.common.FMLCommonHandler;
+import lumaceon.mods.clockworkphase.block.tileentity.TileEntityCelestialCompass;
 import lumaceon.mods.clockworkphase.client.ClientTickHandler;
 import lumaceon.mods.clockworkphase.client.handler.RenderHandler;
-import lumaceon.mods.clockworkphase.client.handler.TextureStitchHandler;
 import lumaceon.mods.clockworkphase.client.particle.ParticleGenerator;
 import lumaceon.mods.clockworkphase.client.render.model.*;
 import lumaceon.mods.clockworkphase.client.settings.Keybindings;
@@ -18,11 +19,12 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.ModelBiped;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
 
 import java.util.ArrayList;
+
+import lumaceon.mods.clockworkphase.custom.RenderTileEntityCelestialCompass;
 
 public class ClientProxy extends CommonProxy
 {
@@ -59,12 +61,12 @@ public class ClientProxy extends CommonProxy
             ItemStack[] watches = InventorySearchHelper.getPocketWatches(player.inventory);
             for(int n = 0; watches != null && n < watches.length; n++) //Each pocket watch
             {
-                if(watches[n] != null)
+                if(!watches[n].isEmpty())
                 {
                     ItemStack[] items = NBTHelper.getInventoryFromNBTTag(watches[n], NBTTags.POCKET_WATCH_MODULES);
                     for(int i = 0; items != null && i < items.length; i++) //Each module in pocket watch
                     {
-                        if(items[i] != null && NBTHelper.getBoolean(items[i], NBTTags.ACTIVE))
+                        if(!items[i].isEmpty() && NBTHelper.getBoolean(items[i], NBTTags.ACTIVE))
                         {
                             boolean dupe = false;
                             for(int q = 0; q < overlayRenderers.size() && !dupe; q++) //Check for duplicates
@@ -113,7 +115,7 @@ public class ClientProxy extends CommonProxy
     @Override
     public void initializeSideOnlyHandlers()
     {
-        MinecraftForge.EVENT_BUS.register(new TextureStitchHandler());
+//        MinecraftForge.EVENT_BUS.register(new TextureStitchHandler());
         MinecraftForge.EVENT_BUS.register(new RenderHandler());
         FMLCommonHandler.instance().bus().register(new ClientTickHandler());
         FMLCommonHandler.instance().bus().register(new KeyHandler());
@@ -122,16 +124,16 @@ public class ClientProxy extends CommonProxy
     @Override
     public void registerModels()
     {
-
+        ClientRegistry.bindTileEntitySpecialRenderer(TileEntityCelestialCompass.class, new RenderTileEntityCelestialCompass());
     }
 
     public World getStaticWorld()
     {
-        return Minecraft.getMinecraft().theWorld;
+        return Minecraft.getMinecraft().world;
     }
 
     @Override
-    public MovingObjectPosition getObjectLookedAt()
+    public RayTraceResult getObjectLookedAt()
     {
         return Minecraft.getMinecraft().objectMouseOver;
     }

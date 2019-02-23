@@ -13,10 +13,11 @@ public class EntityTimeSandTunnelSubFX extends EntityClockworkPhaseFX
         this.motionY = yMotion;
         this.motionZ = zMotion;
         this.particleMaxAge = 10;
-        this.noClip = true;
+        this.canCollide = false;
     }
 
-    public ResourceLocation getResourceLocation()
+    @Override
+	public ResourceLocation getResourceLocation()
     {
         return Textures.TIME_TUNNEL;
     }

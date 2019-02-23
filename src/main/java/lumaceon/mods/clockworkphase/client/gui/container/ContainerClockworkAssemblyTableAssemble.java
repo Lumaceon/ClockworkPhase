@@ -55,17 +55,17 @@ public class ContainerClockworkAssemblyTableAssemble extends Container
     @Override
     public void onCraftMatrixChanged(IInventory p_75130_1_)
     {
-        ItemStack result;
+        ItemStack result = ItemStack.EMPTY;
 
         result = getClockworkRecipe();
-        if(result != null)
+        if(!result.isEmpty())
         {
             this.result.setInventorySlotContents(0, result);
             return;
         }
 
         result = getMultitoolRecipe();
-        if(result != null)
+        if(!result.isEmpty())
         {
             this.result.setInventorySlotContents(0, result);
             return;
@@ -89,7 +89,7 @@ public class ContainerClockworkAssemblyTableAssemble extends Container
         for(int i = 0; i < 2; i++)
         {
             item = matrix.getStackInSlot(i);
-            if(item == null) { return null; }
+            if(item.isEmpty()) { return ItemStack.EMPTY; }
 
 
             if(item.getItem() instanceof IClockwork)
@@ -128,21 +128,21 @@ public class ContainerClockworkAssemblyTableAssemble extends Container
             }
             else
             {
-                return null;
+                return ItemStack.EMPTY;
             }
         }
 
         if(alreadyContainsMainspring && mainspring)
         {
-            return null;
+            return ItemStack.EMPTY;
         }
         if(alreadyContainsClockwork && clockwork)
         {
-            return null;
+            return ItemStack.EMPTY;
         }
         if(doubles)
         {
-            return null;
+            return ItemStack.EMPTY;
         }
         if((mainspring || clockwork) && construct)
         {
@@ -150,21 +150,21 @@ public class ContainerClockworkAssemblyTableAssemble extends Container
         }
         else
         {
-            return null;
+            return ItemStack.EMPTY;
         }
     }
 
     private ItemStack constructResult()
     {
-        ItemStack tempItem;
-        ItemStack mainspring = null;
-        ItemStack clockwork = null;
-        ItemStack construct = null;
+        ItemStack tempItem = ItemStack.EMPTY;
+        ItemStack mainspring = ItemStack.EMPTY;
+        ItemStack clockwork = ItemStack.EMPTY;
+        ItemStack construct = ItemStack.EMPTY;
 
         for(int n = 0; n < matrix.getSizeInventory(); n++)
         {
             tempItem = matrix.getStackInSlot(n);
-            if (tempItem != null)
+            if (!tempItem.isEmpty())
             {
                 if(tempItem.getItem() instanceof ItemMainspring)
                 {
@@ -184,7 +184,7 @@ public class ContainerClockworkAssemblyTableAssemble extends Container
         }
 
         ItemStack output = construct;
-        if(mainspring != null)
+        if(!mainspring.isEmpty())
         {
             int currentTension = NBTHelper.getInt(mainspring, NBTTags.TENSION_ENERGY);
             int maxTension = NBTHelper.getInt(mainspring, NBTTags.MAX_TENSION);
@@ -192,7 +192,7 @@ public class ContainerClockworkAssemblyTableAssemble extends Container
             NBTHelper.setInteger(output, NBTTags.TENSION_ENERGY, currentTension);
             NBTHelper.setInteger(output, NBTTags.MAX_TENSION, maxTension);
 
-            if(output != null)
+            if(!output.isEmpty())
             {
                 if(maxTension / output.getMaxDamage() == 0) //Check for division by 0
                 {
@@ -205,7 +205,7 @@ public class ContainerClockworkAssemblyTableAssemble extends Container
             }
         }
 
-        if(clockwork != null)
+        if(!clockwork.isEmpty())
         {
             NBTHelper.setInteger(output, NBTTags.QUALITY, NBTHelper.getInt(clockwork, NBTTags.QUALITY));
             NBTHelper.setInteger(output, NBTTags.SPEED, NBTHelper.getInt(clockwork, NBTTags.SPEED));
@@ -222,7 +222,7 @@ public class ContainerClockworkAssemblyTableAssemble extends Container
 
     public ItemStack getMultitoolRecipe()
     {
-        ItemStack item;
+        ItemStack item = ItemStack.EMPTY;
         boolean fluxItem = false;
         boolean multitool = false;
         boolean doubles = false;
@@ -230,7 +230,7 @@ public class ContainerClockworkAssemblyTableAssemble extends Container
         for(int n = 0; n < matrix.getSizeInventory(); n++)
         {
             item = matrix.getStackInSlot(n);
-            if(item != null)
+            if(!item.isEmpty())
             {
                 if(item.getItem() instanceof ItemTemporalMultitool)
                 {
@@ -243,7 +243,7 @@ public class ContainerClockworkAssemblyTableAssemble extends Container
                     ItemStack[] items = NBTHelper.getInventoryFromNBTTag(item, NBTTags.TEMPORAL_ITEMS);
                     if(items != null && items.length >= 20)
                     {
-                        return null;
+                        return ItemStack.EMPTY;
                     }
                 }
                 else if(item.getItem().getItemStackLimit(item) == 1 && !(item.getItem() instanceof ItemBlock) && !(item.getItem() instanceof ItemTemporalMultitool) && !(item.getItem() instanceof ItemPotion) && !(item.getItem() instanceof ItemArmor) && !(item.getItem() instanceof ItemBucket))
@@ -256,12 +256,12 @@ public class ContainerClockworkAssemblyTableAssemble extends Container
 
                     if(NBTHelper.hasTag(item, NBTTags.TEMPORAL_ITEMS))
                     {
-                        return null;
+                        return ItemStack.EMPTY;
                     }
                 }
                 else
                 {
-                    return null;
+                    return ItemStack.EMPTY;
                 }
             }
         }
@@ -270,19 +270,19 @@ public class ContainerClockworkAssemblyTableAssemble extends Container
         {
             return multitoolResult();
         }
-        return null;
+        return ItemStack.EMPTY;
     }
 
     private ItemStack multitoolResult()
     {
-        ItemStack tempItem;
-        ItemStack fluxableItem = null;
-        ItemStack multitool = null;
+        ItemStack tempItem = ItemStack.EMPTY;
+        ItemStack fluxableItem = ItemStack.EMPTY;
+        ItemStack multitool = ItemStack.EMPTY;
 
         for(int n = 0; n < matrix.getSizeInventory(); n++)
         {
             tempItem = matrix.getStackInSlot(n);
-            if(tempItem != null)
+            if(!tempItem.isEmpty())
             {
                 if(tempItem.getItem() instanceof ItemTemporalMultitool)
                 {
@@ -296,7 +296,7 @@ public class ContainerClockworkAssemblyTableAssemble extends Container
             }
         }
 
-        if(fluxableItem != null && multitool != null)
+        if(!fluxableItem.isEmpty() && !multitool.isEmpty())
         {
             ItemStack[] inventory = NBTHelper.getInventoryFromNBTTag(multitool, NBTTags.TEMPORAL_ITEMS);
             ItemStack[] resultInventory;
@@ -317,35 +317,35 @@ public class ContainerClockworkAssemblyTableAssemble extends Container
             NBTHelper.setNBTTagListFromInventory(multitool, NBTTags.TEMPORAL_ITEMS, resultInventory);
             return multitool;
         }
-        return null;
+        return ItemStack.EMPTY;
     }
 
     public ItemStack getPocketWatchRecipe()
     {
-        ItemStack item;
-        ItemStack pocketWatch = null;
-        ItemStack module = null;
+        ItemStack item = ItemStack.EMPTY;
+        ItemStack pocketWatch = ItemStack.EMPTY;
+        ItemStack module = ItemStack.EMPTY;
         boolean moduleExists = false;
         boolean pocketWatchExists = false;
 
         for(int n = 0; n < matrix.getSizeInventory(); n++)
         {
             item = matrix.getStackInSlot(n);
-            if(item != null)
+            if(!item.isEmpty())
             {
                 if(item.getItem() instanceof ItemPocketWatch)
                 {
                     pocketWatch = item.copy();
                     if(pocketWatchExists)
                     {
-                        return null;
+                        return ItemStack.EMPTY;
                     }
                     pocketWatchExists = true;
 
                     ItemStack[] items = NBTHelper.getInventoryFromNBTTag(item, NBTTags.POCKET_WATCH_MODULES);
                     if(items != null && items.length >= 20)
                     {
-                        return null;
+                        return ItemStack.EMPTY;
                     }
                 }
                 else if(item.getItem() instanceof ItemModule)
@@ -353,32 +353,32 @@ public class ContainerClockworkAssemblyTableAssemble extends Container
                     module = item.copy();
                     if(moduleExists)
                     {
-                        return null;
+                        return ItemStack.EMPTY;
                     }
                     moduleExists = true;
 
                     if(NBTHelper.hasTag(item, NBTTags.POCKET_WATCH_MODULES))
                     {
-                        return null;
+                        return ItemStack.EMPTY;
                     }
                 }
                 else
                 {
-                    return null;
+                    return ItemStack.EMPTY;
                 }
             }
         }
 
-        if(pocketWatch != null && module != null && NBTHelper.hasTag(pocketWatch, NBTTags.POCKET_WATCH_MODULES))
+        if(!pocketWatch.isEmpty() && !module.isEmpty() && NBTHelper.hasTag(pocketWatch, NBTTags.POCKET_WATCH_MODULES))
         {
             ItemStack[] items = NBTHelper.getInventoryFromNBTTag(pocketWatch, NBTTags.POCKET_WATCH_MODULES);
             for(int n = 0; n < items.length; n++)
             {
-                if(items[n] != null)
+                if(!items[n].isEmpty())
                 {
                     if(items[n].getItem().equals(module.getItem()))
                     {
-                        return null;
+                        return ItemStack.EMPTY;
                     }
                 }
             }
@@ -387,19 +387,19 @@ public class ContainerClockworkAssemblyTableAssemble extends Container
         {
             return pocketWatchResult();
         }
-        return null;
+        return ItemStack.EMPTY;
     }
 
     private ItemStack pocketWatchResult()
     {
-        ItemStack tempItem;
-        ItemStack module = null;
-        ItemStack pocketWatch = null;
+        ItemStack tempItem = ItemStack.EMPTY;
+        ItemStack module = ItemStack.EMPTY;
+        ItemStack pocketWatch = ItemStack.EMPTY;
 
         for(int n = 0; n < matrix.getSizeInventory(); n++)
         {
             tempItem = matrix.getStackInSlot(n);
-            if (tempItem != null)
+            if (!tempItem.isEmpty())
             {
                 if(tempItem.getItem() instanceof ItemPocketWatch)
                 {
@@ -413,7 +413,7 @@ public class ContainerClockworkAssemblyTableAssemble extends Container
             }
         }
 
-        if(module != null && pocketWatch != null)
+        if(!module.isEmpty() && !pocketWatch.isEmpty())
         {
             ItemStack[] inventory = NBTHelper.getInventoryFromNBTTag(pocketWatch, NBTTags.POCKET_WATCH_MODULES);
             ItemStack[] resultInventory;
@@ -434,7 +434,7 @@ public class ContainerClockworkAssemblyTableAssemble extends Container
             NBTHelper.setNBTTagListFromInventory(pocketWatch, NBTTags.POCKET_WATCH_MODULES, resultInventory);
             return pocketWatch;
         }
-        return null;
+        return ItemStack.EMPTY;
     }
 
     @Override
@@ -444,27 +444,28 @@ public class ContainerClockworkAssemblyTableAssemble extends Container
 
         if (!this.world.isRemote)
         {
-            for (int i = 0; i < 9; ++i)
-            {
-                ItemStack itemstack = this.matrix.getStackInSlotOnClosing(i);
-
-                if (itemstack != null)
-                {
-                    p_75134_1_.dropPlayerItemWithRandomChoice(itemstack, false);
-                }
-            }
+            this.clearContainer(p_75134_1_, this.world, this.matrix);
+//            for (int i = 0; i < 9; ++i)
+//            {
+//                ItemStack itemstack = this.matrix.getStackInSlotOnClosing(i);
+//
+//                if (!itemstack.isEmpty())
+//                {
+//                    p_75134_1_.dropPlayerItemWithRandomChoice(itemstack, false);
+//                }
+//            }
         }
     }
 
     @Override
     public boolean canInteractWith(EntityPlayer p_75145_1_)
     {
-        return matrix.isUseableByPlayer(p_75145_1_);
+        return matrix.isUsableByPlayer(p_75145_1_);
     }
 
     @Override
     public ItemStack transferStackInSlot(EntityPlayer p_82846_1_, int p_82846_2_)
     {
-        return null;
+        return ItemStack.EMPTY;
     }
 }

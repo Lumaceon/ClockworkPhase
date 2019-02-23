@@ -15,6 +15,7 @@ import net.minecraft.inventory.Container;
 import net.minecraft.inventory.InventoryCraftResult;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.NonNullList;
 import net.minecraft.world.World;
 import net.minecraftforge.oredict.OreDictionary;
 
@@ -61,17 +62,17 @@ public class ContainerClockworkAssemblyTableMainspring extends Container
     {
         ItemStack item;
         ItemStack mainspring = result.getStackInSlot(0);
-        if(mainspring != null && mainspring.getItem().equals(ModItems.mainspring))
+        if(!mainspring.isEmpty() && mainspring.getItem().equals(ModItems.mainspring))
         {
             //Find the value of the metals
             int totalMetalValue = 0;
             for(int i = 0; i < 8; i++)
             {
                 item = matrix.getStackInSlot(i);
-                if(item != null)
+                if(!item.isEmpty())
                 {
                     MainspringMetal metal;
-                    ArrayList<ItemStack> ores;
+                    NonNullList<ItemStack> ores;
                     boolean found = false;
                     for(int n = 0; n < ClockworkPhase.MAINSPRING_METAL_DICTIONARY.mainspringMetals.size() && !found; n++)
                     {
@@ -135,34 +136,36 @@ public class ContainerClockworkAssemblyTableMainspring extends Container
 
         if (!this.world.isRemote)
         {
-            for (int i = 0; i < 8; ++i)
-            {
-                ItemStack itemstack = this.matrix.getStackInSlotOnClosing(i);
-
-                if (itemstack != null)
-                {
-                    p_75134_1_.dropPlayerItemWithRandomChoice(itemstack, false);
-                }
-            }
-
-            ItemStack item = this.result.getStackInSlotOnClosing(0);
-
-            if(item != null)
-            {
-                p_75134_1_.dropPlayerItemWithRandomChoice(item, false);
-            }
+            this.clearContainer(p_75134_1_, this.world, this.matrix);
+            this.clearContainer(p_75134_1_, this.world, this.result);
+//            for (int i = 0; i < 8; ++i)
+//            {
+//                ItemStack itemstack = this.matrix.getStackInSlotOnClosing(i);
+//
+//                if (!itemstack.isEmpty())
+//                {
+//                    p_75134_1_.dropPlayerItemWithRandomChoice(itemstack, false);
+//                }
+//            }
+//
+//            ItemStack item = this.result.getStackInSlotOnClosing(0);
+//
+//            if(!item.isEmpty())
+//            {
+//                p_75134_1_.dropPlayerItemWithRandomChoice(item, false);
+//            }
         }
     }
 
     @Override
     public boolean canInteractWith(EntityPlayer player)
     {
-        return matrix.isUseableByPlayer(player);
+        return matrix.isUsableByPlayer(player);
     }
 
     @Override
     public ItemStack transferStackInSlot(EntityPlayer p_82846_1_, int p_82846_2_)
     {
-        return null;
+        return ItemStack.EMPTY;
     }
 }

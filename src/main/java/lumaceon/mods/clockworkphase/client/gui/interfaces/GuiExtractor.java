@@ -26,17 +26,24 @@ public class GuiExtractor extends GuiContainer
     }
 
     @Override
+    public void drawScreen(int mouseX, int mouseY, float partialTicks){
+        this.drawDefaultBackground();
+        super.drawScreen(mouseX, mouseY, partialTicks);
+        this.renderHoveredToolTip(mouseX, mouseY);
+    }
+
+    @Override
     protected void drawGuiContainerForegroundLayer(int p_146979_1_, int p_146979_2_)
     {
         GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-        this.drawCenteredString(this.fontRendererObj, TimeSandParser.getStringForRenderingFromTimeSand(te.getTimeSand()), 61, 14 - this.fontRendererObj.FONT_HEIGHT / 2, 16777215);
+        this.drawCenteredString(this.fontRenderer, TimeSandParser.getStringForRenderingFromTimeSand(te.getTimeSand()), 61, 14 - this.fontRenderer.FONT_HEIGHT / 2, 16777215);
     }
 
     @Override
     protected void drawGuiContainerBackgroundLayer(float p_146976_1_, int p_146976_2_, int p_146976_3_)
     {
         GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-        if(te.getStackInSlot(0) != null && te.getStackInSlot(0).getItem().equals(ModItems.catalystElements[phase.ordinal()]))
+        if(!te.getStackInSlot(0).isEmpty() && te.getStackInSlot(0).getItem().equals(ModItems.catalystElements[phase.ordinal()]))
         {
             Minecraft.getMinecraft().renderEngine.bindTexture(Textures.EXTRACTOR_GUI_ACTIVE[phase.ordinal()]);
         }

@@ -2,7 +2,7 @@ package lumaceon.mods.clockworkphase.client.particle.entityfx;
 
 import lumaceon.mods.clockworkphase.lib.Textures;
 import lumaceon.mods.clockworkphase.proxy.ClientProxy;
-import net.minecraft.client.particle.EntityFX;
+import net.minecraft.client.particle.Particle;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 
@@ -24,10 +24,11 @@ public class EntityTimeSandTunnelFX extends EntityClockworkPhaseFX
         this.motionY = 0;
         this.motionZ = 0;
         this.particleMaxAge = 40;
-        this.noClip = true;
+        this.canCollide = false;
     }
 
-    public ResourceLocation getResourceLocation()
+    @Override
+	public ResourceLocation getResourceLocation()
     {
         return Textures.TIME_TUNNEL;
     }
@@ -41,7 +42,7 @@ public class EntityTimeSandTunnelFX extends EntityClockworkPhaseFX
         posY = targetY - ((targetY - originY) * ((particleMaxAge - particleAge) / (double)particleMaxAge));
         posZ = targetZ - ((targetZ - originZ) * ((particleMaxAge - particleAge) / (double)particleMaxAge));
 
-        EntityFX particle = new EntityTimeSandTunnelSubFX(worldObj, prevPosX, prevPosY, prevPosZ, 0, 0, 0);
+        EntityClockworkPhaseFX particle = new EntityTimeSandTunnelSubFX(world, prevPosX, prevPosY, prevPosZ, 0, 0, 0);
         ClientProxy.particleGenerator.spawnParticle(particle, 64.0F);
     }
 }

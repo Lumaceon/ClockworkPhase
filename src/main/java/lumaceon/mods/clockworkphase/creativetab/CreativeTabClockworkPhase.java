@@ -3,7 +3,7 @@ package lumaceon.mods.clockworkphase.creativetab;
 import lumaceon.mods.clockworkphase.init.ModItems;
 import lumaceon.mods.clockworkphase.lib.Phases;
 import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 
 public class CreativeTabClockworkPhase extends CreativeTabs
 {
@@ -13,8 +13,8 @@ public class CreativeTabClockworkPhase extends CreativeTabs
     }
 
     @Override
-    public Item getTabIconItem()
+    public ItemStack createIcon()
     {
-        return ModItems.hourglassElements[Phases.AIR.ordinal()];
+        return new ItemStack(ModItems.hourglassElements[Phases.AIR.ordinal()]);
     }
 }

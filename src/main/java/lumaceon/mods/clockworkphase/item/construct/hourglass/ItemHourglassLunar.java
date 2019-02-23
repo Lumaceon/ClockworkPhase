@@ -8,7 +8,12 @@ import lumaceon.mods.clockworkphase.util.PhaseHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.ChatComponentText;
+import net.minecraft.util.ActionResult;
+import net.minecraft.util.EnumActionResult;
+import net.minecraft.util.EnumFacing;
+import net.minecraft.util.EnumHand;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.text.TextComponentString;
 import net.minecraft.world.World;
 
 public class ItemHourglassLunar extends ItemHourglass
@@ -50,7 +55,7 @@ public class ItemHourglassLunar extends ItemHourglass
                     player.capabilities.allowFlying = false;
                     player.capabilities.isFlying = false;
                 }
-                player.addChatComponentMessage(new ChatComponentText("Your clockwork's quality can't handle it's speed."));
+                player.sendMessage(new TextComponentString("Your clockwork's quality can't handle it's speed."));
                 return;
             }
 
@@ -62,7 +67,7 @@ public class ItemHourglassLunar extends ItemHourglass
                     player.capabilities.allowFlying = false;
                     player.capabilities.isFlying = false;
                 }
-                player.addChatComponentMessage(new ChatComponentText("Your clockwork's speed is too slow to be of any use."));
+                player.sendMessage(new TextComponentString("Your clockwork's speed is too slow to be of any use."));
                 return;
             }
 
@@ -93,8 +98,9 @@ public class ItemHourglassLunar extends ItemHourglass
     }
 
     @Override
-    public boolean onItemUse(ItemStack is, EntityPlayer player, World world, int x, int y, int z, int meta, float f1, float f2, float f3)
+    public EnumActionResult onItemUse(EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ)
     {
+        ItemStack is = player.getHeldItem(hand);
         boolean isActive = NBTHelper.getBoolean(is, NBTTags.ACTIVE);
         NBTHelper.setBoolean(is, NBTTags.ACTIVE, !isActive);
         NBTHelper.setDouble(is, NBTTags.X_MOTION, player.motionX);
@@ -109,11 +115,13 @@ public class ItemHourglassLunar extends ItemHourglass
         {
             player.capabilities.allowFlying = true;
         }
-        return true;
+        return EnumActionResult.SUCCESS;
     }
 
-    public ItemStack onItemRightClick(ItemStack is, World world, EntityPlayer player)
+    @Override
+	public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player, EnumHand hand)
     {
+        ItemStack is = player.getHeldItem(hand);
         boolean isActive = NBTHelper.getBoolean(is, NBTTags.ACTIVE);
         NBTHelper.setBoolean(is, NBTTags.ACTIVE, !isActive);
         NBTHelper.setDouble(is, NBTTags.X_MOTION, player.motionX);
@@ -128,6 +136,6 @@ public class ItemHourglassLunar extends ItemHourglass
         {
             player.capabilities.allowFlying = true;
         }
-        return is;
+        return ActionResult.newResult(EnumActionResult.SUCCESS, is);
     }
 }

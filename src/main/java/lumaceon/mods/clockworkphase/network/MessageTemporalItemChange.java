@@ -1,8 +1,8 @@
 package lumaceon.mods.clockworkphase.network;
 
-import cpw.mods.fml.common.network.simpleimpl.IMessage;
-import cpw.mods.fml.common.network.simpleimpl.IMessageHandler;
-import cpw.mods.fml.common.network.simpleimpl.MessageContext;
+import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
+import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
+import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 import io.netty.buffer.ByteBuf;
 import lumaceon.mods.clockworkphase.item.construct.ITemporalChange;
 import lumaceon.mods.clockworkphase.item.construct.abstracts.ITimeSand;
@@ -29,11 +29,11 @@ public class MessageTemporalItemChange implements IMessageHandler<MessageTempora
     @Override
     public IMessage onMessage(MessageTemporalItemChange message, MessageContext ctx)
     {
-        if(ctx.side.isServer() && ctx.getServerHandler().playerEntity != null)
+        if(ctx.side.isServer() && ctx.getServerHandler().player != null)
         {
-            EntityPlayer player = ctx.getServerHandler().playerEntity;
+            EntityPlayer player = ctx.getServerHandler().player;
             ItemStack is = player.inventory.getCurrentItem();
-            if(is != null)
+            if(!is.isEmpty())
             {
                 if(is.getItem() instanceof ITemporalChange)
                 {
@@ -53,7 +53,7 @@ public class MessageTemporalItemChange implements IMessageHandler<MessageTempora
                     if(timeSand)
                     {
                         ItemStack newItem = new ItemStack(((ITemporalChange) is.getItem()).getItemChangeTo());
-                        newItem.setTagCompound(is.stackTagCompound);
+                        newItem.setTagCompound(is.getTagCompound());
                         newItem.setItemDamage(is.getItemDamage());
                         player.inventory.setInventorySlotContents(player.inventory.currentItem, newItem);
                     }

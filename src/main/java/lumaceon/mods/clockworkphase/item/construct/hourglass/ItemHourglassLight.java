@@ -9,7 +9,12 @@ import lumaceon.mods.clockworkphase.util.PhaseHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.ChatComponentText;
+import net.minecraft.util.ActionResult;
+import net.minecraft.util.EnumActionResult;
+import net.minecraft.util.EnumFacing;
+import net.minecraft.util.EnumHand;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.text.TextComponentString;
 import net.minecraft.world.World;
 
 public class ItemHourglassLight extends ItemHourglass
@@ -40,14 +45,14 @@ public class ItemHourglassLight extends ItemHourglass
             if(efficiency > 10)
             {
                 NBTHelper.setBoolean(is, NBTTags.ACTIVE, false);
-                player.addChatComponentMessage(new ChatComponentText("Your clockwork's quality can't handle it's speed."));
+                player.sendMessage(new TextComponentString("Your clockwork's quality can't handle it's speed."));
                 return;
             }
 
             if(speed < 50)
             {
                 NBTHelper.setBoolean(is, NBTTags.ACTIVE, false);
-                player.addChatComponentMessage(new ChatComponentText("Your clockwork's speed is too slow to be of any use."));
+                player.sendMessage(new TextComponentString("Your clockwork's speed is too slow to be of any use."));
                 return;
             }
 
@@ -59,14 +64,14 @@ public class ItemHourglassLight extends ItemHourglass
             int x = (int)Math.floor(player.posX);
             int y = (int)Math.floor(player.posY + 1.5);
             int z = (int)Math.floor(player.posZ);
-            int lightness = world.getBlockLightValue(x, y, z);
+            int lightness = world.getLightFromNeighbors(new BlockPos(x, y, z));
 
-            if(world.isAirBlock(x, y, z))
+            if(world.isAirBlock(new BlockPos(x, y, z)))
             {
                 if(lightness <= 7)
                 {
                     if(speed > 500) {speed = 500;}
-                    world.setBlock(x, y, z, ModBlocks.hourglassLight, 10 + (speed / 100), 2);
+                    world.setBlockState(new BlockPos(x, y, z), ModBlocks.hourglassLight.getStateFromMeta(10 + (speed / 100)), 2);
                     this.removeTension(is, tensionCost);
                 }
             }
@@ -74,17 +79,19 @@ public class ItemHourglassLight extends ItemHourglass
     }
 
     @Override
-    public boolean onItemUse(ItemStack is, EntityPlayer player, World world, int x, int y, int z, int meta, float f1, float f2, float f3)
+    public EnumActionResult onItemUse(EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ)
     {
-        boolean isActive = NBTHelper.getBoolean(is, NBTTags.ACTIVE);
-        NBTHelper.setBoolean(is, NBTTags.ACTIVE, !isActive);
-        return true;
+        boolean isActive = NBTHelper.getBoolean(player.getHeldItem(hand), NBTTags.ACTIVE);
+        NBTHelper.setBoolean(player.getHeldItem(hand), NBTTags.ACTIVE, !isActive);
+        return EnumActionResult.SUCCESS;
     }
 
-    public ItemStack onItemRightClick(ItemStack is, World world, EntityPlayer player)
+    @Override
+	public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player, EnumHand hand)
     {
+        ItemStack is = player.getHeldItem(hand);
         boolean isActive = NBTHelper.getBoolean(is, NBTTags.ACTIVE);
         NBTHelper.setBoolean(is, NBTTags.ACTIVE, !isActive);
-        return is;
+        return ActionResult.newResult(EnumActionResult.SUCCESS, is);
     }
 }

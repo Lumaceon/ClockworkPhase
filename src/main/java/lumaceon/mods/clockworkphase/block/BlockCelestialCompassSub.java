@@ -1,18 +1,27 @@
 package lumaceon.mods.clockworkphase.block;
 
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
+import lumaceon.mods.clockworkphase.custom.CustomEvents;
 import lumaceon.mods.clockworkphase.init.ModBlocks;
 import lumaceon.mods.clockworkphase.util.TextureHelper;
+import net.minecraft.block.BlockHorizontal;
 import net.minecraft.block.material.Material;
-import net.minecraft.client.renderer.texture.IIconRegister;
-import net.minecraft.util.IIcon;
+import net.minecraft.block.properties.PropertyDirection;
+import net.minecraft.block.state.BlockStateContainer;
+import net.minecraft.block.state.IBlockState;
+import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.util.EnumFacing;
+import net.minecraft.util.Mirror;
+import net.minecraft.util.Rotation;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
-import net.minecraftforge.common.util.ForgeDirection;
+import net.minecraft.world.World;
+import net.minecraftforge.client.model.ModelLoader;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class BlockCelestialCompassSub extends BlockClockworkPhaseAbstract
 {
-    public IIcon[] icons = new IIcon[96];
+    public static final PropertyDirection FACING = BlockHorizontal.FACING;
 
     public BlockCelestialCompassSub(Material material)
     {
@@ -21,77 +30,86 @@ public class BlockCelestialCompassSub extends BlockClockworkPhaseAbstract
         this.setBlockUnbreakable();
         this.setResistance(1000000F);
         this.setLightLevel(1.0F);
+        this.setDefaultState(this.blockState.getBaseState().withProperty(FACING, EnumFacing.NORTH));
     }
 
     @Override
-    public IIcon getIcon(int p_149691_1_, int p_149691_2_)
-    {
-        return this.blockIcon;
+    @SideOnly(Side.CLIENT)
+    public void registerBlockIcons() {
+        super.registerBlockIcons();
+        ModelLoader.setCustomStateMapper(this, block -> CustomEvents.MODELS_COMPASS_SUB);
     }
 
     @Override
-    public IIcon getIcon(IBlockAccess blockAccess, int x, int y, int z, int meta)
-    {
-        if(meta != 0 && meta != 1)
-        {
-            return this.blockIcon;
-        }
+    public IBlockState getActualState(IBlockState state1, IBlockAccess blockAccess, BlockPos pos) {
 
         boolean flag = true;
+        int x = pos.getX(), y = pos.getY(), z = pos.getZ();
 
         //Coordinates to be passed into the TextureHelper.
         int xOffset = 0;
         int zOffset = 0;
 
-        meta = blockAccess.getBlockMetadata(x, y, z);
-        ForgeDirection direction = ForgeDirection.getOrientation(meta);
+        IBlockState state = blockAccess.getBlockState(new BlockPos(x, y, z));
+        int meta = state.getBlock().getMetaFromState(state);
+        EnumFacing direction = EnumFacing.byHorizontalIndex(meta);
 
-        x += direction.offsetX;
-        z += direction.offsetZ;
+        x += direction.getXOffset();
+        z += direction.getZOffset();
 
-        xOffset += -direction.offsetX;
-        zOffset += -direction.offsetZ;
+        xOffset += -direction.getXOffset();
+        zOffset += -direction.getZOffset();
 
-        for(int n = 0; n < 10 && flag; n++)
-        {
-            if(blockAccess.getBlock(x, y, z) == null)
-            {
-                return getIcon(0, 0);
-            }
-            else if(blockAccess.getBlock(x, y, z).equals(ModBlocks.celestialCompass))
-            {
+        for (int n = 0; n < 10 && flag; n++) {
+            if (blockAccess.getBlockState(new BlockPos(x, y, z)).getBlock().equals(ModBlocks.celestialCompass)) {
                 flag = false;
-            }
-            else
-            {
-                meta = blockAccess.getBlockMetadata(x, y, z);
-                direction = ForgeDirection.getOrientation(meta);
+            } else {
+                state = blockAccess.getBlockState(new BlockPos(x, y, z));
+                meta = state.getBlock().getMetaFromState(state);
+                direction = EnumFacing.byHorizontalIndex(meta);
 
-                x += direction.offsetX;
-                z += direction.offsetZ;
+                x += direction.getXOffset();
+                z += direction.getZOffset();
 
-                xOffset += -direction.offsetX;
-                zOffset += -direction.offsetZ;
+                xOffset += -direction.getXOffset();
+                zOffset += -direction.getZOffset();
             }
         }
 
         int iconIndex = TextureHelper.getCCTextureIndexFromCoordinates(xOffset, zOffset);
-        if(iconIndex < 0 || iconIndex > 96)
-        {
+        if (iconIndex < 0 || iconIndex > 96) {
             iconIndex = 0;
         }
-        return this.icons[iconIndex];
+        return CustomEvents.STATES_COMPASS_SUB[iconIndex];
     }
 
     @Override
-    @SideOnly(Side.CLIENT)
-    public void registerBlockIcons(IIconRegister registry)
-    {
-        this.blockIcon = registry.registerIcon(this.getUnlocalizedName().substring(this.getUnlocalizedName().indexOf(".") + 1));
+    public IBlockState getStateForPlacement(World worldIn, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, int meta, EntityLivingBase placer) {
+        return this.getDefaultState().withProperty(FACING, placer.getHorizontalFacing().getOpposite());
+    }
 
-        for(int n = 0; n < 96; n++)
-        {
-            this.icons[n] = registry.registerIcon(this.getUnlocalizedName().substring(this.getUnlocalizedName().indexOf(".") + 1) + "/" + n);
-        }
+    @Override
+    public IBlockState getStateFromMeta(int meta) {
+        return this.getDefaultState().withProperty(FACING, EnumFacing.byHorizontalIndex(meta));
+    }
+
+    @Override
+    public int getMetaFromState(IBlockState state) {
+        return (state.getValue(FACING)).getHorizontalIndex();
+    }
+
+    @Override
+    public IBlockState withRotation(IBlockState state, Rotation rot) {
+        return state.withProperty(FACING, rot.rotate(state.getValue(FACING)));
+    }
+
+    @Override
+    public IBlockState withMirror(IBlockState state, Mirror mirrorIn) {
+        return state.withRotation(mirrorIn.toRotation(state.getValue(FACING)));
+    }
+
+    @Override
+    protected BlockStateContainer createBlockState() {
+        return new BlockStateContainer(this, FACING);
     }
 }

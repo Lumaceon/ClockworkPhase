@@ -2,7 +2,7 @@ package lumaceon.mods.clockworkphase.client.particle.entityfx;
 
 import lumaceon.mods.clockworkphase.lib.Textures;
 import lumaceon.mods.clockworkphase.proxy.ClientProxy;
-import net.minecraft.client.particle.EntityFX;
+import net.minecraft.client.particle.Particle;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 
@@ -24,7 +24,7 @@ public class EntityGrowthAbsorptionFX extends EntityClockworkPhaseFX
         targetLocation[2] = zTarget;
 
         this.particleMaxAge = 15;
-        this.noClip = true;
+        this.canCollide = false;
     }
 
     @Override
@@ -43,7 +43,7 @@ public class EntityGrowthAbsorptionFX extends EntityClockworkPhaseFX
         posZ = targetLocation[2] - ((targetLocation[2] - originLocation[2]) * ((particleMaxAge - particleAge) / (double)particleMaxAge));
 
         float mult = 0.05F;
-        EntityFX particle = new EntityGrowthAbsorptionSubFX(worldObj, posX, posY, posZ, (worldObj.rand.nextFloat() - 0.5) * mult, worldObj.rand.nextFloat() * mult * 0.5, (worldObj.rand.nextFloat() - 0.5) * mult);
+        EntityClockworkPhaseFX particle = new EntityGrowthAbsorptionSubFX(world, posX, posY, posZ, (world.rand.nextFloat() - 0.5) * mult, world.rand.nextFloat() * mult * 0.5, (world.rand.nextFloat() - 0.5) * mult);
         ClientProxy.particleGenerator.spawnParticle(particle, 64.0F);
     }
 }

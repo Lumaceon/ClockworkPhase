@@ -1,7 +1,6 @@
 package lumaceon.mods.clockworkphase.client.render.model;
 
 import lumaceon.mods.clockworkphase.client.render.RenderDrone;
-import lumaceon.mods.clockworkphase.extendeddata.ExtendedPlayerProperties;
 import net.minecraft.client.model.ModelBiped;
 import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.entity.Entity;

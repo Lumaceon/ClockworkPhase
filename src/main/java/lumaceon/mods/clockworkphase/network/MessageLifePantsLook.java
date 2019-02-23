@@ -1,8 +1,8 @@
 package lumaceon.mods.clockworkphase.network;
 
-import cpw.mods.fml.common.network.simpleimpl.IMessage;
-import cpw.mods.fml.common.network.simpleimpl.IMessageHandler;
-import cpw.mods.fml.common.network.simpleimpl.MessageContext;
+import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
+import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
+import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.world.World;
@@ -41,11 +41,11 @@ public class MessageLifePantsLook implements IMessageHandler<MessageLifePantsLoo
     {
         if(ctx.side.isServer())
         {
-            EntityPlayer player = ctx.getServerHandler().playerEntity;
-            World world = player.worldObj;
+            EntityPlayer player = ctx.getServerHandler().player;
+            World world = player.world;
             if(player.getDistance(message.x, message.y, message.z) <= 8)
             {
-                /**if(player.inventory.armorItemInSlot(1) != null && player.inventory.armorItemInSlot(1).getItem() instanceof ItemChronomancerLeggingsLife)
+                /**if(!player.inventory.armorItemInSlot(1)is.isEmpty() && player.inventory.armorItemInSlot(1).getItem() instanceof ItemChronomancerLeggingsLife)
                 {
                     int timeSandRequirement = MechanicTweaker.TIME_SAND_COST_LIFE_LEGGINGS;
                     timeSandRequirement -= ((ITimeSand) player.inventory.armorItemInSlot(1).getItem()).removeTimeSandFromInventory(player.inventory, timeSandRequirement);

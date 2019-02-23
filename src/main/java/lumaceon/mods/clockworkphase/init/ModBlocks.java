@@ -1,12 +1,12 @@
 package lumaceon.mods.clockworkphase.init;
 
-import cpw.mods.fml.common.registry.GameRegistry;
+import net.minecraftforge.fml.common.registry.GameRegistry;
+import lumaceon.mods.clockworkphase.custom.IHasModel;
 import lumaceon.mods.clockworkphase.block.*;
 import lumaceon.mods.clockworkphase.block.blockitems.ItemBlockExtractor;
 import lumaceon.mods.clockworkphase.block.blockitems.ItemBlockTimeWell;
 import lumaceon.mods.clockworkphase.block.extractor.*;
 import lumaceon.mods.clockworkphase.block.tileentity.TileEntityCelestialCompass;
-import lumaceon.mods.clockworkphase.inventory.InventoryClockworkAssembly;
 import lumaceon.mods.clockworkphase.block.tileentity.TileEntityTimeWell;
 import lumaceon.mods.clockworkphase.block.tileentity.TileEntityExtractor;
 import lumaceon.mods.clockworkphase.lib.Names;
@@ -35,75 +35,58 @@ public class ModBlocks
 
     public static void init()
     {
-        brassBlock = new BlockBrass(Material.iron).setBlockName(Names.BRASS_BLOCK);
-        GameRegistry.registerBlock(brassBlock, Names.BRASS_BLOCK);
+        brassBlock = toModel(new BlockBrass(Material.IRON)).register(Names.BRASS_BLOCK);
         OreDictionary.registerOre("blockBrass", brassBlock);
 
-        clockworkAssemblyTable = new BlockClockworkAssemblyTable(Material.wood).setBlockName(Names.ASSEMBLY_TABLE);
-        GameRegistry.registerBlock(clockworkAssemblyTable, Names.ASSEMBLY_TABLE);
+        clockworkAssemblyTable = toModel(new BlockClockworkAssemblyTable(Material.WOOD)).register(Names.ASSEMBLY_TABLE);
 
-        windingBox = new BlockWindingBox(Material.iron).setBlockName(Names.WINDING_BOX);
-        GameRegistry.registerBlock(windingBox, Names.WINDING_BOX);
+        windingBox = toModel(new BlockWindingBox(Material.IRON)).register(Names.WINDING_BOX);
 
-        disassembler = new BlockDisassembler(Material.iron).setBlockName(Names.DISASSEMBLER);
-        GameRegistry.registerBlock(disassembler, Names.DISASSEMBLER);
+        disassembler = toModel(new BlockDisassembler(Material.IRON)).register(Names.DISASSEMBLER);
 
-        timeSand = new BlockTimeSand(ModFluids.timeSand, Material.water).setBlockName(Names.TIME_SAND);
-        GameRegistry.registerBlock(timeSand, Names.TIME_SAND);
+        timeSand = toModel(new BlockTimeSand(ModFluids.timeSand, Material.WATER)).register(Names.TIME_SAND);
 
-        celestialCompass = new BlockCelestialCompass(Material.iron).setBlockName(Names.CELESTIAL_COMPASS);
-        GameRegistry.registerBlock(celestialCompass, Names.CELESTIAL_COMPASS);
+        celestialCompass = toModel(new BlockCelestialCompass(Material.IRON)).register(Names.CELESTIAL_COMPASS);
 
-        celestialCompassSub = new BlockCelestialCompassSub(Material.iron).setBlockName(Names.CELESTIAL_COMPASS_SUB);
-        GameRegistry.registerBlock(celestialCompassSub, Names.CELESTIAL_COMPASS_SUB);
+        celestialCompassSub = toModel(new BlockCelestialCompassSub(Material.IRON)).register(Names.CELESTIAL_COMPASS_SUB);
 
-        timeWell = new BlockTimeWell(Material.iron).setBlockName(Names.TIME_WELL);
-        GameRegistry.registerBlock(timeWell, ItemBlockTimeWell.class, Names.TIME_WELL);
+        timeWell = toModel(new BlockTimeWell(Material.IRON)).register(Names.TIME_WELL, ItemBlockTimeWell.class);
 
-        oreTemporal = new BlockTemporalOre().setBlockName(Names.TEMPORAL_ORE);
-        GameRegistry.registerBlock(oreTemporal, Names.TEMPORAL_ORE);
+        oreTemporal = toModel(new BlockTemporalOre()).register(Names.TEMPORAL_ORE);
         OreDictionary.registerOre("oreTemporal", oreTemporal);
 
-        sandTemporal = new BlockTemporalSand().setBlockName(Names.TEMPORAL_SAND);
-        GameRegistry.registerBlock(sandTemporal, Names.TEMPORAL_SAND);
+        sandTemporal = toModel(new BlockTemporalSand()).register(Names.TEMPORAL_SAND);
 
-        woodTemporal = new BlockTemporalWood().setBlockName(Names.TEMPORAL_WOOD);
-        GameRegistry.registerBlock(woodTemporal, Names.TEMPORAL_WOOD);
+        woodTemporal = toModel(new BlockTemporalWood()).register(Names.TEMPORAL_WOOD);
 
-        blockTemporal = new BlockTemporal(Material.iron).setBlockName(Names.TEMPORAL_BLOCK);
-        GameRegistry.registerBlock(blockTemporal, Names.TEMPORAL_BLOCK);
+        blockTemporal = toModel(new BlockTemporal(Material.IRON)).register(Names.TEMPORAL_BLOCK);
         OreDictionary.registerOre("blockTemporal", blockTemporal);
 
 
         /** EXTRACTOR ITEM/BLOCK START **/
-        extractorsElements[0] = new BlockExtractorLife(Material.iron).setBlockName(Names.EXTRACTOR + "Life");
-        GameRegistry.registerBlock(extractorsElements[0], ItemBlockExtractor.class, Names.EXTRACTOR + "Life");
+        extractorsElements[0] = toModel(new BlockExtractorLife(Material.IRON)).register(Names.EXTRACTOR + "_life", ItemBlockExtractor.class);
 
-        extractorsElements[1] = new BlockExtractorLight(Material.iron).setBlockName(Names.EXTRACTOR + "Light");
-        GameRegistry.registerBlock(extractorsElements[1], ItemBlockExtractor.class, Names.EXTRACTOR + "Light");
+        extractorsElements[1] = toModel(new BlockExtractorLight(Material.IRON)).register(Names.EXTRACTOR + "_light", ItemBlockExtractor.class);
 
-        extractorsElements[2] = new BlockExtractorWater(Material.iron).setBlockName(Names.EXTRACTOR + "Water");
-        GameRegistry.registerBlock(extractorsElements[2], ItemBlockExtractor.class, Names.EXTRACTOR + "Water");
+        extractorsElements[2] = toModel(new BlockExtractorWater(Material.IRON)).register(Names.EXTRACTOR + "_water", ItemBlockExtractor.class);
 
-        extractorsElements[3] = new BlockExtractorEarth(Material.iron).setBlockName(Names.EXTRACTOR + "Earth");
-        GameRegistry.registerBlock(extractorsElements[3], ItemBlockExtractor.class, Names.EXTRACTOR + "Earth");
+        extractorsElements[3] = toModel(new BlockExtractorEarth(Material.IRON)).register(Names.EXTRACTOR + "_earth", ItemBlockExtractor.class);
 
-        extractorsElements[4] = new BlockExtractorAir(Material.iron).setBlockName(Names.EXTRACTOR + "Air");
-        GameRegistry.registerBlock(extractorsElements[4], ItemBlockExtractor.class, Names.EXTRACTOR + "Air");
+        extractorsElements[4] = toModel(new BlockExtractorAir(Material.IRON)).register(Names.EXTRACTOR + "_air", ItemBlockExtractor.class);
 
-        extractorsElements[5] = new BlockExtractorFire(Material.iron).setBlockName(Names.EXTRACTOR + "Fire");
-        GameRegistry.registerBlock(extractorsElements[5], ItemBlockExtractor.class, Names.EXTRACTOR + "Fire");
+        extractorsElements[5] = toModel(new BlockExtractorFire(Material.IRON)).register(Names.EXTRACTOR + "_fire", ItemBlockExtractor.class);
 
-        extractorsElements[6] = new BlockExtractorLunar(Material.iron).setBlockName(Names.EXTRACTOR + "Lunar");
-        GameRegistry.registerBlock(extractorsElements[6], ItemBlockExtractor.class, Names.EXTRACTOR + "Lunar");
+        extractorsElements[6] = toModel(new BlockExtractorLunar(Material.IRON)).register(Names.EXTRACTOR + "_lunar", ItemBlockExtractor.class);
 
-        extractorsElements[7] = new BlockExtractorDeath(Material.iron).setBlockName(Names.EXTRACTOR + "Death");
-        GameRegistry.registerBlock(extractorsElements[7], ItemBlockExtractor.class, Names.EXTRACTOR + "Death");
+        extractorsElements[7] = toModel(new BlockExtractorDeath(Material.IRON)).register(Names.EXTRACTOR + "_death", ItemBlockExtractor.class);
         /** END EXTRACTOR **/
 
 
-        hourglassLight = new BlockHourglassLight(Material.portal).setBlockName(Names.HOURGLASS_LIGHT);
-        GameRegistry.registerBlock(hourglassLight, Names.HOURGLASS_LIGHT);
+        hourglassLight = toModel(new BlockHourglassLight(Material.PORTAL)).register(Names.HOURGLASS_LIGHT);
+    }
+
+    private static IHasModel toModel(Block block) {
+        return (IHasModel) block;
     }
 
     public static void registerTileEntities()

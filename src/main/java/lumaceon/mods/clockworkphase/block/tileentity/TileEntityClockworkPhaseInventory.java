@@ -1,33 +1,41 @@
 package lumaceon.mods.clockworkphase.block.tileentity;
 
+import lumaceon.mods.clockworkphase.custom.IInventoryHelper;
 import lumaceon.mods.clockworkphase.lib.NBTTags;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
+import net.minecraft.util.NonNullList;
 
-public class TileEntityClockworkPhaseInventory extends TileEntityClockworkPhase implements IInventory
+public class TileEntityClockworkPhaseInventory extends TileEntityClockworkPhase implements IInventoryHelper
 {
-    protected ItemStack[] inventory;
+//    protected ItemStack[] inventory;
+    protected NonNullList<ItemStack> inventory;
 
     @Override
-    public void writeToNBT(NBTTagCompound nbt)
+    public NonNullList<ItemStack> getInv() {
+        return inventory;
+    }
+
+    @Override
+    public NBTTagCompound writeToNBT(NBTTagCompound nbt)
     {
         super.writeToNBT(nbt);
 
         NBTTagList nbtList = new NBTTagList();
-        for (int index = 0; index < inventory.length; index++)
+        for (int index = 0; index < inventory.size(); index++)
         {
-            if (inventory[index] != null)
+            if (!inventory.get(index).isEmpty())
             {
                 NBTTagCompound tag = new NBTTagCompound();
                 tag.setByte("slot_index", (byte)index);
-                inventory[index].writeToNBT(tag);
+                inventory.get(index).writeToNBT(tag);
                 nbtList.appendTag(tag);
             }
         }
         nbt.setTag(NBTTags.INVENTORY_ARRAY, nbtList);
+        return nbt;
     }
 
     @Override
@@ -36,86 +44,16 @@ public class TileEntityClockworkPhaseInventory extends TileEntityClockworkPhase 
         super.readFromNBT(nbt);
 
         NBTTagList tagList = nbt.getTagList(NBTTags.INVENTORY_ARRAY, 10);
-        inventory = new ItemStack[getSizeInventory()];
+        inventory = NonNullList.withSize(getSizeInventory(), ItemStack.EMPTY);
         for (int i = 0; i < tagList.tagCount(); ++i)
         {
             NBTTagCompound tagCompound = tagList.getCompoundTagAt(i);
             byte slotIndex = tagCompound.getByte("slot_index");
-            if (slotIndex >= 0 && slotIndex < inventory.length)
+            if (slotIndex >= 0 && slotIndex < inventory.size())
             {
-                inventory[slotIndex] = ItemStack.loadItemStackFromNBT(tagCompound);
+                inventory.set(slotIndex, new ItemStack(tagCompound));
             }
         }
-    }
-
-    @Override
-    public int getSizeInventory()
-    {
-        return inventory.length;
-    }
-
-    @Override
-    public ItemStack getStackInSlot(int slotIndex)
-    {
-        return inventory[slotIndex];
-    }
-
-    @Override
-    public ItemStack decrStackSize(int index, int lossCount)
-    {
-        ItemStack is = getStackInSlot(index);
-        if (is != null)
-        {
-            if (lossCount >= is.stackSize)
-            {
-                setInventorySlotContents(index, null);
-            }
-            else
-            {
-                is = is.splitStack(lossCount);
-                if (is.stackSize == 0)
-                {
-                    setInventorySlotContents(index, null);
-                }
-            }
-        }
-        return is;
-    }
-
-    @Override
-    public ItemStack getStackInSlotOnClosing(int index)
-    {
-        if (inventory[index] != null)
-        {
-            ItemStack itemStack = inventory[index];
-            inventory[index] = null;
-            return itemStack;
-        }
-        return null;
-    }
-
-    @Override
-    public void setInventorySlotContents(int index, ItemStack is)
-    {
-        inventory[index] = is;
-
-        if (is != null && is.stackSize > this.getInventoryStackLimit())
-        {
-            is.stackSize = this.getInventoryStackLimit();
-        }
-        this.markDirty();
-    }
-
-    @Override
-    public String getInventoryName()
-    {
-        return null;
-    }
-
-    @Override
-    public boolean hasCustomInventoryName()
-    {
-        return false;
     }
 
     @Override
@@ -125,16 +63,10 @@ public class TileEntityClockworkPhaseInventory extends TileEntityClockworkPhase 
     }
 
     @Override
-    public boolean isUseableByPlayer(EntityPlayer player)
+    public boolean isUsableByPlayer(EntityPlayer player)
     {
         return true;
     }
-
-    @Override
-    public void openInventory() { }
-
-    @Override
-    public void closeInventory() { }
 
     @Override
     public boolean isItemValidForSlot(int p_94041_1_, ItemStack is)

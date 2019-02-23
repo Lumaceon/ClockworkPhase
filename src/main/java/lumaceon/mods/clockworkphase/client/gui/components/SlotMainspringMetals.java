@@ -5,6 +5,7 @@ import lumaceon.mods.clockworkphase.api.MainspringMetal;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.NonNullList;
 import net.minecraftforge.oredict.OreDictionary;
 
 import java.util.ArrayList;
@@ -20,7 +21,7 @@ public class SlotMainspringMetals extends Slot
     public boolean isItemValid(ItemStack is)
     {
         MainspringMetal metal;
-        ArrayList<ItemStack> ores;
+        NonNullList<ItemStack> ores;
 
         for(int i = 0; i < ClockworkPhase.MAINSPRING_METAL_DICTIONARY.mainspringMetals.size(); i++)
         {

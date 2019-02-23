@@ -1,7 +1,8 @@
 package lumaceon.mods.clockworkphase.item.component;
 
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
+import net.minecraft.client.util.ITooltipFlag;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import lumaceon.mods.clockworkphase.item.ItemClockworkPhaseGeneric;
 import lumaceon.mods.clockworkphase.item.construct.abstracts.IDisassemble;
 import lumaceon.mods.clockworkphase.lib.NBTTags;
@@ -17,8 +18,9 @@ import java.util.List;
 
 public class ItemClockwork extends ItemClockworkPhaseGeneric implements IDisassemble
 {
-    @SideOnly(Side.CLIENT)
-    public void addInformation(ItemStack is, EntityPlayer player, List list, boolean flag)
+    @Override
+	@SideOnly(Side.CLIENT)
+    public void addInformation(ItemStack is, World worldIn, List<String> list, ITooltipFlag flagIn)
     {
         if(NBTHelper.getTagList(is, NBTTags.INVENTORY_ARRAY).tagCount() == 0)
         {
@@ -46,15 +48,15 @@ public class ItemClockwork extends ItemClockworkPhaseGeneric implements IDisasse
             for (int i = 0; i < tagList.tagCount(); ++i)
             {
                 NBTTagCompound tagCompound = tagList.getCompoundTagAt(i);
-                items[i] = ItemStack.loadItemStackFromNBT(tagCompound);
+                items[i] = new ItemStack(tagCompound);
             }
 
             for(int n = 0; n < items.length; n++)
             {
-                if(items[n] != null)
+                if(!items[n].isEmpty())
                 {
-                    world.spawnEntityInWorld(new EntityItem(world, x, y, z, items[n]));
-                    is.stackSize = 0;
+                    world.spawnEntity(new EntityItem(world, x, y, z, items[n]));
+                    is.setCount(0);
                 }
             }
         }

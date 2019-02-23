@@ -1,8 +1,9 @@
 package lumaceon.mods.clockworkphase.network;
 
-import cpw.mods.fml.common.network.simpleimpl.IMessage;
-import cpw.mods.fml.common.network.simpleimpl.IMessageHandler;
-import cpw.mods.fml.common.network.simpleimpl.MessageContext;
+import net.minecraft.util.math.BlockPos;
+import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
+import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
+import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 import io.netty.buffer.ByteBuf;
 import lumaceon.mods.clockworkphase.ClockworkPhase;
 import lumaceon.mods.clockworkphase.block.tileentity.TileEntityTimeSandCapacitor;
@@ -17,9 +18,9 @@ public class MessageTimeSandCapacitorSync implements IMessageHandler<MessageTime
 
     public MessageTimeSandCapacitorSync(TileEntityTimeSandCapacitor capacitor)
     {
-        x = capacitor.xCoord;
-        y = capacitor.yCoord;
-        z = capacitor.zCoord;
+        x = capacitor.getPos().getX();
+        y = capacitor.getPos().getY();
+        z = capacitor.getPos().getZ();
         timeSand = capacitor.getTimeSand();
     }
 
@@ -44,9 +45,9 @@ public class MessageTimeSandCapacitorSync implements IMessageHandler<MessageTime
     @Override
     public IMessage onMessage(MessageTimeSandCapacitorSync message, MessageContext ctx)
     {
-        TileEntity te = ClockworkPhase.proxy.getStaticWorld().getTileEntity(message.x, message.y, message.z);
+        TileEntity te = ClockworkPhase.proxy.getStaticWorld().getTileEntity(new BlockPos(message.x, message.y, message.z));
 
-        if(te != null && te instanceof TileEntityTimeSandCapacitor)
+        if(te instanceof TileEntityTimeSandCapacitor)
         {
             TileEntityTimeSandCapacitor timeWell = (TileEntityTimeSandCapacitor)te;
             timeWell.setTimeSandUnsynced(message.timeSand);

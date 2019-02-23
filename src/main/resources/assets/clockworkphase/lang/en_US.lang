@@ -1,115 +1,115 @@
 #Item Localizations
-item.clockworkphase:timeTuner.name=Time Tuner
-item.clockworkphase:bugSwatter.name=Bug Swatter
-item.clockworkphase:brassIngot.name=Brass Ingot
-item.clockworkphase:mainspring.name=Mainspring
-item.clockworkphase:timeSandBucket.name=Time Sand Bucket
-item.clockworkphase:blandHourglass.name=Hourglass
-item.clockworkphase:clockwork.name=Clockwork
-item.clockworkphase:chipTemporal.name=teMPoRal cHIp
-item.clockworkphase:nuggetTemporal.name=teMPoRal nUgGeT
-item.clockworkphase:temporalCoreActive.name=aCTiVe TEmPOraL cORe
-item.clockworkphase:temporalCoreSedate.name=sEdAte TEmPOraL cORe
+item.clockworkphase.time_tuner.name=Time Tuner
+item.clockworkphase.bug_swatter.name=Bug Swatter
+item.clockworkphase.brass_ingot.name=Brass Ingot
+item.clockworkphase.mainspring.name=Mainspring
+item.clockworkphase.time_sand_bucket.name=Time Sand Bucket
+item.clockworkphase.bland_hourglass.name=Hourglass
+item.clockworkphase.clockwork.name=Clockwork
+item.clockworkphase.chip_temporal.name=teMPoRal cHIp
+item.clockworkphase.nugget_temporal.name=teMPoRal nUgGeT
+item.clockworkphase.temporal_core_active.name=aCTiVe TEmPOraL cORe
+item.clockworkphase.temporal_core_sedate.name=sEdAte TEmPOraL cORe
 
-item.clockworkphase:ingotTemporal.name=teMPoRal INgOt
-item.clockworkphase:ingotTemporalLife.name=teMPoRal INgOt lIFe
-item.clockworkphase:ingotTemporalLight.name=teMPoRal INgOt lIGhT
-item.clockworkphase:ingotTemporalWater.name=teMPoRal INgOt WaTEr
-item.clockworkphase:ingotTemporalEarth.name=teMPoRal INgOt eARth
-item.clockworkphase:ingotTemporalAir.name=teMPoRal INgOt aIr
-item.clockworkphase:ingotTemporalFire.name=teMPoRal INgOt FirE
-item.clockworkphase:ingotTemporalLunar.name=teMPoRal INgOt lUNaR
-item.clockworkphase:ingotTemporalDeath.name=teMPoRal INgOt dEaTH
+item.clockworkphase.ingot_temporal.name=teMPoRal INgOt
+item.clockworkphase.ingot_temporal_life.name=teMPoRal INgOt lIFe
+item.clockworkphase.ingot_temporal_light.name=teMPoRal INgOt lIGhT
+item.clockworkphase.ingot_temporal_water.name=teMPoRal INgOt WaTEr
+item.clockworkphase.ingot_temporal_earth.name=teMPoRal INgOt eARth
+item.clockworkphase.ingot_temporal_air.name=teMPoRal INgOt aIr
+item.clockworkphase.ingot_temporal_fire.name=teMPoRal INgOt FirE
+item.clockworkphase.ingot_temporal_lunar.name=teMPoRal INgOt lUNaR
+item.clockworkphase.ingot_temporal_death.name=teMPoRal INgOt dEaTH
 
-item.clockworkphase:catalystLife.name=Life Catalyst
-item.clockworkphase:catalystLight.name=Light Catalyst
-item.clockworkphase:catalystWater.name=Water Catalyst
-item.clockworkphase:catalystEarth.name=Earth Catalyst
-item.clockworkphase:catalystAir.name=Air Catalyst
-item.clockworkphase:catalystFire.name=Fire Catalyst
-item.clockworkphase:catalystLunar.name=Lunar Catalyst
-item.clockworkphase:catalystDeath.name=Death Catalyst
+item.clockworkphase.catalyst_life.name=Life Catalyst
+item.clockworkphase.catalyst_light.name=Light Catalyst
+item.clockworkphase.catalyst_water.name=Water Catalyst
+item.clockworkphase.catalyst_earth.name=Earth Catalyst
+item.clockworkphase.catalyst_air.name=Air Catalyst
+item.clockworkphase.catalyst_fire.name=Fire Catalyst
+item.clockworkphase.catalyst_lunar.name=Lunar Catalyst
+item.clockworkphase.catalyst_death.name=Death Catalyst
 
 
-item.clockworkphase:gearBrass.name=Brass Gear
-item.clockworkphase:gearBronze.name=Bronze Gear
-item.clockworkphase:gearCopper.name=Copper Gear
-item.clockworkphase:gearDiamond.name=Diamond Gear
-item.clockworkphase:gearEmerald.name=Emerald Gear
-item.clockworkphase:gearIron.name=Iron Gear
-item.clockworkphase:gearLead.name=Lead Gear
-item.clockworkphase:gearSilver.name=Silver Gear
-item.clockworkphase:gearSteel.name=Steel Gear
-item.clockworkphase:gearTemporal.name=teMpOrAL gEaR
-item.clockworkphase:gearThaumium.name=Thaumium Gear
-item.clockworkphase:gearTin.name=Tin Gear
-item.clockworkphase:oilBucket.name= Oil Bucket
-item.clockworkphase:framework.name=Framework
+item.clockworkphase.gear_brass.name=Brass Gear
+item.clockworkphase.gear_bronze.name=Bronze Gear
+item.clockworkphase.gear_copper.name=Copper Gear
+item.clockworkphase.gear_diamond.name=Diamond Gear
+item.clockworkphase.gear_emerald.name=Emerald Gear
+item.clockworkphase.gear_iron.name=Iron Gear
+item.clockworkphase.gear_lead.name=Lead Gear
+item.clockworkphase.gear_silver.name=Silver Gear
+item.clockworkphase.gear_steel.name=Steel Gear
+item.clockworkphase.gear_temporal.name=teMpOrAL gEaR
+item.clockworkphase.gear_thaumium.name=Thaumium Gear
+item.clockworkphase.gear_tin.name=Tin Gear
+item.clockworkphase.oil_bucket.name= Oil Bucket
+item.clockworkphase.framework.name=Framework
 
-item.clockworkphase:gearRusty.name=Rusty Gear
-item.clockworkphase:gearLegendary.name=Legendary Gear
-item.clockworkphase:noteBottle.name=Note-in-a-Bottle
-item.clockworkphase:preciousCharm.name=Precious Charm
-item.clockworkphase:oldCoin.name=Ancient Coin
+item.clockworkphase.gear_rusty.name=Rusty Gear
+item.clockworkphase.gear_legendary.name=Legendary Gear
+item.clockworkphase.note_bottle.name=Note-in-a-Bottle
+item.clockworkphase.precious_charm.name=Precious Charm
+item.clockworkphase.old_coin.name=Ancient Coin
 
-item.clockworkphase:hourglass.name=Chronomancer's Hourglass
-item.clockworkphase:hourglassLife.name=Chronomancer's Hourglass of Life
-item.clockworkphase:hourglassLight.name=Chronomancer's Hourglass of Light
-item.clockworkphase:hourglassWater.name=Chronomancer's Hourglass of Water
-item.clockworkphase:hourglassEarth.name=Chronomancer's Hourglass of Earth
-item.clockworkphase:hourglassAir.name=Chronomancer's Hourglass of Wind
-item.clockworkphase:hourglassFire.name=Chronomancer's Hourglass of Fire
-item.clockworkphase:hourglassLunar.name=Chronomancer's Hourglass of the Moon
-item.clockworkphase:hourglassDeath.name=Chronomancer's Hourglass of Death
+item.clockworkphase.hourglass.name=Chronomancer's Hourglass
+item.clockworkphase.hourglass_life.name=Chronomancer's Hourglass of Life
+item.clockworkphase.hourglass_light.name=Chronomancer's Hourglass of Light
+item.clockworkphase.hourglass_water.name=Chronomancer's Hourglass of Water
+item.clockworkphase.hourglass_earth.name=Chronomancer's Hourglass of Earth
+item.clockworkphase.hourglass_air.name=Chronomancer's Hourglass of Wind
+item.clockworkphase.hourglass_fire.name=Chronomancer's Hourglass of Fire
+item.clockworkphase.hourglass_lunar.name=Chronomancer's Hourglass of the Moon
+item.clockworkphase.hourglass_death.name=Chronomancer's Hourglass of Death
 
-item.clockworkphase:clockworkPickaxe.name=Clockwork Pickaxe
-item.clockworkphase:clockworkAxe.name=Clockwork Axe
-item.clockworkphase:clockworkShovel.name=Clockwork Shovel
-item.clockworkphase:clockworkSaber.name=Clockwork Sword
-item.clockworkphase:temporalClockworkSaber.name=tEmPOrAl cLoCkWOrK SwORd
-item.clockworkphase:temporalClockworkPickaxe.name=TEmPOraL cLoCkwOrk piCkaXE
-item.clockworkphase:temporalClockworkAxe.name=teMpOraL cLocKwoRk aXe
-item.clockworkphase:temporalClockworkShovel.name=temPORaL cLoCkWOrk sHoVeL
-item.clockworkphase:temporalMultitool.name=tEMPorAl mULtI-tOoL
-item.clockworkphase:pocketWatch.name=Pocket Watch
+item.clockworkphase.clockwork_pickaxe.name=Clockwork Pickaxe
+item.clockworkphase.clockwork_axe.name=Clockwork Axe
+item.clockworkphase.clockwork_shovel.name=Clockwork Shovel
+item.clockworkphase.clockwork_saber.name=Clockwork Sword
+item.clockworkphase.temporal_clockwork_saber.name=tEmPOrAl cLoCkWOrK SwORd
+item.clockworkphase.temporal_clockwork_pickaxe.name=TEmPOraL cLoCkwOrk piCkaXE
+item.clockworkphase.temporal_clockwork_Axe.name=teMpOraL cLocKwoRk aXe
+item.clockworkphase.temporal_clockwork_shovel.name=temPORaL cLoCkWOrk sHoVeL
+item.clockworkphase.temporal_multitool.name=tEMPorAl mULtI-tOoL
+item.clockworkphase.pocket_watch.name=Pocket Watch
 
-item.clockworkphase:clockworkHeadpiece.name=Clockwork Headpiece
-item.clockworkphase:clockworkChestplate.name=Clockwork Chestplate
-item.clockworkphase:clockworkLeggings.name=Clockwork Leggings
-item.clockworkphase:clockworkBoots.name=Clockwork Boots
+item.clockworkphase.clockwork_headpiece.name=Clockwork Headpiece
+item.clockworkphase.clockwork_chestplate.name=Clockwork Chestplate
+item.clockworkphase.clockwork_leggings.name=Clockwork Leggings
+item.clockworkphase.clockwork_boots.name=Clockwork Boots
 
-item.clockworkphase:moduleLifeWalk.name=Life Walk Module
-item.clockworkphase:moduleDeathWalk.name=Death Walk Module
-item.clockworkphase:moduleFurnace.name=Furnace Module
-item.clockworkphase:moduleSilkTouch.name=Silk Touch Module
-item.clockworkphase:modulePartialGravity.name=Partial Gravity Module
+item.clockworkphase.module_life_walk.name=Life Walk Module
+item.clockworkphase.module_death_walk.name=Death Walk Module
+item.clockworkphase.module_furnace.name=Furnace Module
+item.clockworkphase.module_silk_touch.name=Silk Touch Module
+item.clockworkphase.module_partial_gravity.name=Partial Gravity Module
 
 
 #Block Localizations
-tile.clockworkphase:brassBlock.name=Brass Block
-tile.clockworkphase:clockworkAssemblyTable.name=Clockwork Assembly Table
-tile.clockworkphase:windingBox.name=Winding Box
-tile.clockworkphase:growthExtractor.name=Growth Extractor
-tile.clockworkphase:timeSand.name=Time Sand
-tile.clockworkphase:celestialCompass.name=Celestial Compass Core
-tile.clockworkphase:celestialCompassSub.name=Celestial Compass
-tile.clockworkphase:disassembler.name=Disassembler
-tile.clockworkphase:hourglassLightBlock.name=Hourglass Light
-tile.clockworkphase:timeWell.name=Well of Time
-tile.clockworkphase:oreTemporal.name=tEmPoRAl oRe
-tile.clockworkphase:sandTemporal.name=tEmPoRAl sNaD
-tile.clockworkphase:woodTemporal.name=tEmPoRAl lOg
-tile.clockworkphase:blockTemporal.name=tEmPoRAl blOCk
+tile.clockworkphase.brass_block.name=Brass Block
+tile.clockworkphase.clockwork_assembly_table.name=Clockwork Assembly Table
+tile.clockworkphase.winding_box.name=Winding Box
+tile.clockworkphase.growth_extractor.name=Growth Extractor
+tile.clockworkphase.timeSand.name=Time Sand
+tile.clockworkphase.celestial_compass.name=Celestial Compass Core
+tile.clockworkphase.celestial_compass_sub.name=Celestial Compass
+tile.clockworkphase.disassembler.name=Disassembler
+tile.clockworkphase.hourglass_light_block.name=Hourglass Light
+tile.clockworkphase.time_well.name=Well of Time
+tile.clockworkphase.ore_temporal.name=tEmPoRAl oRe
+tile.clockworkphase.sand_temporal.name=tEmPoRAl sNaD
+tile.clockworkphase.wood_temporal.name=tEmPoRAl lOg
+tile.clockworkphase.block_temporal.name=tEmPoRAl blOCk
 
-tile.clockworkphase:clockworkphase:extractor.name=Fork Extractor
-tile.clockworkphase:clockworkphase:extractorLife.name=Life Fork Extractor
-tile.clockworkphase:clockworkphase:extractorLight.name=Light Fork Extractor
-tile.clockworkphase:clockworkphase:extractorWater.name=Water Fork Extractor
-tile.clockworkphase:clockworkphase:extractorEarth.name=Earth Fork Extractor
-tile.clockworkphase:clockworkphase:extractorAir.name=Air Fork Extractor
-tile.clockworkphase:clockworkphase:extractorFire.name=Fire Fork Extractor
-tile.clockworkphase:clockworkphase:extractorLunar.name=Lunar Fork Extractor
-tile.clockworkphase:clockworkphase:extractorDeath.name=Death Fork Extractor
+tile.clockworkphase.extractor.name=Fork Extractor
+tile.clockworkphase.extractor_life.name=Life Fork Extractor
+tile.clockworkphase.extractor_light.name=Light Fork Extractor
+tile.clockworkphase.extractor_water.name=Water Fork Extractor
+tile.clockworkphase.extractor_earth.name=Earth Fork Extractor
+tile.clockworkphase.extractor_air.name=Air Fork Extractor
+tile.clockworkphase.extractor_fire.name=Fire Fork Extractor
+tile.clockworkphase.extractor_lunar.name=Lunar Fork Extractor
+tile.clockworkphase.extractor_death.name=Death Fork Extractor
 
 
 
@@ -118,8 +118,8 @@ itemGroup.ClockworkPhase=Clockwork Phase
 
 
 #Phase Event Localizations
-clockworkphase:phase_event.default=Default - (This should never show up)
-clockworkphase:phase_event.healthyatmosphere=Healthy Atmosphere
+clockworkphase.phase_event.default=Default - (This should never show up)
+clockworkphase.phase_event.healthyatmosphere=Healthy Atmosphere
 
 
 #Key Localizations

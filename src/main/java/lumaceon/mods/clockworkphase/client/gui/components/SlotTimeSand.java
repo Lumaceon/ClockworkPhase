@@ -12,7 +12,8 @@ public class SlotTimeSand extends Slot
         super(inventory, id, x, y);
     }
 
-    public boolean isItemValid(ItemStack is)
+    @Override
+	public boolean isItemValid(ItemStack is)
     {
         return is.getItem() instanceof ITimeSand;
     }

@@ -1,8 +1,20 @@
 package lumaceon.mods.clockworkphase.item.construct.clockwork.tool;
 
-import cpw.mods.fml.common.network.NetworkRegistry;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
+import lumaceon.mods.clockworkphase.custom.CustomUtils;
+import lumaceon.mods.clockworkphase.custom.IHasModel;
+import net.minecraft.block.state.IBlockState;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.block.model.ModelResourceLocation;
+import net.minecraft.client.util.ITooltipFlag;
+import net.minecraft.util.ActionResult;
+import net.minecraft.util.EnumActionResult;
+import net.minecraft.util.EnumFacing;
+import net.minecraft.util.EnumHand;
+import net.minecraft.util.math.BlockPos;
+import net.minecraftforge.client.model.ModelLoader;
+import net.minecraftforge.fml.common.network.NetworkRegistry;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import lumaceon.mods.clockworkphase.ClockworkPhase;
 import lumaceon.mods.clockworkphase.block.tileentity.TileEntityTimeWell;
 import lumaceon.mods.clockworkphase.init.ModBlocks;
@@ -14,17 +26,14 @@ import lumaceon.mods.clockworkphase.item.construct.abstracts.IClockwork;
 import lumaceon.mods.clockworkphase.item.construct.abstracts.IDisassemble;
 import lumaceon.mods.clockworkphase.lib.MechanicTweaker;
 import lumaceon.mods.clockworkphase.lib.NBTTags;
-import lumaceon.mods.clockworkphase.lib.Textures;
 import lumaceon.mods.clockworkphase.network.MessageParticleSpawn;
 import lumaceon.mods.clockworkphase.network.MessageTemporalItemChange;
 import lumaceon.mods.clockworkphase.network.PacketHandler;
-import lumaceon.mods.clockworkphase.proxy.ClientProxy;
 import lumaceon.mods.clockworkphase.util.NBTHelper;
 import lumaceon.mods.clockworkphase.util.TensionHelper;
 import lumaceon.mods.clockworkphase.util.TimeSandHelper;
 import lumaceon.mods.clockworkphase.util.TimeSandParser;
 import net.minecraft.block.Block;
-import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
@@ -35,16 +44,15 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
-import net.minecraftforge.common.ForgeHooks;
 import org.lwjgl.input.Keyboard;
 
 import java.util.List;
 
-public class ItemClockworkAxe extends ItemAxe implements IClockwork, IDisassemble, ITimeSand, IKeybindAbility, ITemporalChange
+public class ItemClockworkAxe extends ItemAxe implements IClockwork, IDisassemble, ITimeSand, IKeybindAbility, ITemporalChange, IHasModel
 {
     public ItemClockworkAxe(Item.ToolMaterial mat)
     {
-        super(mat);
+        super(mat, 8, -3);
         this.setCreativeTab(ClockworkPhase.instance.creativeTabClockworkPhase);
         this.setMaxStackSize(1);
         this.setMaxDamage(50);
@@ -53,15 +61,15 @@ public class ItemClockworkAxe extends ItemAxe implements IClockwork, IDisassembl
     }
 
     @Override
-    public boolean onItemUse(ItemStack is, EntityPlayer player, World world, int x, int y, int z, int meta, float f1, float f2, float f3)
+    public EnumActionResult onItemUse(EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ)
     {
-        return false;
+        return EnumActionResult.PASS;
     }
 
     @Override
-    public ItemStack onItemRightClick(ItemStack is, World world, EntityPlayer player)
+    public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player, EnumHand hand)
     {
-        return is;
+        return ActionResult.newResult(EnumActionResult.PASS, player.getHeldItem(hand));
     }
 
     @Override
@@ -70,25 +78,21 @@ public class ItemClockworkAxe extends ItemAxe implements IClockwork, IDisassembl
         int x = (int) Math.floor(entityItem.posX);
         int y = (int) Math.floor(entityItem.posY - 1);
         int z = (int) Math.floor(entityItem.posZ);
+        BlockPos pos = new BlockPos(x, y, z);
 
-        Block targetBlock = entityItem.worldObj.getBlock(x, y, z);
-
-        if (targetBlock == null)
-        {
-            return false;
-        }
+        Block targetBlock = entityItem.world.getBlockState(pos).getBlock();
 
         if (!targetBlock.equals(ModBlocks.timeWell))
         {
             return false;
         }
 
-        TileEntity te = entityItem.worldObj.getTileEntity(x, y, z);
-        if(te != null && te instanceof TileEntityTimeWell)
+        TileEntity te = entityItem.world.getTileEntity(pos);
+        if(te instanceof TileEntityTimeWell)
         {
-            if(!entityItem.worldObj.isRemote)
+            if(!entityItem.world.isRemote)
             {
-                int amountRemoved = this.removeTimeSand(entityItem.getEntityItem(), 1000);
+                int amountRemoved = this.removeTimeSand(entityItem.getItem(), 1000);
                 TileEntityTimeWell timeWell = (TileEntityTimeWell)te;
                 timeWell.addTimeSand(amountRemoved);
                 return false;
@@ -98,25 +102,15 @@ public class ItemClockworkAxe extends ItemAxe implements IClockwork, IDisassembl
     }
 
     @Override
-    public float func_150893_a(ItemStack is, Block block)
+    public float getDestroySpeed(ItemStack stack, IBlockState state)
     {
-        float efficiency = super.func_150893_a(is, block); if(efficiency == 1.0F) { return efficiency; }
-        int tension = NBTHelper.getInt(is, NBTTags.TENSION_ENERGY); if(tension <= 0) { return 1.0F; }
-        int speed = NBTHelper.getInt(is, NBTTags.SPEED); if(speed <= 0) { return 1.0F; }
-
-        return (float)speed / 20;
-    }
-
-    @Override
-    public float getDigSpeed(ItemStack stack, Block block, int meta)
-    {
-        if(ForgeHooks.isToolEffective(stack, block, meta))
+        if(CustomUtils.isToolEffective(stack, state))
         {
             int tension = NBTHelper.getInt(stack, NBTTags.TENSION_ENERGY); if(tension <= 0) { return 1.0F; }
             int speed = NBTHelper.getInt(stack, NBTTags.SPEED); if(speed <= 0) { return 1.0F; }
             return (float)speed / 20;
         }
-        return func_150893_a(stack, block);
+        return super.getDestroySpeed(stack, state);
     }
 
     @Override
@@ -126,9 +120,9 @@ public class ItemClockworkAxe extends ItemAxe implements IClockwork, IDisassembl
     }
 
     @Override
-    public boolean onBlockDestroyed(ItemStack is, World world, Block block, int x, int y, int z, EntityLivingBase entity)
+    public boolean onBlockDestroyed(ItemStack is, World world, IBlockState state, BlockPos pos, EntityLivingBase entity)
     {
-        if ((double)block.getBlockHardness(world, x, y, z) != 0.0D)
+        if ((double)state.getBlockHardness(world, pos) != 0.0D)
         {
             if(is.getItem() instanceof IClockwork)
             {
@@ -148,7 +142,7 @@ public class ItemClockworkAxe extends ItemAxe implements IClockwork, IDisassembl
 
                 if(memory > 0 && !world.isRemote)
                 {
-                    if(this.func_150893_a(is, block) > 1.0F)
+                    if(this.getDestroySpeed(is, state) > 1.0F)
                     {
                         if(entity instanceof EntityPlayer)
                         {
@@ -164,7 +158,7 @@ public class ItemClockworkAxe extends ItemAxe implements IClockwork, IDisassembl
                             if(world.rand.nextInt(chance) == 0)
                             {
                                 this.addTimeSand(is, MechanicTweaker.AXE_TIME_SAND_INCREMENT);
-                                PacketHandler.INSTANCE.sendToAllAround(new MessageParticleSpawn(x + 0.5, y + 0.5, z + 0.5, 1), new NetworkRegistry.TargetPoint(world.provider.dimensionId, x + 0.5, y + 0.5, z + 0.5, 64));
+                                PacketHandler.INSTANCE.sendToAllAround(new MessageParticleSpawn(pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, 1), new NetworkRegistry.TargetPoint(world.provider.getDimension(), pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, 64));
                             }
                         }
                     }
@@ -177,8 +171,9 @@ public class ItemClockworkAxe extends ItemAxe implements IClockwork, IDisassembl
 
     @Override
     @SideOnly(Side.CLIENT)
-    public void addInformation(ItemStack is, EntityPlayer player, List list, boolean flag)
+    public void addInformation(ItemStack is, World worldIn, List<String> list, ITooltipFlag flagIn)
     {
+        EntityPlayer player = Minecraft.getMinecraft().player;
         list.add("Tension: " + "\u00a7e" + NBTHelper.getInt(is, NBTTags.TENSION_ENERGY) + "/" + "\u00a7e" + NBTHelper.getInt(is, NBTTags.MAX_TENSION));
         int timeSand = getTimeSand(is);
         if(timeSand > 0)
@@ -287,7 +282,7 @@ public class ItemClockworkAxe extends ItemAxe implements IClockwork, IDisassembl
             NBTHelper.setInteger(mainspring, NBTTags.MAX_TENSION, maxTension);
             NBTHelper.setInteger(mainspring, NBTTags.TENSION_ENERGY, 0);
 
-            world.spawnEntityInWorld(new EntityItem(world, x, y, z, mainspring));
+            world.spawnEntity(new EntityItem(world, x, y, z, mainspring));
         }
 
         if(NBTHelper.hasTag(is, NBTTags.CLOCKWORK))
@@ -295,8 +290,8 @@ public class ItemClockworkAxe extends ItemAxe implements IClockwork, IDisassembl
             NBTTagList tagList = NBTHelper.getTagList(is, NBTTags.CLOCKWORK);
             if(tagList.tagCount() > 0)
             {
-                ItemStack clockwork = ItemStack.loadItemStackFromNBT(tagList.getCompoundTagAt(0));
-                world.spawnEntityInWorld(new EntityItem(world, x, y, z, clockwork));
+                ItemStack clockwork = new ItemStack(tagList.getCompoundTagAt(0));
+                world.spawnEntity(new EntityItem(world, x, y, z, clockwork));
             }
         }
 
@@ -310,22 +305,11 @@ public class ItemClockworkAxe extends ItemAxe implements IClockwork, IDisassembl
     }
 
     @Override
-    public String getUnlocalizedName()
-    {
-        return String.format("item.%s%s", Textures.RESOURCE_PREFIX, super.getUnlocalizedName().substring(super.getUnlocalizedName().indexOf('.') + 1));
-    }
-
-    @Override
-    public String getUnlocalizedName(ItemStack is)
-    {
-        return String.format("item.%s%s", Textures.RESOURCE_PREFIX, super.getUnlocalizedName().substring(super.getUnlocalizedName().indexOf('.') + 1));
-    }
-
-    @Override
     @SideOnly(Side.CLIENT)
-    public void registerIcons(IIconRegister registry)
+    public void registerIcons()
     {
-        this.itemIcon = registry.registerIcon(this.getUnlocalizedName().substring(this.getUnlocalizedName().indexOf(".") + 1));
+        ModelLoader.setCustomModelResourceLocation(this, 0, new ModelResourceLocation(getRegistryName(), "inventory"));
+//        this.itemIcon = registry.registerIcon(this.getTranslationKey().substring(this.getTranslationKey().indexOf(".") + 1));
     }
 
     @Override

@@ -10,20 +10,20 @@ public class NBTHelper
 {
     public static boolean hasTag(ItemStack is, String keyName)
     {
-        return is != null && is.stackTagCompound != null && is.stackTagCompound.hasKey(keyName);
+        return !is.isEmpty() && is.getTagCompound() != null && is.getTagCompound().hasKey(keyName);
     }
 
     public static void removeTag(ItemStack is, String keyName)
     {
-        if (is.stackTagCompound != null)
+        if (is.getTagCompound() != null)
         {
-            is.stackTagCompound.removeTag(keyName);
+            is.getTagCompound().removeTag(keyName);
         }
     }
 
     private static void initNBTTagCompound(ItemStack is)
     {
-        if (is.stackTagCompound == null)
+        if (is.getTagCompound() == null)
         {
             is.setTagCompound(new NBTTagCompound());
         }
@@ -36,7 +36,7 @@ public class NBTHelper
         NBTTagList nbtList = new NBTTagList();
         for (int index = 0; index < inventory.length; index++)
         {
-            if (inventory[index] != null)
+            if (!inventory[index].isEmpty())
             {
                 NBTTagCompound tag = new NBTTagCompound();
                 tag.setByte("slot_index", (byte)index);
@@ -51,7 +51,7 @@ public class NBTHelper
     {
         initNBTTagCompound(is);
 
-        if(!is.stackTagCompound.hasKey(keyName))
+        if(!is.getTagCompound().hasKey(keyName))
         {
             return null;
         }
@@ -66,7 +66,7 @@ public class NBTHelper
             byte slotIndex = tagCompound.getByte("slot_index");
             if (slotIndex >= 0 && slotIndex < inventory.length)
             {
-                inventory[slotIndex] = ItemStack.loadItemStackFromNBT(tagCompound);
+                inventory[slotIndex] = new ItemStack(tagCompound);
             }
         }
         return inventory;
@@ -76,38 +76,38 @@ public class NBTHelper
     {
         initNBTTagCompound(is);
 
-        is.stackTagCompound.setTag(keyName, nbt);
+        is.getTagCompound().setTag(keyName, nbt);
     }
 
     public static void setTagList(ItemStack is, String keyName, NBTTagList nbt)
     {
         initNBTTagCompound(is);
 
-        is.stackTagCompound.setTag(keyName, nbt);
+        is.getTagCompound().setTag(keyName, nbt);
     }
 
     public static NBTBase getTag(ItemStack is, String keyName)
     {
         initNBTTagCompound(is);
 
-        if(!is.stackTagCompound.hasKey(keyName))
+        if(!is.getTagCompound().hasKey(keyName))
         {
             setTagList(is, keyName, new NBTTagList());
         }
 
-        return is.stackTagCompound.getTag(keyName);
+        return is.getTagCompound().getTag(keyName);
     }
 
     public static NBTTagList getTagList(ItemStack is, String keyName)
     {
         initNBTTagCompound(is);
 
-        if(!is.stackTagCompound.hasKey(keyName))
+        if(!is.getTagCompound().hasKey(keyName))
         {
             setTagList(is, keyName, new NBTTagList());
         }
 
-        NBTBase returnValue = is.stackTagCompound.getTag(keyName);
+        NBTBase returnValue = is.getTagCompound().getTag(keyName);
 
         if(!(returnValue instanceof NBTTagList))
         {
@@ -121,64 +121,64 @@ public class NBTHelper
     {
         initNBTTagCompound(is);
 
-        is.stackTagCompound.setLong(keyName, keyValue);
+        is.getTagCompound().setLong(keyName, keyValue);
     }
 
     public static String getString(ItemStack is, String keyName)
     {
         initNBTTagCompound(is);
 
-        if (!is.stackTagCompound.hasKey(keyName))
+        if (!is.getTagCompound().hasKey(keyName))
         {
             setString(is, keyName, "");
         }
 
-        return is.stackTagCompound.getString(keyName);
+        return is.getTagCompound().getString(keyName);
     }
 
     public static void setString(ItemStack is, String keyName, String keyValue)
     {
         initNBTTagCompound(is);
 
-        is.stackTagCompound.setString(keyName, keyValue);
+        is.getTagCompound().setString(keyName, keyValue);
     }
 
     public static boolean getBoolean(ItemStack is, String keyName)
     {
         initNBTTagCompound(is);
 
-        if (!is.stackTagCompound.hasKey(keyName))
+        if (!is.getTagCompound().hasKey(keyName))
         {
             setBoolean(is, keyName, false);
         }
 
-        return is.stackTagCompound.getBoolean(keyName);
+        return is.getTagCompound().getBoolean(keyName);
     }
 
     public static void setBoolean(ItemStack is, String keyName, boolean keyValue)
     {
         initNBTTagCompound(is);
 
-        is.stackTagCompound.setBoolean(keyName, keyValue);
+        is.getTagCompound().setBoolean(keyName, keyValue);
     }
 
     public static byte getByte(ItemStack is, String keyName)
     {
         initNBTTagCompound(is);
 
-        if (!is.stackTagCompound.hasKey(keyName))
+        if (!is.getTagCompound().hasKey(keyName))
         {
             setByte(is, keyName, (byte) 0);
         }
 
-        return is.stackTagCompound.getByte(keyName);
+        return is.getTagCompound().getByte(keyName);
     }
 
     public static void setByte(ItemStack is, String keyName, byte keyValue)
     {
         initNBTTagCompound(is);
 
-        is.stackTagCompound.setByte(keyName, keyValue);
+        is.getTagCompound().setByte(keyName, keyValue);
     }
 
     // short
@@ -186,87 +186,87 @@ public class NBTHelper
     {
         initNBTTagCompound(is);
 
-        if (!is.stackTagCompound.hasKey(keyName))
+        if (!is.getTagCompound().hasKey(keyName))
         {
             setShort(is, keyName, (short) 0);
         }
 
-        return is.stackTagCompound.getShort(keyName);
+        return is.getTagCompound().getShort(keyName);
     }
 
     public static void setShort(ItemStack is, String keyName, short keyValue)
     {
         initNBTTagCompound(is);
 
-        is.stackTagCompound.setShort(keyName, keyValue);
+        is.getTagCompound().setShort(keyName, keyValue);
     }
 
     public static int getInt(ItemStack is, String keyName)
     {
         initNBTTagCompound(is);
 
-        if (!is.stackTagCompound.hasKey(keyName))
+        if (!is.getTagCompound().hasKey(keyName))
         {
             setInteger(is, keyName, 0);
         }
 
-        return is.stackTagCompound.getInteger(keyName);
+        return is.getTagCompound().getInteger(keyName);
     }
 
     public static void setInteger(ItemStack is, String keyName, int keyValue)
     {
         initNBTTagCompound(is);
 
-        is.stackTagCompound.setInteger(keyName, keyValue);
+        is.getTagCompound().setInteger(keyName, keyValue);
     }
 
     public static long getLong(ItemStack is, String keyName)
     {
         initNBTTagCompound(is);
 
-        if (!is.stackTagCompound.hasKey(keyName))
+        if (!is.getTagCompound().hasKey(keyName))
         {
             setLong(is, keyName, 0);
         }
 
-        return is.stackTagCompound.getLong(keyName);
+        return is.getTagCompound().getLong(keyName);
     }
 
     public static float getFloat(ItemStack is, String keyName)
     {
         initNBTTagCompound(is);
 
-        if (!is.stackTagCompound.hasKey(keyName))
+        if (!is.getTagCompound().hasKey(keyName))
         {
             setFloat(is, keyName, 0);
         }
 
-        return is.stackTagCompound.getFloat(keyName);
+        return is.getTagCompound().getFloat(keyName);
     }
 
     public static void setFloat(ItemStack is, String keyName, float keyValue)
     {
         initNBTTagCompound(is);
 
-        is.stackTagCompound.setFloat(keyName, keyValue);
+        is.getTagCompound().setFloat(keyName, keyValue);
     }
 
     public static double getDouble(ItemStack is, String keyName)
     {
         initNBTTagCompound(is);
 
-        if (!is.stackTagCompound.hasKey(keyName))
+        if (!is.getTagCompound().hasKey(keyName))
         {
             setDouble(is, keyName, 0);
         }
 
-        return is.stackTagCompound.getDouble(keyName);
+        return is.getTagCompound().getDouble(keyName);
     }
 
     public static void setDouble(ItemStack is, String keyName, double keyValue)
     {
         initNBTTagCompound(is);
 
-        is.stackTagCompound.setDouble(keyName, keyValue);
+        is.getTagCompound().setDouble(keyName, keyValue);
     }
 }

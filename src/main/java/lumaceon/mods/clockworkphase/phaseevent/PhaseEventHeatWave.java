@@ -6,7 +6,7 @@ import net.minecraft.util.DamageSource;
 
 public class PhaseEventHeatWave extends PhaseEventAbstract
 {
-    public String EVENT_UNLOCALIZED_NAME = "clockworkphase:phase_event.healthyatmosphere";
+    public String EVENT_UNLOCALIZED_NAME = "clockworkphase.phase_event.healthyatmosphere";
     public String EVENT_WARNING_MESSAGE = "The air around you begins to heat up.";
     public String EVENT_ACTIVATION_MESSAGE = "A heat wave strikes.";
     public String EVENT_DEACTIVATION_MESSAGE = "The air around you returns to normal temperature.";
@@ -16,9 +16,9 @@ public class PhaseEventHeatWave extends PhaseEventAbstract
     {
         if(warmupTime <= 0 && duration > 0)
         {
-            if(entity.isBurning() && entity.worldObj.getWorldTime() % 4 == 0)
+            if(entity.isBurning() && entity.world.getWorldTime() % 4 == 0)
             {
-                entity.attackEntityFrom(DamageSource.onFire, 0.5F);
+                entity.attackEntityFrom(DamageSource.ON_FIRE, 0.5F);
             }
         }
     }
@@ -30,7 +30,7 @@ public class PhaseEventHeatWave extends PhaseEventAbstract
     }
 
     @Override
-    public String getUnlocalizedName()
+    public String getTranslationKey()
     {
         return this.EVENT_UNLOCALIZED_NAME;
     }

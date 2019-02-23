@@ -1,7 +1,8 @@
 package lumaceon.mods.clockworkphase.item;
 
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
+import net.minecraft.client.util.ITooltipFlag;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import lumaceon.mods.clockworkphase.client.handler.KeyHandler;
 import lumaceon.mods.clockworkphase.item.construct.IKeybindAbility;
 import lumaceon.mods.clockworkphase.item.construct.abstracts.IDisassemble;
@@ -19,7 +20,7 @@ public class ItemTemporalMultitool extends ItemClockworkPhaseGeneric implements 
 {
     @Override
     @SideOnly(Side.CLIENT)
-    public void addInformation(ItemStack is, EntityPlayer player, List list, boolean flag)
+    public void addInformation(ItemStack is, World worldIn, List<String> list, ITooltipFlag flagIn)
     {
         if(Keyboard.isKeyDown(Keyboard.KEY_LSHIFT) || Keyboard.isKeyDown(Keyboard.KEY_RSHIFT))
         {
@@ -52,7 +53,7 @@ public class ItemTemporalMultitool extends ItemClockworkPhaseGeneric implements 
             ItemStack[] items = NBTHelper.getInventoryFromNBTTag(is, NBTTags.TEMPORAL_ITEMS);
             for(int n = 0; n < items.length; n++)
             {
-                world.spawnEntityInWorld(new EntityItem(world, x, y, z, items[n]));
+                world.spawnEntity(new EntityItem(world, x, y, z, items[n]));
             }
             NBTHelper.removeTag(is, NBTTags.TEMPORAL_ITEMS);
         }

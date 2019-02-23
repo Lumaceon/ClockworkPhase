@@ -15,7 +15,8 @@ public class SlotItemSpecific extends Slot
         this.item = item;
     }
 
-    public boolean isItemValid(ItemStack is)
+    @Override
+	public boolean isItemValid(ItemStack is)
     {
         return is.getItem().equals(this.item);
     }

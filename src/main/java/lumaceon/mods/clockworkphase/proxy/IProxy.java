@@ -1,7 +1,7 @@
 package lumaceon.mods.clockworkphase.proxy;
 
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.util.MovingObjectPosition;
+import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.World;
 
 public interface IProxy
@@ -18,5 +18,5 @@ public interface IProxy
 
     public World getStaticWorld();
 
-    public MovingObjectPosition getObjectLookedAt();
+    public RayTraceResult getObjectLookedAt();
 }

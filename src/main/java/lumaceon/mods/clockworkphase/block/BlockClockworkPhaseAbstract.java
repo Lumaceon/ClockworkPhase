@@ -1,15 +1,16 @@
 package lumaceon.mods.clockworkphase.block;
 
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
+import lumaceon.mods.clockworkphase.custom.IHasModel;
+import net.minecraft.client.renderer.block.model.ModelResourceLocation;
+import net.minecraft.item.Item;
+import net.minecraftforge.client.model.ModelLoader;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import lumaceon.mods.clockworkphase.ClockworkPhase;
-import lumaceon.mods.clockworkphase.lib.Textures;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
-import net.minecraft.client.renderer.texture.IIconRegister;
-import net.minecraft.item.ItemStack;
 
-public abstract class BlockClockworkPhaseAbstract extends Block
+public abstract class BlockClockworkPhaseAbstract extends Block implements IHasModel
 {
     public BlockClockworkPhaseAbstract(Material material)
     {
@@ -19,15 +20,10 @@ public abstract class BlockClockworkPhaseAbstract extends Block
     }
 
     @Override
-    public String getUnlocalizedName()
-    {
-        return String.format("tile.%s%s", Textures.RESOURCE_PREFIX, super.getUnlocalizedName().substring(super.getUnlocalizedName().indexOf('.') + 1));
-    }
-
-    @Override
     @SideOnly(Side.CLIENT)
-    public void registerBlockIcons(IIconRegister registry)
+    public void registerBlockIcons()
     {
-        this.blockIcon = registry.registerIcon(this.getUnlocalizedName().substring(this.getUnlocalizedName().indexOf(".") + 1));
+        ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(this), 0, new ModelResourceLocation(getRegistryName(), "inventory"));
+//        this.blockIcon = registry.registerIcon(this.getTranslationKey().substring(this.getTranslationKey().indexOf(".") + 1));
     }
 }

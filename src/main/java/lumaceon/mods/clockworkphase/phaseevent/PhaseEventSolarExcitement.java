@@ -4,12 +4,13 @@ import lumaceon.mods.clockworkphase.lib.GlobalPhaseReference;
 import lumaceon.mods.clockworkphase.lib.Phases;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.MobEffects;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 
 public class PhaseEventSolarExcitement extends PhaseEventAbstract
 {
-    public String EVENT_UNLOCALIZED_NAME = "clockworkphase:phase_event.solarexcite";
+    public String EVENT_UNLOCALIZED_NAME = "clockworkphase.phase_event.solarexcite";
     public String EVENT_WARNING_MESSAGE = "";
     public String EVENT_ACTIVATION_MESSAGE = "Everything grows much more bright.";
     public String EVENT_DEACTIVATION_MESSAGE = "The world dims around you.";
@@ -20,7 +21,7 @@ public class PhaseEventSolarExcitement extends PhaseEventAbstract
         if(entity instanceof EntityPlayer)
         {
             EntityPlayer player = (EntityPlayer)entity;
-            player.addPotionEffect(new PotionEffect(Potion.nightVision.getId(), 220, 0, true));
+            player.addPotionEffect(new PotionEffect(MobEffects.NIGHT_VISION, 220, 0, true, true));
         }
     }
 
@@ -34,7 +35,7 @@ public class PhaseEventSolarExcitement extends PhaseEventAbstract
     }
 
     @Override
-    public String getUnlocalizedName()
+    public String getTranslationKey()
     {
         return this.EVENT_UNLOCALIZED_NAME;
     }

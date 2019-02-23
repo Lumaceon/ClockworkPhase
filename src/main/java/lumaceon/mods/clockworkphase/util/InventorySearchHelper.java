@@ -16,7 +16,7 @@ public class InventorySearchHelper
             ArrayList<ItemStack> tempList = new ArrayList<ItemStack>(5);
             for(int n = 0; n < inventory.getSizeInventory(); n++)
             {
-                if(inventory.getStackInSlot(n) != null && inventory.getStackInSlot(n).getItem() instanceof ItemPocketWatch)
+                if(!inventory.getStackInSlot(n).isEmpty() && inventory.getStackInSlot(n).getItem() instanceof ItemPocketWatch)
                 {
                     tempList.add(inventory.getStackInSlot(n));
                 }

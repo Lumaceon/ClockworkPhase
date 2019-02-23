@@ -1,7 +1,13 @@
 package lumaceon.mods.clockworkphase.item.construct.clockworkarmor;
 
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
+import lumaceon.mods.clockworkphase.custom.IHasModel;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.block.model.ModelResourceLocation;
+import net.minecraft.client.util.ITooltipFlag;
+import net.minecraft.inventory.EntityEquipmentSlot;
+import net.minecraftforge.client.model.ModelLoader;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import lumaceon.mods.clockworkphase.ClockworkPhase;
 import lumaceon.mods.clockworkphase.init.ModItems;
 import lumaceon.mods.clockworkphase.item.construct.abstracts.*;
@@ -10,28 +16,29 @@ import lumaceon.mods.clockworkphase.proxy.ClientProxy;
 import lumaceon.mods.clockworkphase.util.NBTHelper;
 import lumaceon.mods.clockworkphase.util.TensionHelper;
 import net.minecraft.client.model.ModelBiped;
-import net.minecraft.client.renderer.texture.IIconRegister;
-import net.minecraft.enchantment.Enchantment;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemArmor;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.util.DamageSource;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ISpecialArmor;
 import org.lwjgl.input.Keyboard;
 
+import javax.annotation.Nullable;
 import java.util.List;
 
-public class ItemChronoArmor extends ItemArmor implements IClockwork, IDisassemble, ISpecialArmor
+public class ItemChronoArmor extends ItemArmor implements IClockwork, IDisassemble, ISpecialArmor, IHasModel
 {
+
+    private static final EntityEquipmentSlot[] EESlotsValues = new EntityEquipmentSlot[] { EntityEquipmentSlot.HEAD, EntityEquipmentSlot.CHEST, EntityEquipmentSlot.LEGS, EntityEquipmentSlot.FEET };
+
     public ItemChronoArmor(ArmorMaterial material, int renderIndex, int armorType)
     {
-        super(material, renderIndex, armorType);
+        super(material, renderIndex, EESlotsValues[armorType]);
         this.setCreativeTab(ClockworkPhase.instance.creativeTabClockworkPhase);
         this.setMaxStackSize(1);
         this.setMaxDamage(500);
@@ -40,8 +47,11 @@ public class ItemChronoArmor extends ItemArmor implements IClockwork, IDisassemb
 
     @Override
     @SideOnly(Side.CLIENT)
-    public void addInformation(ItemStack is, EntityPlayer player, List list, boolean flag)
+    public void addInformation(ItemStack is, World worldIn, List<String> list, ITooltipFlag flagIn)
     {
+        EntityPlayer player = Minecraft.getMinecraft().player;
+        if (player == null)
+            return;
         ItemStack hat = player.inventory.armorItemInSlot(0);
         ItemStack shirt = player.inventory.armorItemInSlot(1);
         ItemStack pants = player.inventory.armorItemInSlot(2);
@@ -50,31 +60,31 @@ public class ItemChronoArmor extends ItemArmor implements IClockwork, IDisassemb
         float singleArmorDefense = 0;
         float totalArmorDefense = 0;
 
-        if(is != null && is.getItem() instanceof ItemChronoArmor)
+        if(!is.isEmpty() && is.getItem() instanceof ItemChronoArmor)
         {
             ArmorProperties hatProp = ((ItemChronoArmor) is.getItem()).getProperties(player, is, new DamageSource("mob"), 0, 0);
             singleArmorDefense += hatProp.AbsorbRatio;
         }
 
-        if(hat != null && hat.getItem() instanceof ItemChronoArmor)
+        if(!hat.isEmpty() && hat.getItem() instanceof ItemChronoArmor)
         {
             ArmorProperties hatProp = ((ItemChronoArmor) hat.getItem()).getProperties(player, hat, new DamageSource("mob"), 0, 0);
             totalArmorDefense += hatProp.AbsorbRatio;
         }
 
-        if(shirt != null && shirt.getItem() instanceof ItemChronoArmor)
+        if(!shirt.isEmpty() && shirt.getItem() instanceof ItemChronoArmor)
         {
             ArmorProperties hatProp = ((ItemChronoArmor) shirt.getItem()).getProperties(player, shirt, new DamageSource("mob"), 0, 0);
             totalArmorDefense += hatProp.AbsorbRatio;
         }
 
-        if(pants != null && pants.getItem() instanceof ItemChronoArmor)
+        if(!pants.isEmpty() && pants.getItem() instanceof ItemChronoArmor)
         {
             ArmorProperties hatProp = ((ItemChronoArmor) pants.getItem()).getProperties(player, pants, new DamageSource("mob"), 0, 0);
             totalArmorDefense += hatProp.AbsorbRatio;
         }
 
-        if(shoes != null && shoes.getItem() instanceof ItemChronoArmor)
+        if(!shoes.isEmpty() && shoes.getItem() instanceof ItemChronoArmor)
         {
             ArmorProperties hatProp = ((ItemChronoArmor) shoes.getItem()).getProperties(player, shoes, new DamageSource("mob"), 0, 0);
             totalArmorDefense += hatProp.AbsorbRatio;
@@ -99,10 +109,10 @@ public class ItemChronoArmor extends ItemArmor implements IClockwork, IDisassemb
 
     @Override
     @SideOnly(Side.CLIENT)
-    public ModelBiped getArmorModel(EntityLivingBase entityLiving, ItemStack is, int armorSlot)
+    public ModelBiped getArmorModel(EntityLivingBase entityLiving, ItemStack is, EntityEquipmentSlot armorSlotEnum, ModelBiped _default)
     {
         ModelBiped armorModel = null;
-        if(is != null && is.getItem() instanceof ItemChronoArmor)
+        if(!is.isEmpty() && is.getItem() instanceof ItemChronoArmor)
         {
             if(is.getItem() instanceof ItemClockworkHeadpiece)
             {
@@ -121,6 +131,8 @@ public class ItemChronoArmor extends ItemArmor implements IClockwork, IDisassemb
                 armorModel = ClientProxy.getChronoArmorModel(3);
             }
 
+            int armorSlot = Math.abs(armorSlotEnum.getIndex() - 3);
+
             if(armorModel != null)
             {
                 armorModel.bipedHead.showModel = armorSlot == 0;
@@ -133,30 +145,21 @@ public class ItemChronoArmor extends ItemArmor implements IClockwork, IDisassemb
                 armorModel.isSneak = entityLiving.isSneaking();
                 armorModel.isRiding = entityLiving.isRiding();
                 armorModel.isChild = entityLiving.isChild();
-                armorModel.heldItemRight = entityLiving.getHeldItem() != null ? 1 : 0;
-                if (entityLiving instanceof EntityPlayer)
-                {
-                    armorModel.aimedBow = ((EntityPlayer) entityLiving).getItemInUseDuration() > 2;
-                }
+//                armorModel.heldItemRight = !entityLiving.getHeldItem().isEmpty() ? 1 : 0; // TODO
+//                if (entityLiving instanceof EntityPlayer)
+//                {
+//                    armorModel.aimedBow = ((EntityPlayer) entityLiving).getItemInUseDuration() > 2;
+//                }
             }
         }
         return armorModel;
     }
 
+    @Nullable
     @Override
-    public String getArmorTexture(ItemStack stack, Entity entity, int slot, String type)
+    public String getArmorTexture(ItemStack stack, Entity entity, EntityEquipmentSlot slot, String type)
     {
-        switch(slot)
-        {
-            case 0:
-                return "clockworkphase:textures/armor/chronoArmor.png";
-            case 1:
-                return "clockworkphase:textures/armor/chronoArmor.png";
-            case 2:
-                return "clockworkphase:textures/armor/chronoArmor.png";
-            default:
-                return "clockworkphase:textures/armor/chronoArmor.png";
-        }
+        return "clockworkphase:textures/armor/chrono_armor.png";
     }
 
     @Override
@@ -172,22 +175,11 @@ public class ItemChronoArmor extends ItemArmor implements IClockwork, IDisassemb
     }
 
     @Override
-    public String getUnlocalizedName()
-    {
-        return String.format("item.%s%s", Textures.RESOURCE_PREFIX, super.getUnlocalizedName().substring(super.getUnlocalizedName().indexOf('.') + 1));
-    }
-
-    @Override
-    public String getUnlocalizedName(ItemStack is)
-    {
-        return String.format("item.%s%s", Textures.RESOURCE_PREFIX, super.getUnlocalizedName().substring(super.getUnlocalizedName().indexOf('.') + 1));
-    }
-
-    @Override
     @SideOnly(Side.CLIENT)
-    public void registerIcons(IIconRegister registry)
+    public void registerIcons()
     {
-        this.itemIcon = registry.registerIcon(this.getUnlocalizedName().substring(this.getUnlocalizedName().indexOf(".") + 1));
+        ModelLoader.setCustomModelResourceLocation(this, 0, new ModelResourceLocation(getRegistryName(), "inventory"));
+//        this.itemIcon = registry.registerIcon(this.getTranslationKey().substring(this.getTranslationKey().indexOf(".") + 1));
     }
 
     @Override
@@ -248,7 +240,7 @@ public class ItemChronoArmor extends ItemArmor implements IClockwork, IDisassemb
     @Override
     public int getArmorDisplay(EntityPlayer player, ItemStack armor, int slot)
     {
-        return this.getArmorMaterial().getDamageReductionAmount(Math.abs(slot - 3));
+        return this.getArmorMaterial().getDamageReductionAmount(EESlotsValues[Math.abs(slot - 3)]);
     }
 
     @Override
@@ -312,7 +304,7 @@ public class ItemChronoArmor extends ItemArmor implements IClockwork, IDisassemb
             NBTHelper.setInteger(mainspring, NBTTags.MAX_TENSION, maxTension);
             NBTHelper.setInteger(mainspring, NBTTags.TENSION_ENERGY, 0);
 
-            world.spawnEntityInWorld(new EntityItem(world, x, y, z, mainspring));
+            world.spawnEntity(new EntityItem(world, x, y, z, mainspring));
         }
 
         if(NBTHelper.hasTag(is, NBTTags.CLOCKWORK))
@@ -320,8 +312,8 @@ public class ItemChronoArmor extends ItemArmor implements IClockwork, IDisassemb
             NBTTagList tagList = NBTHelper.getTagList(is, NBTTags.CLOCKWORK);
             if(tagList.tagCount() > 0)
             {
-                ItemStack clockwork = ItemStack.loadItemStackFromNBT(tagList.getCompoundTagAt(0));
-                world.spawnEntityInWorld(new EntityItem(world, x, y, z, clockwork));
+                ItemStack clockwork = new ItemStack(tagList.getCompoundTagAt(0));
+                world.spawnEntity(new EntityItem(world, x, y, z, clockwork));
             }
         }
 

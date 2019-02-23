@@ -4,9 +4,9 @@ import lumaceon.mods.clockworkphase.lib.Reference;
 import lumaceon.mods.clockworkphase.phaseevent.PhaseEventAbstract;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.ChatComponentText;
+import net.minecraft.util.text.TextComponentString;
 import net.minecraft.world.World;
-import net.minecraft.world.WorldSavedData;
+import net.minecraft.world.storage.WorldSavedData;
 
 public class ExtendedWorldData extends WorldSavedData
 {
@@ -34,7 +34,7 @@ public class ExtendedWorldData extends WorldSavedData
             {
                 for(int n = 0; n < world.playerEntities.size(); n++)
                 {
-                    ((EntityPlayer)world.playerEntities.get(n)).addChatComponentMessage(new ChatComponentText(phaseEvent.getWarningMessage()));
+                    ((EntityPlayer)world.playerEntities.get(n)).sendMessage(new TextComponentString(phaseEvent.getWarningMessage()));
                 }
             }
         }
@@ -44,7 +44,7 @@ public class ExtendedWorldData extends WorldSavedData
             {
                 for(int n = 0; n < world.playerEntities.size(); n++)
                 {
-                    ((EntityPlayer)world.playerEntities.get(n)).addChatComponentMessage(new ChatComponentText(phaseEvent.getActivationMessage()));
+                    ((EntityPlayer)world.playerEntities.get(n)).sendMessage(new TextComponentString(phaseEvent.getActivationMessage()));
                 }
             }
         }
@@ -56,7 +56,7 @@ public class ExtendedWorldData extends WorldSavedData
         {
             for(int n = 0; n < world.playerEntities.size(); n++)
             {
-                ((EntityPlayer)world.playerEntities.get(n)).addChatComponentMessage(new ChatComponentText(phaseEvent.getDeactivationMessage()));
+                ((EntityPlayer)world.playerEntities.get(n)).sendMessage(new TextComponentString(phaseEvent.getDeactivationMessage()));
             }
         }
         phaseEvent = null;
@@ -64,7 +64,7 @@ public class ExtendedWorldData extends WorldSavedData
     }
 
     @Override
-    public void writeToNBT(NBTTagCompound nbt)
+    public NBTTagCompound writeToNBT(NBTTagCompound nbt)
     {
         if(phaseEvent != null)
         {
@@ -81,6 +81,7 @@ public class ExtendedWorldData extends WorldSavedData
             nbt.removeTag("phase_id");
             nbt.removeTag("phase_event_data");
         }
+        return nbt;
     }
 
     @Override
@@ -95,11 +96,11 @@ public class ExtendedWorldData extends WorldSavedData
 
     public static ExtendedWorldData get(World world)
     {
-        ExtendedWorldData dataHandler = (ExtendedWorldData)world.perWorldStorage.loadData(ExtendedWorldData.class, ID);
+        ExtendedWorldData dataHandler = (ExtendedWorldData)world.getPerWorldStorage().getOrLoadData(ExtendedWorldData.class, ID);
         if(dataHandler == null)
         {
             dataHandler = new ExtendedWorldData();
-            world.perWorldStorage.setData(ID, dataHandler);
+            world.getPerWorldStorage().setData(ID, dataHandler);
         }
         return dataHandler;
     }

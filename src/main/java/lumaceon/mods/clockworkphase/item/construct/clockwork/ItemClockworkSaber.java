@@ -1,7 +1,11 @@
 package lumaceon.mods.clockworkphase.item.construct.clockwork;
 
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
+import net.minecraft.block.state.IBlockState;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.util.ITooltipFlag;
+import net.minecraft.util.math.BlockPos;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import lumaceon.mods.clockworkphase.init.ModItems;
 import lumaceon.mods.clockworkphase.item.construct.IKeybindAbility;
 import lumaceon.mods.clockworkphase.item.construct.ITemporalChange;
@@ -28,8 +32,9 @@ public class ItemClockworkSaber extends ItemTimeSandClockworkAbstract implements
 {
     @Override
     @SideOnly(Side.CLIENT)
-    public void addInformation(ItemStack is, EntityPlayer player, List list, boolean flag)
+    public void addInformation(ItemStack is, World worldIn, List<String> list, ITooltipFlag flagIn)
     {
+        EntityPlayer player = Minecraft.getMinecraft().player;
         list.add("Tension: " + "\u00a7e" + NBTHelper.getInt(is, NBTTags.TENSION_ENERGY) + "/" + "\u00a7e" + NBTHelper.getInt(is, NBTTags.MAX_TENSION));
         int timeSand = getTimeSand(is);
         if(timeSand > 0)
@@ -103,14 +108,15 @@ public class ItemClockworkSaber extends ItemTimeSandClockworkAbstract implements
     }
 
 
-    @SideOnly(Side.CLIENT)
+    @Override
+	@SideOnly(Side.CLIENT)
     public boolean isFull3D()
     {
         return true;
     }
 
     @Override
-    public boolean onBlockDestroyed(ItemStack is, World world, Block p_150894_3_, int p_150894_4_, int p_150894_5_, int p_150894_6_, EntityLivingBase p_150894_7_)
+    public boolean onBlockDestroyed(ItemStack stack, World worldIn, IBlockState state, BlockPos pos, EntityLivingBase entityLiving)
     {
         return true;
     }

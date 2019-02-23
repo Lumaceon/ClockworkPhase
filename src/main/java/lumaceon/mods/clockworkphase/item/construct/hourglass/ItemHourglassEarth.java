@@ -8,7 +8,12 @@ import lumaceon.mods.clockworkphase.util.PhaseHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.ChatComponentText;
+import net.minecraft.util.ActionResult;
+import net.minecraft.util.EnumActionResult;
+import net.minecraft.util.EnumFacing;
+import net.minecraft.util.EnumHand;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.text.TextComponentString;
 import net.minecraft.world.World;
 
 public class ItemHourglassEarth extends ItemHourglass
@@ -39,7 +44,7 @@ public class ItemHourglassEarth extends ItemHourglass
             if(efficiency > 10)
             {
                 NBTHelper.setBoolean(is, NBTTags.ACTIVE, false);
-                player.addChatComponentMessage(new ChatComponentText("Your clockwork's quality can't handle it's speed."));
+                player.sendMessage(new TextComponentString("Your clockwork's quality can't handle it's speed."));
                 return;
             }
 
@@ -71,8 +76,9 @@ public class ItemHourglassEarth extends ItemHourglass
     }
 
     @Override
-    public boolean onItemUse(ItemStack is, EntityPlayer player, World world, int x, int y, int z, int meta, float f1, float f2, float f3)
+    public EnumActionResult onItemUse(EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ)
     {
+        ItemStack is = player.getHeldItem(hand);
         boolean isActive = NBTHelper.getBoolean(is, NBTTags.ACTIVE);
         NBTHelper.setBoolean(is, NBTTags.ACTIVE, !isActive);
         if(!isActive) //Being turned on
@@ -88,11 +94,13 @@ public class ItemHourglassEarth extends ItemHourglass
             player.capabilities.isFlying = false;
             player.capabilities.allowFlying = false;
         }
-        return true;
+        return EnumActionResult.SUCCESS;
     }
 
-    public ItemStack onItemRightClick(ItemStack is, World world, EntityPlayer player)
+    @Override
+	public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player, EnumHand hand)
     {
+        ItemStack is = player.getHeldItem(hand);
         boolean isActive = NBTHelper.getBoolean(is, NBTTags.ACTIVE);
         NBTHelper.setBoolean(is, NBTTags.ACTIVE, !isActive);
         if(!isActive) //Being turned on
@@ -108,6 +116,6 @@ public class ItemHourglassEarth extends ItemHourglass
             player.capabilities.isFlying = false;
             player.capabilities.allowFlying = false;
         }
-        return is;
+        return ActionResult.newResult(EnumActionResult.SUCCESS, is);
     }
 }

@@ -63,8 +63,8 @@ public class TimeSandParser
                 numberOfMinutes = (int)((timeSandD % 3600.0) / 60.0);
                 return numberOfHours + "Hrs " + numberOfMinutes + "Mins";
             case MINUTE:
-                numberOfMinutes = (int)(timeSandD / 100.0);
-                numberOfSeconds = (int)(timeSandD % 100.0);
+                numberOfMinutes = (int)(timeSandD / 60.0);
+                numberOfSeconds = (int)(timeSandD % 60.0);
                 return numberOfMinutes + "Mins " + numberOfSeconds + "Secs";
             case SECOND:
                 return timeSand + " Seconds";

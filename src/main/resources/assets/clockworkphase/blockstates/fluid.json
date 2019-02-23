@@ -1,0 +1,12 @@
+{
+  "forge_marker": 1,
+  "defaults": {
+    "model": "forge:fluid",
+    "transform": "forge:default-item"
+  },
+  "variants": {
+    "time_sand": [{
+      "custom": { "fluid": "time_sand" }
+    }]
+  }
+}

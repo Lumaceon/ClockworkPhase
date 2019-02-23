@@ -37,12 +37,12 @@ public class ContainerTimeWell extends Container
     @Override
     public boolean canInteractWith(EntityPlayer player)
     {
-        return timeWell.isUseableByPlayer(player);
+        return timeWell.isUsableByPlayer(player);
     }
 
     @Override
     public ItemStack transferStackInSlot(EntityPlayer p_82846_1_, int p_82846_2_)
     {
-        return null;
+        return ItemStack.EMPTY;
     }
 }

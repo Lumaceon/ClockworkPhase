@@ -1,6 +1,6 @@
 package lumaceon.mods.clockworkphase.init;
 
-import cpw.mods.fml.common.registry.GameRegistry;
+import lumaceon.mods.clockworkphase.custom.IHasModel;
 import lumaceon.mods.clockworkphase.item.*;
 import lumaceon.mods.clockworkphase.item.component.*;
 import lumaceon.mods.clockworkphase.item.component.base.*;
@@ -22,10 +22,7 @@ import lumaceon.mods.clockworkphase.registry.MemoryItemRegistry;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemArmor;
-import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.util.EnumHelper;
-import net.minecraftforge.fluids.FluidContainerRegistry;
-import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.oredict.OreDictionary;
 
 public class ModItems
@@ -51,14 +48,10 @@ public class ModItems
     public static Item chipTemporal;
     public static void initMaterials()
     {
-        ingotTemporal = new ItemTemporalIngot().setUnlocalizedName(Names.TEMPORAL_INGOT);
-        GameRegistry.registerItem(ingotTemporal, Names.TEMPORAL_INGOT);
-        brassIngot = new ItemBrassIngot().setUnlocalizedName(Names.BRASS_INGOT);
-        GameRegistry.registerItem(brassIngot, Names.BRASS_INGOT);
-        nuggetTemporal = new ItemTemporalNugget().setUnlocalizedName(Names.TEMPORAL_NUGGET);
-        GameRegistry.registerItem(nuggetTemporal, Names.TEMPORAL_NUGGET);
-        chipTemporal = new ItemTemporalChip().setUnlocalizedName(Names.TEMPORAL_CHIP);
-        GameRegistry.registerItem(chipTemporal, Names.TEMPORAL_CHIP);
+        ingotTemporal = toModel(new ItemTemporalIngot()).register(Names.TEMPORAL_INGOT);
+        brassIngot = toModel(new ItemBrassIngot()).register(Names.BRASS_INGOT);
+        nuggetTemporal = toModel(new ItemTemporalNugget()).register(Names.TEMPORAL_NUGGET);
+        chipTemporal = toModel(new ItemTemporalChip()).register(Names.TEMPORAL_CHIP);
 
         OreDictionary.registerOre("ingotBrass", brassIngot);
         OreDictionary.registerOre("ingotTemporal", ingotTemporal);
@@ -85,42 +78,24 @@ public class ModItems
     public static Item oldCoin;
     public static void initClockworkComponents()
     {
-        gearBrass = new ItemGearBrass().setUnlocalizedName(Names.GEAR_BRASS);
-        GameRegistry.registerItem(gearBrass, Names.GEAR_BRASS);
-        gearBronze = new ItemGearBronze().setUnlocalizedName(Names.GEAR_BRONZE);
-        GameRegistry.registerItem(gearBronze, Names.GEAR_BRONZE);
-        gearChronosphere = new ItemGearChronosphere().setUnlocalizedName(Names.GEAR_CHRONOSPHERE);
-        GameRegistry.registerItem(gearChronosphere, Names.GEAR_CHRONOSPHERE);
-        gearCopper = new ItemGearCopper().setUnlocalizedName(Names.GEAR_COPPER);
-        GameRegistry.registerItem(gearCopper, Names.GEAR_COPPER);
-        gearDiamond = new ItemGearDiamond().setUnlocalizedName(Names.GEAR_DIAMOND);
-        GameRegistry.registerItem(gearDiamond, Names.GEAR_DIAMOND);
-        gearEmerald = new ItemGearEmerald().setUnlocalizedName(Names.GEAR_EMERALD);
-        GameRegistry.registerItem(gearEmerald, Names.GEAR_EMERALD);
-        gearIron = new ItemGearIron().setUnlocalizedName(Names.GEAR_IRON);
-        GameRegistry.registerItem(gearIron, Names.GEAR_IRON);
-        gearLead = new ItemGearLead().setUnlocalizedName(Names.GEAR_LEAD);
-        GameRegistry.registerItem(gearLead, Names.GEAR_LEAD);
-        gearSilver = new ItemGearSilver().setUnlocalizedName(Names.GEAR_SILVER);
-        GameRegistry.registerItem(gearSilver, Names.GEAR_SILVER);
-        gearSteel = new ItemGearSteel().setUnlocalizedName(Names.GEAR_STEEL);
-        GameRegistry.registerItem(gearSteel, Names.GEAR_STEEL);
-        gearTemporal = new ItemGearTemporal().setUnlocalizedName(Names.GEAR_TEMPORAL);
-        GameRegistry.registerItem(gearTemporal, Names.GEAR_TEMPORAL);
-        gearThaumium = new ItemGearThaumium().setUnlocalizedName(Names.GEAR_THAUMIUM);
-        GameRegistry.registerItem(gearThaumium, Names.GEAR_THAUMIUM);
-        gearTin = new ItemGearTin().setUnlocalizedName(Names.GEAR_TIN);
-        GameRegistry.registerItem(gearTin, Names.GEAR_TIN);
-        gearRusty = new ItemRustyGear().setUnlocalizedName(Names.GEAR_RUSTY);
-        GameRegistry.registerItem(gearRusty, Names.GEAR_RUSTY);
-        framework = new ItemFramework().setUnlocalizedName(Names.FRAMEWORK);
-        GameRegistry.registerItem(framework, Names.FRAMEWORK);
-        noteBottle = new ItemNoteBottle().setUnlocalizedName(Names.NOTE_BOTTLE);
-        GameRegistry.registerItem(noteBottle, Names.NOTE_BOTTLE);
-        preciousCharm = new ItemPreciousCharm().setUnlocalizedName(Names.PRECIOUS_CHARM);
-        GameRegistry.registerItem(preciousCharm, Names.PRECIOUS_CHARM);
-        oldCoin = new ItemOldCoin().setUnlocalizedName(Names.OLD_COIN);
-        GameRegistry.registerItem(oldCoin, Names.OLD_COIN);
+        gearBrass = toModel(new ItemGearBrass()).register(Names.GEAR_BRASS);
+        gearBronze = toModel(new ItemGearBronze()).register(Names.GEAR_BRONZE);
+        gearChronosphere = toModel(new ItemGearChronosphere()).register(Names.GEAR_CHRONOSPHERE);
+        gearCopper = toModel(new ItemGearCopper()).register(Names.GEAR_COPPER);
+        gearDiamond = toModel(new ItemGearDiamond()).register(Names.GEAR_DIAMOND);
+        gearEmerald = toModel(new ItemGearEmerald()).register(Names.GEAR_EMERALD);
+        gearIron = toModel(new ItemGearIron()).register(Names.GEAR_IRON);
+        gearLead = toModel(new ItemGearLead()).register(Names.GEAR_LEAD);
+        gearSilver = toModel(new ItemGearSilver()).register(Names.GEAR_SILVER);
+        gearSteel = toModel(new ItemGearSteel()).register(Names.GEAR_STEEL);
+        gearTemporal = toModel(new ItemGearTemporal()).register(Names.GEAR_TEMPORAL);
+        gearThaumium = toModel(new ItemGearThaumium()).register(Names.GEAR_THAUMIUM);
+        gearTin = toModel(new ItemGearTin()).register(Names.GEAR_TIN);
+        gearRusty = toModel(new ItemRustyGear()).register(Names.GEAR_RUSTY);
+        framework = toModel(new ItemFramework()).register(Names.FRAMEWORK);
+        noteBottle = toModel(new ItemNoteBottle()).register(Names.NOTE_BOTTLE);
+        preciousCharm = toModel(new ItemPreciousCharm()).register(Names.PRECIOUS_CHARM);
+        oldCoin = toModel(new ItemOldCoin()).register(Names.OLD_COIN);
 
         OreDictionary.registerOre("gearBrass", gearBrass);
         OreDictionary.registerOre("gearBronze", gearBronze);
@@ -151,23 +126,15 @@ public class ModItems
     public static Item temporalClockworkSaber;
     public static void initBasicClockworkTools()
     {
-        clockworkPickaxe = new ItemClockworkPickaxe(clockworkMaterial).setUnlocalizedName(Names.CLOCKWORK_PICKAXE);
-        GameRegistry.registerItem(clockworkPickaxe, Names.CLOCKWORK_PICKAXE);
-        clockworkAxe = new ItemClockworkAxe(clockworkMaterial).setUnlocalizedName(Names.CLOCKWORK_AXE);
-        GameRegistry.registerItem(clockworkAxe, Names.CLOCKWORK_AXE);
-        clockworkShovel = new ItemClockworkShovel(clockworkMaterial).setUnlocalizedName(Names.CLOCKWORK_SHOVEL);
-        GameRegistry.registerItem(clockworkShovel, Names.CLOCKWORK_SHOVEL);
-        clockworkSaber = new ItemClockworkSaber().setUnlocalizedName(Names.CLOCKWORK_SABER);
-        GameRegistry.registerItem(clockworkSaber, Names.CLOCKWORK_SABER);
+        clockworkPickaxe = toModel(new ItemClockworkPickaxe(clockworkMaterial)).register(Names.CLOCKWORK_PICKAXE);
+        clockworkAxe = toModel(new ItemClockworkAxe(clockworkMaterial)).register(Names.CLOCKWORK_AXE);
+        clockworkShovel = toModel(new ItemClockworkShovel(clockworkMaterial)).register(Names.CLOCKWORK_SHOVEL);
+        clockworkSaber = toModel(new ItemClockworkSaber()).register(Names.CLOCKWORK_SABER);
 
-        temporalClockworkPickaxe = new ItemTemporalClockworkPickaxe(clockworkMaterial).setUnlocalizedName(Names.TEMPORAL_CLOCKWORK_PICKAXE);
-        GameRegistry.registerItem(temporalClockworkPickaxe, Names.TEMPORAL_CLOCKWORK_PICKAXE);
-        temporalClockworkAxe = new ItemTemporalClockworkAxe(clockworkMaterial).setUnlocalizedName(Names.TEMPORAL_CLOCKWORK_AXE);
-        GameRegistry.registerItem(temporalClockworkAxe, Names.TEMPORAL_CLOCKWORK_AXE);
-        temporalClockworkShovel = new ItemTemporalClockworkShovel(clockworkMaterial).setUnlocalizedName(Names.TEMPORAL_CLOCKWORK_SHOVEL);
-        GameRegistry.registerItem(temporalClockworkShovel, Names.TEMPORAL_CLOCKWORK_SHOVEL);
-        temporalClockworkSaber = new ItemTemporalClockworkSaber().setUnlocalizedName(Names.TEMPORAL_CLOCKWORK_SABER);
-        GameRegistry.registerItem(temporalClockworkSaber, Names.TEMPORAL_CLOCKWORK_SABER);
+        temporalClockworkPickaxe = toModel(new ItemTemporalClockworkPickaxe(clockworkMaterial)).register(Names.TEMPORAL_CLOCKWORK_PICKAXE);
+        temporalClockworkAxe = toModel(new ItemTemporalClockworkAxe(clockworkMaterial)).register(Names.TEMPORAL_CLOCKWORK_AXE);
+        temporalClockworkShovel = toModel(new ItemTemporalClockworkShovel(clockworkMaterial)).register(Names.TEMPORAL_CLOCKWORK_SHOVEL);
+        temporalClockworkSaber = toModel(new ItemTemporalClockworkSaber()).register(Names.TEMPORAL_CLOCKWORK_SABER);
     }
 
     public static Item chronomancerHeadpiece;
@@ -176,59 +143,38 @@ public class ModItems
     public static Item chronomancerBoots;
     public static void initClockworkArmor()
     {
-        chronomancerHeadpiece = new ItemClockworkHeadpiece(ItemArmor.ArmorMaterial.DIAMOND, 0, 0).setUnlocalizedName(Names.CLOCKWORK_HEADPIECE);
-        GameRegistry.registerItem(chronomancerHeadpiece, Names.CLOCKWORK_HEADPIECE);
-        chronomancerChestplate = new ItemClockworkChestpiece(ItemArmor.ArmorMaterial.DIAMOND, 0, 1).setUnlocalizedName(Names.CLOCKWORK_CHESTPLATE);
-        GameRegistry.registerItem(chronomancerChestplate, Names.CLOCKWORK_CHESTPLATE);
-        chronomancerLeggings = new ItemClockworkLeggings(ItemArmor.ArmorMaterial.DIAMOND, 0, 2).setUnlocalizedName(Names.CLOCKWORK_LEGGINGS);
-        GameRegistry.registerItem(chronomancerLeggings, Names.CLOCKWORK_LEGGINGS);
-        chronomancerBoots = new ItemClockworkBoots(ItemArmor.ArmorMaterial.DIAMOND, 0, 3).setUnlocalizedName(Names.CLOCKWORK_BOOTS);
-        GameRegistry.registerItem(chronomancerBoots, Names.CLOCKWORK_BOOTS);
+        chronomancerHeadpiece = toModel(new ItemClockworkHeadpiece(ItemArmor.ArmorMaterial.DIAMOND, 0, 0)).register(Names.CLOCKWORK_HEADPIECE);
+        chronomancerChestplate = toModel(new ItemClockworkChestpiece(ItemArmor.ArmorMaterial.DIAMOND, 0, 1)).register(Names.CLOCKWORK_CHESTPLATE);
+        chronomancerLeggings = toModel(new ItemClockworkLeggings(ItemArmor.ArmorMaterial.DIAMOND, 0, 2)).register(Names.CLOCKWORK_LEGGINGS);
+        chronomancerBoots = toModel(new ItemClockworkBoots(ItemArmor.ArmorMaterial.DIAMOND, 0, 3)).register(Names.CLOCKWORK_BOOTS);
     }
 
     public static Item hourglass;
     public static Item[] hourglassElements = new Item[8];
     public static void initHourglasses()
     {
-        hourglass = new ItemHourglass().setUnlocalizedName(Names.HOURGLASS);
-        GameRegistry.registerItem(hourglass, Names.HOURGLASS);
-        hourglassElements[0] = new ItemHourglassLife().setUnlocalizedName(Names.HOURGLASS + "Life");
-        GameRegistry.registerItem(hourglassElements[0], Names.HOURGLASS + "Life");
-        hourglassElements[1] = new ItemHourglassLight().setUnlocalizedName(Names.HOURGLASS + "Light");
-        GameRegistry.registerItem(hourglassElements[1], Names.HOURGLASS + "Light");
-        hourglassElements[2] = new ItemHourglassWater().setUnlocalizedName(Names.HOURGLASS + "Water");
-        GameRegistry.registerItem(hourglassElements[2], Names.HOURGLASS + "Water");
-        hourglassElements[3] = new ItemHourglassEarth().setUnlocalizedName(Names.HOURGLASS + "Earth");
-        GameRegistry.registerItem(hourglassElements[3], Names.HOURGLASS + "Earth");
-        hourglassElements[4] = new ItemHourglassAir().setUnlocalizedName(Names.HOURGLASS + "Air");
-        GameRegistry.registerItem(hourglassElements[4], Names.HOURGLASS + "Air");
-        hourglassElements[5] = new ItemHourglassFire().setUnlocalizedName(Names.HOURGLASS + "Fire");
-        GameRegistry.registerItem(hourglassElements[5], Names.HOURGLASS + "Fire");
-        hourglassElements[6] = new ItemHourglassLunar().setUnlocalizedName(Names.HOURGLASS + "Lunar");
-        GameRegistry.registerItem(hourglassElements[6], Names.HOURGLASS + "Lunar");
-        hourglassElements[7] = new ItemHourglassDeath().setUnlocalizedName(Names.HOURGLASS + "Death");
-        GameRegistry.registerItem(hourglassElements[7], Names.HOURGLASS + "Death");
+        hourglass = toModel(new ItemHourglass()).register(Names.HOURGLASS);
+        hourglassElements[0] = toModel(new ItemHourglassLife()).register(Names.HOURGLASS + "_life");
+        hourglassElements[1] = toModel(new ItemHourglassLight()).register(Names.HOURGLASS + "_light");
+        hourglassElements[2] = toModel(new ItemHourglassWater()).register(Names.HOURGLASS + "_water");
+        hourglassElements[3] = toModel(new ItemHourglassEarth()).register(Names.HOURGLASS + "_earth");
+        hourglassElements[4] = toModel(new ItemHourglassAir()).register(Names.HOURGLASS + "_air");
+        hourglassElements[5] = toModel(new ItemHourglassFire()).register(Names.HOURGLASS + "_fire");
+        hourglassElements[6] = toModel(new ItemHourglassLunar()).register(Names.HOURGLASS + "_lunar");
+        hourglassElements[7] = toModel(new ItemHourglassDeath()).register(Names.HOURGLASS + "_death");
     }
 
     public static Item[] catalystElements = new Item[8];
     public static void initCatalysts()
     {
-        catalystElements[0] = new ItemCatalyst(200000 / MechanicTweaker.TIME_SAND_FROM_NATURAL_SPAWN).setUnlocalizedName(Names.CATALYST + "Life");
-        GameRegistry.registerItem(catalystElements[0], Names.CATALYST + "Life");
-        catalystElements[1] = new ItemCatalyst(200000 / MechanicTweaker.TIME_SAND_FROM_LIGHT_SECOND).setUnlocalizedName(Names.CATALYST + "Light");
-        GameRegistry.registerItem(catalystElements[1], Names.CATALYST + "Light");
-        catalystElements[2] = new ItemCatalyst(200000 / MechanicTweaker.TIME_SAND_FROM_WATER_SECOND).setUnlocalizedName(Names.CATALYST + "Water");
-        GameRegistry.registerItem(catalystElements[2], Names.CATALYST + "Water");
-        catalystElements[3] = new ItemCatalyst(200000 / MechanicTweaker.TIME_SAND_FROM_TREE_EXTRACTION).setUnlocalizedName(Names.CATALYST + "Earth");
-        GameRegistry.registerItem(catalystElements[3], Names.CATALYST + "Earth");
-        catalystElements[4] = new ItemCatalyst(200000 / MechanicTweaker.TIME_SAND_FROM_AIR_SECOND).setUnlocalizedName(Names.CATALYST + "Air");
-        GameRegistry.registerItem(catalystElements[4], Names.CATALYST + "Air");
-        catalystElements[5] = new ItemCatalyst(200000 / MechanicTweaker.TIME_SAND_FROM_ONE_FIRE_DAMAGE).setUnlocalizedName(Names.CATALYST + "Fire");
-        GameRegistry.registerItem(catalystElements[5], Names.CATALYST + "Fire");
-        catalystElements[6] = new ItemCatalyst(200000 / MechanicTweaker.TIME_SAND_FROM_MOON_SECOND).setUnlocalizedName(Names.CATALYST + "Lunar");
-        GameRegistry.registerItem(catalystElements[6], Names.CATALYST + "Lunar");
-        catalystElements[7] = new ItemCatalyst(200000 / MechanicTweaker.TIME_SAND_FROM_DEATH).setUnlocalizedName(Names.CATALYST + "Death");
-        GameRegistry.registerItem(catalystElements[7], Names.CATALYST + "Death");
+        catalystElements[0] = toModel(new ItemCatalyst(200000 / MechanicTweaker.TIME_SAND_FROM_NATURAL_SPAWN)).register(Names.CATALYST + "_life");
+        catalystElements[1] = toModel(new ItemCatalyst(200000 / MechanicTweaker.TIME_SAND_FROM_LIGHT_SECOND)).register(Names.CATALYST + "_light");
+        catalystElements[2] = toModel(new ItemCatalyst(200000 / MechanicTweaker.TIME_SAND_FROM_WATER_SECOND)).register(Names.CATALYST + "_water");
+        catalystElements[3] = toModel(new ItemCatalyst(200000 / MechanicTweaker.TIME_SAND_FROM_TREE_EXTRACTION)).register(Names.CATALYST + "_earth");
+        catalystElements[4] = toModel(new ItemCatalyst(200000 / MechanicTweaker.TIME_SAND_FROM_AIR_SECOND)).register(Names.CATALYST + "_air");
+        catalystElements[5] = toModel(new ItemCatalyst(200000 / MechanicTweaker.TIME_SAND_FROM_ONE_FIRE_DAMAGE)).register(Names.CATALYST + "_fire");
+        catalystElements[6] = toModel(new ItemCatalyst(200000 / MechanicTweaker.TIME_SAND_FROM_MOON_SECOND)).register(Names.CATALYST + "_lunar");
+        catalystElements[7] = toModel(new ItemCatalyst(200000 / MechanicTweaker.TIME_SAND_FROM_DEATH)).register(Names.CATALYST + "_death");
     }
 
     public static Item pocketWatch;
@@ -239,18 +185,12 @@ public class ModItems
     public static ItemModulePartialGravity modulePartialGravity;
     public static void initPocketWatchAndModules()
     {
-        pocketWatch = new ItemPocketWatch().setUnlocalizedName(Names.POCKET_WATCH);
-        GameRegistry.registerItem(pocketWatch, Names.POCKET_WATCH);
-        moduleSilkTouch = (ItemModuleSilkTouch)new ItemModuleSilkTouch().setUnlocalizedName(Names.MODULE_SILK_TOUCH);
-        GameRegistry.registerItem(moduleSilkTouch, Names.MODULE_SILK_TOUCH);
-        moduleFurnace = (ItemModuleFurnace)new ItemModuleFurnace().setUnlocalizedName(Names.MODULE_FURNACE);
-        GameRegistry.registerItem(moduleFurnace, Names.MODULE_FURNACE);
-        moduleLifeWalk = (ItemModuleLifeWalk)new ItemModuleLifeWalk().setUnlocalizedName(Names.MODULE_LIFE_WALK);
-        GameRegistry.registerItem(moduleLifeWalk, Names.MODULE_LIFE_WALK);
-        moduleDeathWalk = (ItemModuleDeathWalk)new ItemModuleDeathWalk().setUnlocalizedName(Names.MODULE_DEATH_WALK);
-        GameRegistry.registerItem(moduleDeathWalk, Names.MODULE_DEATH_WALK);
-        modulePartialGravity = (ItemModulePartialGravity)new ItemModulePartialGravity().setUnlocalizedName(Names.MODULE_PARTIAL_GRAVITY);
-        GameRegistry.registerItem(modulePartialGravity, Names.MODULE_PARTIAL_GRAVITY);
+        pocketWatch = toModel(new ItemPocketWatch()).register(Names.POCKET_WATCH);
+        moduleSilkTouch = toModel(new ItemModuleSilkTouch()).register(Names.MODULE_SILK_TOUCH);
+        moduleFurnace = toModel(new ItemModuleFurnace()).register(Names.MODULE_FURNACE);
+        moduleLifeWalk = toModel(new ItemModuleLifeWalk()).register(Names.MODULE_LIFE_WALK);
+        moduleDeathWalk = toModel(new ItemModuleDeathWalk()).register(Names.MODULE_DEATH_WALK);
+        modulePartialGravity = toModel(new ItemModulePartialGravity()).register(Names.MODULE_PARTIAL_GRAVITY);
     }
 
     public static Item timeTuner;
@@ -258,12 +198,9 @@ public class ModItems
     public static Item temporalMultitool;
     public static void initTools()
     {
-        timeTuner = new ItemTimeTuner().setUnlocalizedName(Names.TIME_TUNER);
-        GameRegistry.registerItem(timeTuner, Names.TIME_TUNER);
-        bugSwatter = new ItemBugSwatter().setUnlocalizedName(Names.BUG_SWATTER);
-        GameRegistry.registerItem(bugSwatter, Names.BUG_SWATTER);
-        temporalMultitool = new ItemTemporalMultitool().setUnlocalizedName(Names.TEMPORAL_MULTITOOL);
-        GameRegistry.registerItem(temporalMultitool, Names.TEMPORAL_MULTITOOL);
+        timeTuner = toModel(new ItemTimeTuner()).register(Names.TIME_TUNER);
+        bugSwatter = toModel(new ItemBugSwatter()).register(Names.BUG_SWATTER);
+        temporalMultitool = toModel(new ItemTemporalMultitool()).register(Names.TEMPORAL_MULTITOOL);
     }
 
     public static Item mainspring;
@@ -274,19 +211,17 @@ public class ModItems
     public static Item temporalCoreSedate;
     public static void initMiscCraftingItems()
     {
-        mainspring = new ItemMainspring().setUnlocalizedName(Names.MAINSPRING);
-        GameRegistry.registerItem(mainspring, Names.MAINSPRING);
-        clockwork = new ItemClockwork().setUnlocalizedName(Names.CLOCKWORK);
-        GameRegistry.registerItem(clockwork, Names.CLOCKWORK);
-        timeSandBucket = new ItemTimeSandBucket(ModBlocks.timeSand).setUnlocalizedName(Names.TIME_SAND_BUCKET).setContainerItem(Items.bucket);
-        GameRegistry.registerItem(timeSandBucket, Names.TIME_SAND_BUCKET);
-        blandHourglass = new ItemBlandHourglass().setUnlocalizedName(Names.BLAND_HOURGLASS);
-        GameRegistry.registerItem(blandHourglass, Names.BLAND_HOURGLASS);
-        temporalCoreActive = new ItemActiveTemporalCore().setUnlocalizedName(Names.ACTIVE_TEMPORAL_CORE);
-        GameRegistry.registerItem(temporalCoreActive, Names.ACTIVE_TEMPORAL_CORE);
-        temporalCoreSedate = new ItemSedateTemporalCore().setUnlocalizedName(Names.SEDATE_TEMPORAL_CORE);
-        GameRegistry.registerItem(temporalCoreSedate, Names.SEDATE_TEMPORAL_CORE);
+        mainspring = toModel(new ItemMainspring()).register(Names.MAINSPRING);
+        clockwork = toModel(new ItemClockwork()).register(Names.CLOCKWORK);
+        timeSandBucket = toModel(new ItemTimeSandBucket(ModBlocks.timeSand).setContainerItem(Items.BUCKET)).register(Names.TIME_SAND_BUCKET);
+        blandHourglass = toModel(new ItemBlandHourglass()).register(Names.BLAND_HOURGLASS);
+        temporalCoreActive = toModel(new ItemActiveTemporalCore()).register(Names.ACTIVE_TEMPORAL_CORE);
+        temporalCoreSedate = toModel(new ItemSedateTemporalCore()).register(Names.SEDATE_TEMPORAL_CORE);
 
-        FluidContainerRegistry.registerFluidContainer(FluidRegistry.getFluidStack(ModFluids.timeSand.getName(), FluidContainerRegistry.BUCKET_VOLUME), new ItemStack(timeSandBucket), new ItemStack(Items.bucket));
+//        FluidContainerRegistry.registerFluidContainer(FluidRegistry.getFluidStack(ModFluids.timeSand.getName(), FluidContainerRegistry.BUCKET_VOLUME), new ItemStack(timeSandBucket), new ItemStack(Items.bucket));
+    }
+
+    private static IHasModel toModel(Item block) {
+        return (IHasModel) block;
     }
 }

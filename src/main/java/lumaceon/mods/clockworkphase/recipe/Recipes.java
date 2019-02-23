@@ -1,20 +1,30 @@
 package lumaceon.mods.clockworkphase.recipe;
 
-import cpw.mods.fml.common.registry.GameRegistry;
+import net.minecraftforge.fml.common.registry.ForgeRegistries;
+import net.minecraftforge.fml.common.registry.GameRegistry;
+import gnu.trove.set.TIntSet;
+import gnu.trove.set.hash.TIntHashSet;
 import lumaceon.mods.clockworkphase.init.ModBlocks;
 import lumaceon.mods.clockworkphase.init.ModItems;
 import lumaceon.mods.clockworkphase.lib.MechanicTweaker;
 import lumaceon.mods.clockworkphase.lib.NBTTags;
+import lumaceon.mods.clockworkphase.lib.Reference;
 import lumaceon.mods.clockworkphase.util.NBTHelper;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.IRecipe;
+import net.minecraft.item.crafting.Ingredient;
+import net.minecraft.item.crafting.ShapelessRecipes;
+import net.minecraft.util.NonNullList;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.oredict.ShapedOreRecipe;
 import net.minecraftforge.oredict.ShapelessOreRecipe;
 
 public class Recipes
 {
-    public static void init()
+    public static void init() // TODO 
     {
         initMachineRecipes();
         initPocketWatchAndModules();
@@ -29,32 +39,32 @@ public class Recipes
         ItemStack output;
 
         output = new ItemStack(ModBlocks.timeWell);
-        GameRegistry.addRecipe(new ShapedOreRecipe(output, "bSb", "ATA", "bSb", 'b', "ingotBrass", 'S', ModItems.temporalCoreSedate, 'T', "ingotTemporal", 'A', ModItems.temporalCoreActive));
+        addRecipe(new ShapedOreRecipe(EMPTY, output, "bSb", "ATA", "bSb", 'b', "ingotBrass", 'S', ModItems.temporalCoreSedate, 'T', "ingotTemporal", 'A', ModItems.temporalCoreActive));
 
         output = new ItemStack(ModBlocks.extractorsElements[0]);
-        GameRegistry.addRecipe(new ShapedOreRecipe(output, "btb", "aIa", "btb",
-                'b', "ingotBrass", 't', "ingotTemporal", 'a', ModItems.temporalCoreActive, 'I', Items.golden_apple)); //Life
+        addRecipe(new ShapedOreRecipe(EMPTY, output, "btb", "aIa", "btb",
+                'b', "ingotBrass", 't', "ingotTemporal", 'a', ModItems.temporalCoreActive, 'I', Items.GOLDEN_APPLE)); //Life
         output = new ItemStack(ModBlocks.extractorsElements[1]);
-        GameRegistry.addRecipe(new ShapedOreRecipe(output, "btb", "aIa", "btb",
-                'b', "ingotBrass", 't', "ingotTemporal", 'a', ModItems.temporalCoreActive, 'I', Blocks.torch)); //Light
+        addRecipe(new ShapedOreRecipe(EMPTY, output, "btb", "aIa", "btb",
+                'b', "ingotBrass", 't', "ingotTemporal", 'a', ModItems.temporalCoreActive, 'I', Blocks.TORCH)); //Light
         output = new ItemStack(ModBlocks.extractorsElements[2]);
-        GameRegistry.addRecipe(new ShapedOreRecipe(output, "btb", "aIa", "btb",
-                'b', "ingotBrass", 't', "ingotTemporal", 'a', ModItems.temporalCoreActive, 'I', Items.water_bucket)); //Water
+        addRecipe(new ShapedOreRecipe(EMPTY, output, "btb", "aIa", "btb",
+                'b', "ingotBrass", 't', "ingotTemporal", 'a', ModItems.temporalCoreActive, 'I', Items.WATER_BUCKET)); //Water
         output = new ItemStack(ModBlocks.extractorsElements[3]);
-        GameRegistry.addRecipe(new ShapedOreRecipe(output, "btb", "aIa", "btb",
+        addRecipe(new ShapedOreRecipe(EMPTY, output, "btb", "aIa", "btb",
                 'b', "ingotBrass", 't', "ingotTemporal", 'a', ModItems.temporalCoreActive, 'I', "stone")); //Earth
         output = new ItemStack(ModBlocks.extractorsElements[4]);
-        GameRegistry.addRecipe(new ShapedOreRecipe(output, "btb", "aIa", "btb",
-                'b', "ingotBrass", 't', "ingotTemporal", 'a', ModItems.temporalCoreActive, 'I', Items.feather)); //Air
+        addRecipe(new ShapedOreRecipe(EMPTY, output, "btb", "aIa", "btb",
+                'b', "ingotBrass", 't', "ingotTemporal", 'a', ModItems.temporalCoreActive, 'I', Items.FEATHER)); //Air
         output = new ItemStack(ModBlocks.extractorsElements[5]);
-        GameRegistry.addRecipe(new ShapedOreRecipe(output, "btb", "aIa", "btb",
-                'b', "ingotBrass", 't', "ingotTemporal", 'a', ModItems.temporalCoreActive, 'I', Items.flint_and_steel)); //Fire
+        addRecipe(new ShapedOreRecipe(EMPTY, output, "btb", "aIa", "btb",
+                'b', "ingotBrass", 't', "ingotTemporal", 'a', ModItems.temporalCoreActive, 'I', Items.FLINT_AND_STEEL)); //Fire
         output = new ItemStack(ModBlocks.extractorsElements[6]);
-        GameRegistry.addRecipe(new ShapedOreRecipe(output, "btb", "aIa", "btb",
-                'b', "ingotBrass", 't', "ingotTemporal", 'a', ModItems.temporalCoreActive, 'I', Items.ghast_tear)); //Lunar
+        addRecipe(new ShapedOreRecipe(EMPTY, output, "btb", "aIa", "btb",
+                'b', "ingotBrass", 't', "ingotTemporal", 'a', ModItems.temporalCoreActive, 'I', Items.GHAST_TEAR)); //Lunar
         output = new ItemStack(ModBlocks.extractorsElements[7]);
-        GameRegistry.addRecipe(new ShapedOreRecipe(output, "btb", "aIa", "btb",
-                'b', "ingotBrass", 't', "ingotTemporal", 'a', ModItems.temporalCoreActive, 'I', Items.bone)); //Death
+        addRecipe(new ShapedOreRecipe(EMPTY, output, "btb", "aIa", "btb",
+                'b', "ingotBrass", 't', "ingotTemporal", 'a', ModItems.temporalCoreActive, 'I', Items.BONE)); //Death
     }
 
     public static void initToolRecipes()
@@ -63,50 +73,50 @@ public class Recipes
         ItemStack framework = new ItemStack(ModItems.framework);
 
         output = new ItemStack(ModItems.hourglass);
-        GameRegistry.addRecipe(new ShapedOreRecipe(output, "bSb", "bhb", "bAb",
+        addRecipe(new ShapedOreRecipe(EMPTY, output, "bSb", "bhb", "bAb",
                 'b', "ingotBrass", 'h', ModItems.blandHourglass, 'S', ModItems.temporalCoreSedate, 'A', ModItems.temporalCoreActive));
 
         output = new ItemStack(ModItems.clockworkPickaxe);
-        GameRegistry.addRecipe(new ShapedOreRecipe(output, "bfb", " s ", " s ",
+        addRecipe(new ShapedOreRecipe(EMPTY, output, "bfb", " s ", " s ",
                 'b', "ingotBrass", 'f', framework, 's', "stickWood"));
 
         output = new ItemStack(ModItems.clockworkAxe);
-        GameRegistry.addRecipe(new ShapedOreRecipe(output, "bf ", "bs ", " s ",
+        addRecipe(new ShapedOreRecipe(EMPTY, output, "bf ", "bs ", " s ",
                 'b', "ingotBrass", 'f', framework, 's', "stickWood"));
         output = new ItemStack(ModItems.clockworkAxe);
-        GameRegistry.addRecipe(new ShapedOreRecipe(output, " fb", " sb", " s ",
+        addRecipe(new ShapedOreRecipe(EMPTY, output, " fb", " sb", " s ",
                 'b', "ingotBrass", 'f', framework, 's', "stickWood"));
 
         output = new ItemStack(ModItems.clockworkShovel);
-        GameRegistry.addRecipe(new ShapedOreRecipe(output, " f ", " s ", " s ",
+        addRecipe(new ShapedOreRecipe(EMPTY, output, " f ", " s ", " s ",
                 'f', new ItemStack(ModItems.framework), 's', "stickWood"));
 
         output = new ItemStack(ModItems.clockworkSaber);
-        GameRegistry.addRecipe(new ShapedOreRecipe(output, " b ", "bfb", "bsb",
+        addRecipe(new ShapedOreRecipe(EMPTY, output, " b ", "bfb", "bsb",
                 'b', "ingotBrass", 'f', framework, 's', "stickWood"));
 
         output = new ItemStack(ModItems.temporalMultitool);
-        GameRegistry.addRecipe(new ShapedOreRecipe(output, "s a", " t ", "a s",
+        addRecipe(new ShapedOreRecipe(EMPTY, output, "s a", " t ", "a s",
                 's', ModItems.temporalCoreSedate, 'a', ModItems.temporalCoreActive, 't', "ingotTemporal"));
 
         output = new ItemStack(ModItems.chronomancerHeadpiece);
-        GameRegistry.addRecipe(new ShapedOreRecipe(output, "bfb", "b b", "   ",
+        addRecipe(new ShapedOreRecipe(EMPTY, output, "bfb", "b b", "   ",
                 'b', "ingotBrass", 'f', framework));
 
         output = new ItemStack(ModItems.chronomancerChestplate);
-        GameRegistry.addRecipe(new ShapedOreRecipe(output, "b b", "bfb", "bbb",
+        addRecipe(new ShapedOreRecipe(EMPTY, output, "b b", "bfb", "bbb",
                 'b', "ingotBrass", 'f', framework));
 
         output = new ItemStack(ModItems.chronomancerLeggings);
-        GameRegistry.addRecipe(new ShapedOreRecipe(output, "bfb", "b b", "b b",
+        addRecipe(new ShapedOreRecipe(EMPTY, output, "bfb", "b b", "b b",
                 'b', "ingotBrass", 'f', framework));
 
         output = new ItemStack(ModItems.chronomancerBoots);
-        GameRegistry.addRecipe(new ShapedOreRecipe(output, "   ", "b b", "bfb",
+        addRecipe(new ShapedOreRecipe(EMPTY, output, "   ", "b b", "bfb",
                 'b', "ingotBrass", 'f', framework));
 
         output = new ItemStack(ModItems.timeTuner);
-        GameRegistry.addRecipe(new ShapedOreRecipe(output, "b b", "btb", " b ",
+        addRecipe(new ShapedOreRecipe(EMPTY, output, "b b", "btb", " b ",
                 'b', "ingotBrass", 't', "ingotTemporal"));
     }
 
@@ -115,28 +125,28 @@ public class Recipes
         ItemStack output;
 
         output = new ItemStack(ModItems.pocketWatch);
-        GameRegistry.addRecipe(new ShapedOreRecipe(output, "bsb", "tct", "bab",
-                'b', "ingotBrass", 's', ModItems.temporalCoreSedate, 'c', Items.clock, 't', "ingotTemporal", 'a', ModItems.temporalCoreActive));
+        addRecipe(new ShapedOreRecipe(EMPTY, output, "bsb", "tct", "bab",
+                'b', "ingotBrass", 's', ModItems.temporalCoreSedate, 'c', Items.CLOCK, 't', "ingotTemporal", 'a', ModItems.temporalCoreActive));
 
         output = new ItemStack(ModItems.moduleLifeWalk);
-        GameRegistry.addRecipe(new ShapedOreRecipe(output, "gbg", "tSt", "sss",
-                'g', Items.golden_apple, 'b', Items.diamond_boots, 't', "ingotTemporal", 'S', ModItems.temporalCoreSedate, 's', "stone"));
+        addRecipe(new ShapedOreRecipe(EMPTY, output, "gbg", "tSt", "sss",
+                'g', Items.GOLDEN_APPLE, 'b', Items.DIAMOND_BOOTS, 't', "ingotTemporal", 'S', ModItems.temporalCoreSedate, 's', "stone"));
 
         output = new ItemStack(ModItems.moduleDeathWalk);
-        GameRegistry.addRecipe(new ShapedOreRecipe(output, "bwb", "tSt", "sss",
-                'b', Items.diamond_boots, 'w', Items.diamond_sword, 't', "ingotTemporal", 'S', ModItems.temporalCoreSedate, 's', "stone"));
+        addRecipe(new ShapedOreRecipe(EMPTY, output, "bwb", "tSt", "sss",
+                'b', Items.DIAMOND_BOOTS, 'w', Items.DIAMOND_SWORD, 't', "ingotTemporal", 'S', ModItems.temporalCoreSedate, 's', "stone"));
 
         output = new ItemStack(ModItems.moduleFurnace);
-        GameRegistry.addRecipe(new ShapedOreRecipe(output, "flf", "tSt", "flf",
-                'f', Blocks.furnace, 'l', Items.lava_bucket, 't', "ingotTemporal", 'S', ModItems.temporalCoreSedate));
+        addRecipe(new ShapedOreRecipe(EMPTY, output, "flf", "tSt", "flf",
+                'f', Blocks.FURNACE, 'l', Items.LAVA_BUCKET, 't', "ingotTemporal", 'S', ModItems.temporalCoreSedate));
 
         output = new ItemStack(ModItems.moduleSilkTouch);
-        GameRegistry.addRecipe(new ShapedOreRecipe(output, "ses", "tSt", "sbs",
-                's', Items.string, 'e', Blocks.enchanting_table, 't', "ingotTemporal", 'S', ModItems.temporalCoreSedate, 'b', Blocks.bookshelf));
+        addRecipe(new ShapedOreRecipe(EMPTY, output, "ses", "tSt", "sbs",
+                's', Items.STRING, 'e', Blocks.ENCHANTING_TABLE, 't', "ingotTemporal", 'S', ModItems.temporalCoreSedate, 'b', Blocks.BOOKSHELF));
 
         output = new ItemStack(ModItems.modulePartialGravity);
-        GameRegistry.addRecipe(new ShapedOreRecipe(output, "fwf", "tSt", "fwf",
-                'f', Items.feather, 'w', Blocks.wool, 't', "ingotTemporal", 'S', ModItems.temporalCoreSedate));
+        addRecipe(new ShapedOreRecipe(EMPTY, output, "fwf", "tSt", "fwf",
+                'f', Items.FEATHER, 'w', Blocks.WOOL, 't', "ingotTemporal", 'S', ModItems.temporalCoreSedate));
     }
 
     public static void initMiscRecipes()
@@ -144,57 +154,57 @@ public class Recipes
         ItemStack output;
 
         output = new ItemStack(ModBlocks.clockworkAssemblyTable);
-        GameRegistry.addRecipe(new ShapedOreRecipe(output, "www", "wgw", "www", 'w', "plankWood", 'g', "gearIron"));
+        addRecipe(new ShapedOreRecipe(EMPTY, output, "www", "wgw", "www", 'w', "plankWood", 'g', "gearIron"));
 
         output = new ItemStack(ModItems.temporalCoreActive);
-        GameRegistry.addRecipe(new ShapedOreRecipe(output, "ttt", "rTr", "ttt",
+        addRecipe(new ShapedOreRecipe(EMPTY, output, "ttt", "rTr", "ttt",
                 'T', "ingotTemporal", 't', "nuggetTemporal", 'r', "dustRedstone"));
         output = new ItemStack(ModItems.temporalCoreSedate);
-        GameRegistry.addRecipe(new ShapedOreRecipe(output, "ttt", "sTs", "ttt",
+        addRecipe(new ShapedOreRecipe(EMPTY, output, "ttt", "sTs", "ttt",
                 'T', "ingotTemporal", 't', "nuggetTemporal", 's', "stone"));
 
         output = new ItemStack(ModItems.blandHourglass);
-        GameRegistry.addRecipe(new ShapedOreRecipe(output, "ggg", " g ", "ggg", 'g', "blockGlass"));
+        addRecipe(new ShapedOreRecipe(EMPTY, output, "ggg", " g ", "ggg", 'g', "blockGlass"));
         output = new ItemStack(ModBlocks.disassembler);
-        GameRegistry.addRecipe(new ShapedOreRecipe(output, "bb ", "b b", "bb ", 'b', "ingotBrass"));
+        addRecipe(new ShapedOreRecipe(EMPTY, output, "bb ", "b b", "bb ", 'b', "ingotBrass"));
         output = new ItemStack(ModBlocks.windingBox);
-        GameRegistry.addRecipe(new ShapedOreRecipe(output, " i ", "bib", "bbb", 'b', "ingotBrass", 'i', "ingotIron"));
+        addRecipe(new ShapedOreRecipe(EMPTY, output, " i ", "bib", "bbb", 'b', "ingotBrass", 'i', "ingotIron"));
 
         output = new ItemStack(ModBlocks.celestialCompass);
-        GameRegistry.addShapedRecipe(output, "dLl", "mCw", "fae",
-                'd', Items.bone, 'L', Items.golden_apple, 'l', Blocks.glowstone,
-                'm', Items.ghast_tear, 'C', Items.clock, 'w', Items.water_bucket,
-                'f', Items.flint_and_steel, 'a', Items.feather, 'e', Blocks.stone);
+        addShapedRecipe(output, "dLl", "mCw", "fae",
+                'd', Items.BONE, 'L', Items.GOLDEN_APPLE, 'l', Blocks.GLOWSTONE,
+                'm', Items.GHAST_TEAR, 'C', Items.CLOCK, 'w', Items.WATER_BUCKET,
+                'f', Items.FLINT_AND_STEEL, 'a', Items.FEATHER, 'e', Blocks.STONE);
 
         output = new ItemStack(ModItems.catalystElements[0]); //Life
-        GameRegistry.addRecipe(new ShapedOreRecipe(output, "w t", "wTt", "w t",
-                'w', Items.wheat, 't', Blocks.torch, 'T', "ingotTemporal"));
+        addRecipe(new ShapedOreRecipe(EMPTY, output, "w t", "wTt", "w t",
+                'w', Items.WHEAT, 't', Blocks.TORCH, 'T', "ingotTemporal"));
         output = new ItemStack(ModItems.catalystElements[1]); //Light
-        GameRegistry.addRecipe(new ShapedOreRecipe(output, "g w", "gTw", "g w",
-                'g', Blocks.glowstone, 'w', Blocks.wool, 'T', "ingotTemporal"));
+        addRecipe(new ShapedOreRecipe(EMPTY, output, "g w", "gTw", "g w",
+                'g', Blocks.GLOWSTONE, 'w', Blocks.WOOL, 'T', "ingotTemporal"));
         output = new ItemStack(ModItems.catalystElements[2]); //Water
-        GameRegistry.addRecipe(new ShapedOreRecipe(output, "w l", "wTl", "w l",
-                'w', Items.water_bucket, 'l', Items.lava_bucket, 'T', "ingotTemporal"));
+        addRecipe(new ShapedOreRecipe(EMPTY, output, "w l", "wTl", "w l",
+                'w', Items.WATER_BUCKET, 'l', Items.LAVA_BUCKET, 'T', "ingotTemporal"));
         output = new ItemStack(ModItems.catalystElements[3]); //Earth
-        GameRegistry.addRecipe(new ShapedOreRecipe(output, "b a", "bTa", "b a",
-                'b', Items.bone, 'a', Items.stone_axe, 'T', "ingotTemporal"));
+        addRecipe(new ShapedOreRecipe(EMPTY, output, "b a", "bTa", "b a",
+                'b', Items.BONE, 'a', Items.STONE_AXE, 'T', "ingotTemporal"));
         output = new ItemStack(ModItems.catalystElements[4]); //Air
-        GameRegistry.addRecipe(new ShapedOreRecipe(output, "f s", "fTs", "f s",
-                'f', Items.feather, 's', "stone", 'T', "ingotTemporal"));
+        addRecipe(new ShapedOreRecipe(EMPTY, output, "f s", "fTs", "f s",
+                'f', Items.FEATHER, 's', "stone", 'T', "ingotTemporal"));
         output = new ItemStack(ModItems.catalystElements[5]); //Fire
-        GameRegistry.addRecipe(new ShapedOreRecipe(output, "f w", "fTw", "f w",
-                'f', Items.flint_and_steel, 'w', Items.water_bucket, 'T', "ingotTemporal"));
+        addRecipe(new ShapedOreRecipe(EMPTY, output, "f w", "fTw", "f w",
+                'f', Items.FLINT_AND_STEEL, 'w', Items.WATER_BUCKET, 'T', "ingotTemporal"));
         output = new ItemStack(ModItems.catalystElements[6]); //Lunar
-        GameRegistry.addRecipe(new ShapedOreRecipe(output, "g s", "gTs", "g s",
+        addRecipe(new ShapedOreRecipe(EMPTY, output, "g s", "gTs", "g s",
                 'g', "blockGlass", 's', "stone", 'T', "ingotTemporal"));
         output = new ItemStack(ModItems.catalystElements[7]); //Death
-        GameRegistry.addRecipe(new ShapedOreRecipe(output, "s g", "sTg", "s g",
-                's', Items.stone_sword, 'g', Items.golden_apple, 'T', "ingotTemporal"));
+        addRecipe(new ShapedOreRecipe(EMPTY, output, "s g", "sTg", "s g",
+                's', Items.STONE_SWORD, 'g', Items.GOLDEN_APPLE, 'T', "ingotTemporal"));
 
         output = new ItemStack(ModItems.mainspring);
         output.setItemDamage(output.getMaxDamage());
         NBTHelper.setInteger(output, NBTTags.MAX_TENSION, 2000);
-        GameRegistry.addRecipe(new ShapedOreRecipe(output, "mmm", "msm", "mmm", 'm', "ingotIron", 's', "stickWood"));
+        addRecipe(new ShapedOreRecipe(EMPTY, output, "mmm", "msm", "mmm", 'm', "ingotIron", 's', "stickWood"));
     }
 
     public static void initClockworkComponentRecipes()
@@ -202,31 +212,31 @@ public class Recipes
         ItemStack output;
 
         output = new ItemStack(ModItems.gearBrass);
-        GameRegistry.addRecipe(new ShapedOreRecipe(output, "sis", "i i", "sis", 'i', "ingotBrass", 's', "stickWood"));
+        addRecipe(new ShapedOreRecipe(EMPTY, output, "sis", "i i", "sis", 'i', "ingotBrass", 's', "stickWood"));
         output = new ItemStack(ModItems.gearBronze);
-        GameRegistry.addRecipe(new ShapedOreRecipe(output, "sis", "i i", "sis", 'i', "ingotBronze", 's', "stickWood"));
+        addRecipe(new ShapedOreRecipe(EMPTY, output, "sis", "i i", "sis", 'i', "ingotBronze", 's', "stickWood"));
         output = new ItemStack(ModItems.gearCopper);
-        GameRegistry.addRecipe(new ShapedOreRecipe(output, "sis", "i i", "sis", 'i', "ingotCopper", 's', "stickWood"));
+        addRecipe(new ShapedOreRecipe(EMPTY, output, "sis", "i i", "sis", 'i', "ingotCopper", 's', "stickWood"));
         output = new ItemStack(ModItems.gearDiamond);
-        GameRegistry.addRecipe(new ShapedOreRecipe(output, "sis", "i i", "sis", 'i', "gemDiamond", 's', "stickWood"));
+        addRecipe(new ShapedOreRecipe(EMPTY, output, "sis", "i i", "sis", 'i', "gemDiamond", 's', "stickWood"));
         output = new ItemStack(ModItems.gearEmerald);
-        GameRegistry.addRecipe(new ShapedOreRecipe(output, "sis", "i i", "sis", 'i', "gemEmerald", 's', "stickWood"));
+        addRecipe(new ShapedOreRecipe(EMPTY, output, "sis", "i i", "sis", 'i', "gemEmerald", 's', "stickWood"));
         output = new ItemStack(ModItems.gearIron);
-        GameRegistry.addRecipe(new ShapedOreRecipe(output, "sis", "i i", "sis", 'i', "ingotIron", 's', "stickWood"));
+        addRecipe(new ShapedOreRecipe(EMPTY, output, "sis", "i i", "sis", 'i', "ingotIron", 's', "stickWood"));
         output = new ItemStack(ModItems.gearLead);
-        GameRegistry.addRecipe(new ShapedOreRecipe(output, "sis", "i i", "sis", 'i', "ingotLead", 's', "stickWood"));
+        addRecipe(new ShapedOreRecipe(EMPTY, output, "sis", "i i", "sis", 'i', "ingotLead", 's', "stickWood"));
         output = new ItemStack(ModItems.gearSilver);
-        GameRegistry.addRecipe(new ShapedOreRecipe(output, "sis", "i i", "sis", 'i', "ingotSilver", 's', "stickWood"));
+        addRecipe(new ShapedOreRecipe(EMPTY, output, "sis", "i i", "sis", 'i', "ingotSilver", 's', "stickWood"));
         output = new ItemStack(ModItems.gearSteel);
-        GameRegistry.addRecipe(new ShapedOreRecipe(output, "sis", "i i", "sis", 'i', "ingotSteel", 's', "stickWood"));
+        addRecipe(new ShapedOreRecipe(EMPTY, output, "sis", "i i", "sis", 'i', "ingotSteel", 's', "stickWood"));
         output = new ItemStack(ModItems.gearTemporal);
-        GameRegistry.addRecipe(new ShapedOreRecipe(output, "sis", "i i", "sis", 'i', "ingotTemporal", 's', "stickWood"));
+        addRecipe(new ShapedOreRecipe(EMPTY, output, "sis", "i i", "sis", 'i', "ingotTemporal", 's', "stickWood"));
         output = new ItemStack(ModItems.gearThaumium);
-        GameRegistry.addRecipe(new ShapedOreRecipe(output, "sis", "i i", "sis", 'i', "ingotThaumium", 's', "stickWood"));
+        addRecipe(new ShapedOreRecipe(EMPTY, output, "sis", "i i", "sis", 'i', "ingotThaumium", 's', "stickWood"));
         output = new ItemStack(ModItems.gearTin);
-        GameRegistry.addRecipe(new ShapedOreRecipe(output, "sis", "i i", "sis", 'i', "ingotTin", 's', "stickWood"));
+        addRecipe(new ShapedOreRecipe(EMPTY, output, "sis", "i i", "sis", 'i', "ingotTin", 's', "stickWood"));
         output = new ItemStack(ModItems.framework);
-        GameRegistry.addRecipe(new ShapedOreRecipe(output, "bib", "ibi", "bib", 'b', "ingotBrass", 'i', "ingotIron"));
+        addRecipe(new ShapedOreRecipe(EMPTY, output, "bib", "ibi", "bib", 'b', "ingotBrass", 'i', "ingotIron"));
     }
 
     public static void initMetalRecipes()
@@ -235,29 +245,52 @@ public class Recipes
 
         //Ingot to Block
         output = new ItemStack(ModBlocks.blockTemporal);
-        GameRegistry.addRecipe(new ShapedOreRecipe(output, "iii", "iii", "iii", 'i', "ingotTemporal"));
+        addRecipe(new ShapedOreRecipe(EMPTY, output, "iii", "iii", "iii", 'i', "ingotTemporal"));
         output = new ItemStack(ModBlocks.brassBlock);
-        GameRegistry.addShapedRecipe(output, "bbb", "bbb", "bbb", 'b', new ItemStack(ModItems.brassIngot));
+        addShapedRecipe(output, "bbb", "bbb", "bbb", 'b', new ItemStack(ModItems.brassIngot));
 
         //Block to Ingot
-        output = new ItemStack(ModItems.brassIngot); output.stackSize = 9;
-        GameRegistry.addRecipe(new ShapelessOreRecipe(output, "blockBrass"));
-        output = new ItemStack(ModItems.ingotTemporal); output.stackSize = 9;
-        GameRegistry.addRecipe(new ShapelessOreRecipe(output, "blockTemporal"));
+        output = new ItemStack(ModItems.brassIngot); output.setCount(9);
+        addRecipe(new ShapelessOreRecipe(EMPTY, output, "blockBrass"));
+        output = new ItemStack(ModItems.ingotTemporal); output.setCount(9);
+        addRecipe(new ShapelessOreRecipe(EMPTY, output, "blockTemporal"));
 
         //Nugget to Ingot
         output = new ItemStack(ModItems.ingotTemporal);
-        GameRegistry.addRecipe(new ShapedOreRecipe(output, "iii", "iii", "iii", 'i', "nuggetTemporal"));
+        addRecipe(new ShapedOreRecipe(EMPTY, output, "iii", "iii", "iii", 'i', "nuggetTemporal"));
 
         //Ingot to Nugget
-        output = new ItemStack(ModItems.nuggetTemporal); output.stackSize = 9;
-        GameRegistry.addRecipe(new ShapelessOreRecipe(output, "ingotTemporal"));
+        output = new ItemStack(ModItems.nuggetTemporal); output.setCount(9);
+        addRecipe(new ShapelessOreRecipe(EMPTY, output, "ingotTemporal"));
 
         //Misc...
         ItemStack chip = new ItemStack(ModItems.chipTemporal);
         output = new ItemStack(ModItems.nuggetTemporal);
-        GameRegistry.addShapelessRecipe(output, chip, chip, chip, chip);
-        output = new ItemStack(ModItems.brassIngot); output.stackSize = 3;
-        GameRegistry.addRecipe(new ShapelessOreRecipe(output, "ingotIron", "ingotIron", "ingotIron", "ingotGold"));
+        NonNullList<Ingredient> lst = NonNullList.create();
+        for (int i = 0; i < 4; i++)
+            lst.add(Ingredient.fromStacks(chip));
+        addRecipe(new ShapelessRecipes("", output, lst));
+        output = new ItemStack(ModItems.brassIngot); output.setCount(3);
+        addRecipe(new ShapelessOreRecipe(EMPTY, output, "ingotIron", "ingotIron", "ingotIron", "ingotGold"));
+    }
+
+    private static final ResourceLocation EMPTY = new ResourceLocation("");
+
+    public static void addShapedRecipe(ItemStack output, Object... params) {
+        GameRegistry.addShapedRecipe(new ResourceLocation(Reference.MOD_ID, getName(output.getItem())), null, output, params);
+    }
+
+    public static void addRecipe(IRecipe recipe) {
+        ForgeRegistries.RECIPES.register(recipe.setRegistryName(new ResourceLocation(Reference.MOD_ID, getName(recipe.getRecipeOutput().getItem()))));
+    }
+
+    private static TIntSet usedHashes = new TIntHashSet();
+
+    private static String getName(Item item) {
+        int hash = item.getRegistryName().hashCode();
+        while (usedHashes.contains(hash))
+            ++hash;
+        usedHashes.add(hash);
+        return "clockwork_" + hash;
     }
 }

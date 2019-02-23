@@ -1,35 +1,36 @@
 package lumaceon.mods.clockworkphase.client.handler;
 
-import cpw.mods.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import lumaceon.mods.clockworkphase.util.OverlayRenderData;
 import lumaceon.mods.clockworkphase.lib.Textures;
 import lumaceon.mods.clockworkphase.proxy.ClientProxy;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.entity.RenderItem;
+import net.minecraft.client.gui.inventory.GuiContainer;
+import net.minecraft.client.renderer.RenderItem;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import org.lwjgl.opengl.GL11;
 
 public class RenderHandler
 {
-    public static RenderItem renderItem = new RenderItem();
+    public static RenderItem renderItem = Minecraft.getMinecraft().getRenderItem();
 
     public RenderHandler()
     {
-        renderItem.renderWithColor = false;
+//        renderItem.renderWithColor = false;
     }
 
     @SubscribeEvent
     public void onRenderOverlay(RenderGameOverlayEvent.Post event)
     {
-        if(event.type.equals(RenderGameOverlayEvent.ElementType.FOOD)) //Render after food bar (no particular reason).
+        if(event.getType().equals(RenderGameOverlayEvent.ElementType.FOOD)) //Render after food bar (no particular reason).
         {
             for(int n = 0; n < ClientProxy.overlayRenderers.size(); n++)
             {
                 OverlayRenderData renderer = ClientProxy.overlayRenderers.get(n);
-                if(renderer.item != null)
+                if(!renderer.item.isEmpty())
                 {
-                    renderItem.renderItemIntoGUI(Minecraft.getMinecraft().fontRenderer, Minecraft.getMinecraft().getTextureManager(), renderer.item, 2 + (n % 10) * 18, 2 + (n / 10) * 18);
-                    renderItem.renderItemOverlayIntoGUI(Minecraft.getMinecraft().fontRenderer, Minecraft.getMinecraft().getTextureManager(), renderer.item, 2 + (n % 10) * 18, 2 + (n / 10) * 18);
+                    renderItem.renderItemIntoGUI(renderer.item, 2 + (n % 10) * 18, 2 + (n / 10) * 18);
+                    renderItem.renderItemOverlayIntoGUI(Minecraft.getMinecraft().fontRenderer, renderer.item, 2 + (n % 10) * 18, 2 + (n / 10) * 18, null);
                     GL11.glDisable(GL11.GL_LIGHTING);
 
                     if(renderer.numberToRender > 0)

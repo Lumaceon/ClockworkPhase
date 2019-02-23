@@ -1,6 +1,6 @@
 package lumaceon.mods.clockworkphase.item.construct.pocketwatch.module;
 
-import lumaceon.mods.clockworkphase.extendeddata.ExtendedPlayerProperties;
+import lumaceon.mods.clockworkphase.extendeddata.PlayerCapability;
 import lumaceon.mods.clockworkphase.lib.MechanicTweaker;
 import lumaceon.mods.clockworkphase.lib.NBTTags;
 import lumaceon.mods.clockworkphase.proxy.ClientProxy;
@@ -9,6 +9,7 @@ import lumaceon.mods.clockworkphase.util.TimeSandHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import scala.collection.generic.BitOperations;
 
@@ -20,15 +21,13 @@ public class ItemModuleDeathWalk extends ItemModule
         if(entity != null && entity instanceof EntityPlayer && NBTHelper.getBoolean(is, NBTTags.ACTIVE) && entity.onGround)
         {
             EntityPlayer player = (EntityPlayer)entity;
-            ExtendedPlayerProperties properties = ExtendedPlayerProperties.get(player);
+            PlayerCapability.IPlayerHandler cap = player.getCapability(PlayerCapability.CAPABILITY_PLAYER, null);
             int deathWalkPower = NBTHelper.getInt(is, NBTTags.MODULE_POWER);
 
             if(deathWalkPower < MechanicTweaker.DEATH_ATTACK_MAX)
             {
-                double addition = (Math.abs(properties.prevPosX - player.posX) + Math.abs(properties.prevPosY - player.posY) + Math.abs(properties.prevPosZ - player.posZ)) * 5;
-                properties.prevPosX = player.posX;
-                properties.prevPosY = player.posY;
-                properties.prevPosZ = player.posZ;
+                double addition = (Math.abs(cap.getPrevPos().getX() - player.posX) + Math.abs(cap.getPrevPos().getY() - player.posY) + Math.abs(cap.getPrevPos().getZ() - player.posZ)) * 5;
+                cap.setPrevPos(new BlockPos(player.posX, player.posY, player.posZ));
                 if(addition > 20) { addition = 20; }
 
                 deathWalkPower += addition;

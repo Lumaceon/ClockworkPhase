@@ -8,10 +8,16 @@ import lumaceon.mods.clockworkphase.util.NBTHelper;
 import lumaceon.mods.clockworkphase.util.PhaseHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.MobEffects;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
-import net.minecraft.util.ChatComponentText;
+import net.minecraft.util.ActionResult;
+import net.minecraft.util.EnumActionResult;
+import net.minecraft.util.EnumFacing;
+import net.minecraft.util.EnumHand;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.text.TextComponentString;
 import net.minecraft.world.World;
 
 public class ItemHourglassDeath extends ItemHourglass
@@ -43,20 +49,20 @@ public class ItemHourglassDeath extends ItemHourglass
             if (efficiency > 10)
             {
                 NBTHelper.setBoolean(is, NBTTags.ACTIVE, false);
-                player.addChatComponentMessage(new ChatComponentText("Your clockwork's quality can't handle it's speed."));
+                player.sendMessage(new TextComponentString("Your clockwork's quality can't handle it's speed."));
                 return;
             }
 
             if (speed > 10)
             {
-                player.addPotionEffect(new PotionEffect(Potion.damageBoost.getId(), 10, speed / 150, false));
-                if (!player.isPotionActive(Potion.hunger))
+                player.addPotionEffect(new PotionEffect(MobEffects.STRENGTH, 10, speed / 150, false, false));
+                if (!player.isPotionActive(MobEffects.HUNGER))
                 {
-                    player.addPotionEffect(new PotionEffect(Potion.hunger.getId(), 20, speed / 150, false));
+                    player.addPotionEffect(new PotionEffect(MobEffects.HUNGER, 20, speed / 150, false, false));
                 }
-                if (!player.isPotionActive(Potion.poison))
+                if (!player.isPotionActive(MobEffects.POISON))
                 {
-                    player.addPotionEffect(new PotionEffect(Potion.poison.getId(), 20, speed / 300, false));
+                    player.addPotionEffect(new PotionEffect(MobEffects.POISON, 20, speed / 300, false, false));
                 }
                 ((IClockwork) is.getItem()).removeTension(is, tensionCost);
             }
@@ -64,18 +70,20 @@ public class ItemHourglassDeath extends ItemHourglass
     }
 
     @Override
-    public boolean onItemUse(ItemStack is, EntityPlayer player, World world, int x, int y, int z, int meta, float f1, float f2, float f3)
+    public EnumActionResult onItemUse(EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ)
     {
+        ItemStack is = player.getHeldItem(hand);
         boolean isActive = NBTHelper.getBoolean(is, NBTTags.ACTIVE);
         NBTHelper.setBoolean(is, NBTTags.ACTIVE, !isActive);
-        return true;
+        return EnumActionResult.SUCCESS;
     }
 
     @Override
-    public ItemStack onItemRightClick(ItemStack is, World world, EntityPlayer player)
+    public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player, EnumHand hand)
     {
+        ItemStack is = player.getHeldItem(hand);
         boolean isActive = NBTHelper.getBoolean(is, NBTTags.ACTIVE);
         NBTHelper.setBoolean(is, NBTTags.ACTIVE, !isActive);
-        return is;
+        return ActionResult.newResult(EnumActionResult.SUCCESS, is);
     }
 }

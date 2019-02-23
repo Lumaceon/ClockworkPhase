@@ -1,0 +1,8 @@
+{
+"parent": "block/cube_top",
+  "textures": {
+	"side": "clockworkphase:blocks/clockwork_assembly_table",
+	"down": "clockworkphase:blocks/clockwork_assembly_table_top",
+	"up": "clockworkphase:blocks/clockwork_assembly_table_top"
+  }
+}

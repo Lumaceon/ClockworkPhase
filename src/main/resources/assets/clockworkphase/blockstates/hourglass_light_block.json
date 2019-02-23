@@ -1,0 +1,20 @@
+{
+  "variants": {
+    "light=0": { "model": "clockworkphase:hourglass_light_block" },
+    "light=1": { "model": "clockworkphase:hourglass_light_block" },
+    "light=2": { "model": "clockworkphase:hourglass_light_block" },
+    "light=3": { "model": "clockworkphase:hourglass_light_block" },
+    "light=4": { "model": "clockworkphase:hourglass_light_block" },
+    "light=5": { "model": "clockworkphase:hourglass_light_block" },
+    "light=6": { "model": "clockworkphase:hourglass_light_block" },
+    "light=7": { "model": "clockworkphase:hourglass_light_block" },
+    "light=8": { "model": "clockworkphase:hourglass_light_block" },
+    "light=9": { "model": "clockworkphase:hourglass_light_block" },
+    "light=10": { "model": "clockworkphase:hourglass_light_block" },
+    "light=11": { "model": "clockworkphase:hourglass_light_block" },
+    "light=12": { "model": "clockworkphase:hourglass_light_block" },
+    "light=13": { "model": "clockworkphase:hourglass_light_block" },
+    "light=14": { "model": "clockworkphase:hourglass_light_block" },
+    "light=15": { "model": "clockworkphase:hourglass_light_block" }
+  }
+}

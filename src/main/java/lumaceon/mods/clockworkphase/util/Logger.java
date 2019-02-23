@@ -1,6 +1,6 @@
 package lumaceon.mods.clockworkphase.util;
 
-import cpw.mods.fml.common.FMLLog;
+import net.minecraftforge.fml.common.FMLLog;
 import lumaceon.mods.clockworkphase.lib.Reference;
 import org.apache.logging.log4j.Level;
 

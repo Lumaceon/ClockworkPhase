@@ -1,6 +1,7 @@
 package lumaceon.mods.clockworkphase.lib;
 
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.NonNullList;
 import net.minecraftforge.oredict.OreDictionary;
 
 import java.util.ArrayList;
@@ -72,7 +73,7 @@ public class BlockConversions
      */
     public static boolean addToPickaxe(String ore)
     {
-        ArrayList<ItemStack> ores = OreDictionary.getOres(ore);
+        NonNullList<ItemStack> ores = OreDictionary.getOres(ore);
         if(ore.isEmpty()) { return false; }
         validPickaxeBlocks.add(ore);
         return true;
@@ -80,7 +81,7 @@ public class BlockConversions
 
     public static boolean addToShovel(String ore)
     {
-        ArrayList<ItemStack> ores = OreDictionary.getOres(ore);
+        NonNullList<ItemStack> ores = OreDictionary.getOres(ore);
         if(ore.isEmpty()) { return false; }
         validPickaxeBlocks.add(ore);
         return true;
