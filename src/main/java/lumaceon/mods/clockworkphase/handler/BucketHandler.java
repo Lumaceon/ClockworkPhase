@@ -22,6 +22,10 @@ public class BucketHandler
     @SubscribeEvent
     public void onBucketFill(FillBucketEvent event) {
 
+        if (event.getTarget() == null || event.getTarget().typeOfHit != RayTraceResult.Type.BLOCK) {
+            return;
+        }
+
         ItemStack stack = fillCustomBucket(event.getWorld(), event.getTarget());
 
         if(stack.isEmpty()) { return; }
