@@ -104,13 +104,15 @@ public class ItemClockworkAxe extends ItemAxe implements IClockwork, IDisassembl
     @Override
     public float getDestroySpeed(ItemStack stack, IBlockState state)
     {
+        int tension = NBTHelper.getInt(stack, NBTTags.TENSION_ENERGY); if(tension <= 0) { return 1.0F; }
+        int speed = NBTHelper.getInt(stack, NBTTags.SPEED); if(speed <= 0) { return 1.0F; }
         if(CustomUtils.isToolEffective(stack, state))
         {
-            int tension = NBTHelper.getInt(stack, NBTTags.TENSION_ENERGY); if(tension <= 0) { return 1.0F; }
-            int speed = NBTHelper.getInt(stack, NBTTags.SPEED); if(speed <= 0) { return 1.0F; }
             return (float)speed / 20;
         }
-        return super.getDestroySpeed(stack, state);
+        float efficiency = super.getDestroySpeed(stack, state); if(efficiency == 1.0F) { return efficiency; }
+
+        return (float)speed / 20;
     }
 
     @Override
