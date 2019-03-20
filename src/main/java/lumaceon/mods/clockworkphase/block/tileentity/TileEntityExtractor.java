@@ -40,6 +40,7 @@ public class TileEntityExtractor extends TileEntityTimeSandCapacitor implements 
     public TileEntityExtractor()
     {
         super();
+        invv = NonNullList.withSize(1, ItemStack.EMPTY);
     }
 
     public TileEntityExtractor(Phases phase)
