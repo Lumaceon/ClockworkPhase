@@ -1,8 +1,5 @@
 package lumaceon.mods.clockworkphase.item.construct.clockwork;
 
-import net.minecraft.client.util.ITooltipFlag;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
 import lumaceon.mods.clockworkphase.init.ModItems;
 import lumaceon.mods.clockworkphase.item.construct.abstracts.IClockwork;
 import lumaceon.mods.clockworkphase.lib.MechanicTweaker;
@@ -11,13 +8,19 @@ import lumaceon.mods.clockworkphase.network.MessageTemporalItemChange;
 import lumaceon.mods.clockworkphase.network.PacketHandler;
 import lumaceon.mods.clockworkphase.util.NBTHelper;
 import lumaceon.mods.clockworkphase.util.TimeSandParser;
+import net.minecraft.block.material.Material;
+import net.minecraft.block.state.IBlockState;
+import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.DamageSource;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import org.lwjgl.input.Keyboard;
 
 import java.util.List;
@@ -28,6 +31,16 @@ public class ItemTemporalClockworkSaber extends ItemClockworkSaber
     {
         super();
         this.setCreativeTab(null);
+    }
+
+    @Override
+    public float getDestroySpeed(ItemStack stack, IBlockState state) {
+        if (state.getBlock() == Blocks.WEB) {
+            return 15.0F;
+        } else {
+            Material material = state.getMaterial();
+            return material != Material.PLANTS && material != Material.VINE && material != Material.CORAL && material != Material.LEAVES && material != Material.GOURD ? 1.0F : 1.5F;
+        }
     }
 
     @Override
