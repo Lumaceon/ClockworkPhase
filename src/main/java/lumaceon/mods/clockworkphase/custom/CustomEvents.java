@@ -63,8 +63,10 @@ public class CustomEvents {
         }
         IBakedModel compass_model = new CompassBakeModel();
         for (ModelResourceLocation mrl : e.getModelRegistry().getKeys()) {
-            if (mrl.getNamespace().equals(Reference.MOD_ID) && mrl.getPath().equals("celestial_compass") && !mrl.getVariant().equals("inventory")) {
-                e.getModelRegistry().putObject(mrl, compass_model);
+            if (mrl.getNamespace().equals(Reference.MOD_ID) && !mrl.getVariant().equals("inventory")) {
+                if (mrl.getPath().equals("celestial_compass")) {
+                    e.getModelRegistry().putObject(mrl, compass_model);
+                }
             }
         }
     }
