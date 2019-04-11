@@ -26,7 +26,11 @@ public class ItemHourglassLight extends ItemHourglass
         {
             EntityPlayer player = (EntityPlayer)entity;
             int tension = NBTHelper.getInt(is, NBTTags.TENSION_ENERGY);
-            int quality = NBTHelper.getInt(is, NBTTags.QUALITY); if(quality <= 0) {return;}
+            int quality = NBTHelper.getInt(is, NBTTags.QUALITY);
+            if(quality <= 0) {
+                NBTHelper.setBoolean(is, NBTTags.ACTIVE, false);
+                return;
+            }
             int speed = NBTHelper.getInt(is, NBTTags.SPEED);
             int memory = NBTHelper.getInt(is, NBTTags.MEMORY);
 
