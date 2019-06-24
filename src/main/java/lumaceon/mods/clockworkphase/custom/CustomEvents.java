@@ -15,6 +15,7 @@ import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.event.ModelBakeEvent;
 import net.minecraftforge.client.event.TextureStitchEvent;
+import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.relauncher.Side;
@@ -35,13 +36,17 @@ public class CustomEvents {
     }
 
     @SideOnly(Side.CLIENT)
-    public static Map<IBlockState, ModelResourceLocation> MODELS_COMPASS_SUB = new HashMap<>(96);
+    public static Map<IBlockState, ModelResourceLocation> MODELS_COMPASS_SUB;
     public static IBlockState[] STATES_COMPASS_SUB = new IBlockState[96];
 
     @SideOnly(Side.CLIENT)
-    public static IBakedModel[] MODELS_COMPASS = new IBakedModel[8];
+    public static IBakedModel[] MODELS_COMPASS;
 
     static {
+        if (FMLCommonHandler.instance().getEffectiveSide().isClient()) {
+            MODELS_COMPASS_SUB = new HashMap<>(96);
+            MODELS_COMPASS = new IBakedModel[8];
+        }
         for (int i = 0; i < 96; i++) {
             PropertyBool bool = PropertyBool.create("state_sub_" + i);
             BlockStateContainer stateContainer = new BlockStateContainer(ModBlocks.celestialCompassSub, bool, BlockHorizontal.FACING);
