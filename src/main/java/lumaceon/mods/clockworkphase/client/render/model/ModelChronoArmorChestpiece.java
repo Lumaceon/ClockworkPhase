@@ -42,7 +42,7 @@ public class ModelChronoArmorChestpiece extends ModelBiped
         rightArmGuard.setRotationPoint(bipedRightArm.rotationPointX * 10, bipedRightArm.rotationPointY * 10, bipedRightArm.rotationPointZ * 10);
         rightArmGuard.isHidden = bipedRightArm.isHidden;
         rightArmGuard.offsetX = bipedRightArm.offsetX * 10;
-        rightArmGuard.offsetY = bipedRightArm.offsetY * 10;
+        rightArmGuard.offsetY = bipedRightArm.offsetY * 10 + (isSneak ? 0.2F : 0F);
         rightArmGuard.offsetZ = bipedRightArm.offsetZ * 10;
         rightArmGuard.rotateAngleX = bipedRightArm.rotateAngleX;
         rightArmGuard.rotateAngleY = bipedRightArm.rotateAngleY;
@@ -52,7 +52,7 @@ public class ModelChronoArmorChestpiece extends ModelBiped
         leftArmGuard.setRotationPoint(bipedLeftArm.rotationPointX * 10, bipedLeftArm.rotationPointY * 10, bipedLeftArm.rotationPointZ * 10);
         leftArmGuard.isHidden = bipedLeftArm.isHidden;
         leftArmGuard.offsetX = bipedLeftArm.offsetX * 10;
-        leftArmGuard.offsetY = bipedLeftArm.offsetY * 10;
+        leftArmGuard.offsetY = bipedLeftArm.offsetY * 10 + (isSneak ? 0.2F : 0F);
         leftArmGuard.offsetZ = bipedLeftArm.offsetZ * 10;
         leftArmGuard.rotateAngleX = bipedLeftArm.rotateAngleX;
         leftArmGuard.rotateAngleY = bipedLeftArm.rotateAngleY;

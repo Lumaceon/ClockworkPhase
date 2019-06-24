@@ -5,6 +5,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.inventory.EntityEquipmentSlot;
+import net.minecraft.item.EnumAction;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -145,6 +146,36 @@ public class ItemChronoArmor extends ItemArmor implements IClockwork, IDisassemb
                 armorModel.isSneak = entityLiving.isSneaking();
                 armorModel.isRiding = entityLiving.isRiding();
                 armorModel.isChild = entityLiving.isChild();
+                ItemStack hand = entityLiving.getHeldItemMainhand();
+                ModelBiped.ArmPose pose = ModelBiped.ArmPose.EMPTY;
+                if (!hand.isEmpty()) {
+                    if (entityLiving.getItemInUseCount() > 0) {
+                        EnumAction action = hand.getItemUseAction();
+                        if (action == EnumAction.BOW) {
+                            pose = ModelBiped.ArmPose.BOW_AND_ARROW;
+                        } else if (action == EnumAction.BLOCK) {
+                            pose = ModelBiped.ArmPose.BLOCK;
+                        }
+                    } else {
+                        pose = ModelBiped.ArmPose.ITEM;
+                    }
+                }
+                armorModel.rightArmPose = pose;
+                hand = entityLiving.getHeldItemOffhand();
+                pose = ModelBiped.ArmPose.EMPTY;
+                if (!hand.isEmpty()) {
+                    if (entityLiving.getItemInUseCount() > 0) {
+                        EnumAction action = hand.getItemUseAction();
+                        if (action == EnumAction.BOW) {
+                            pose = ModelBiped.ArmPose.BOW_AND_ARROW;
+                        } else if (action == EnumAction.BLOCK) {
+                            pose = ModelBiped.ArmPose.BLOCK;
+                        }
+                    } else {
+                        pose = ModelBiped.ArmPose.ITEM;
+                    }
+                }
+                armorModel.leftArmPose = pose;
 //                armorModel.heldItemRight = !entityLiving.getHeldItem().isEmpty() ? 1 : 0; // TODO
 //                if (entityLiving instanceof EntityPlayer)
 //                {
