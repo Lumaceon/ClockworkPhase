@@ -1,115 +1,115 @@
 #Item Localizations
-item.clockworkphase:timeTuner.name=时空调节器
-item.clockworkphase:bugSwatter.name=苍蝇拍
-item.clockworkphase:brassIngot.name=黄铜锭
-item.clockworkphase:mainspring.name=动力发条
-item.clockworkphase:timeSandBucket.name=桶装时之沙
-item.clockworkphase:blandHourglass.name=沙漏
-item.clockworkphase:clockwork.name=发条装置
-item.clockworkphase:chipTemporal.name=时空碎片
-item.clockworkphase:nuggetTemporal.name=时空粒
-item.clockworkphase:temporalCoreActive.name=激活的时空核心
-item.clockworkphase:temporalCoreSedate.name=静止的时空核心
+item.clockworkphase.time_tuner.name=时空调节器
+item.clockworkphase.bug_swatter.name=苍蝇拍
+item.clockworkphase.brass_ingot.name=黄铜锭
+item.clockworkphase.mainspring.name=动力发条
+item.clockworkphase.time_sand_bucket.name=桶装时之沙
+item.clockworkphase.bland_hourglass.name=沙漏
+item.clockworkphase.clockwork.name=发条装置
+item.clockworkphase.chip_temporal.name=时空碎片
+item.clockworkphase.nugget_temporal.name=时空粒
+item.clockworkphase.temporal_core_active.name=激活的时空核心
+item.clockworkphase.temporal_core_sedate.name=静止的时空核心
 
-item.clockworkphase:ingotTemporal.name=时空锭
-item.clockworkphase:ingotTemporalLife.name=时空锭-生命
-item.clockworkphase:ingotTemporalLight.name=时空锭-光明
-item.clockworkphase:ingotTemporalWater.name=时空锭-水源
-item.clockworkphase:ingotTemporalEarth.name=时空锭-大地
-item.clockworkphase:ingotTemporalAir.name=时空锭-空气
-item.clockworkphase:ingotTemporalFire.name=时空锭-火焰
-item.clockworkphase:ingotTemporalLunar.name=时空锭-月亮
-item.clockworkphase:ingotTemporalDeath.name=时空锭-死亡
+item.clockworkphase.ingot_temporal.name=时空锭
+item.clockworkphase.ingot_temporal_life.name=时空锭-生命
+item.clockworkphase.ingot_temporal_light.name=时空锭-光明
+item.clockworkphase.ingot_temporal_water.name=时空锭-水源
+item.clockworkphase.ingot_temporal_earth.name=时空锭-大地
+item.clockworkphase.ingot_temporal_air.name=时空锭-空气
+item.clockworkphase.ingot_temporal_fire.name=时空锭-火焰
+item.clockworkphase.ingot_temporal_lunar.name=时空锭-月亮
+item.clockworkphase.ingot_temporal_death.name=时空锭-死亡
 
-item.clockworkphase:catalystLife.name=生命催化剂
-item.clockworkphase:catalystLight.name=光明催化剂
-item.clockworkphase:catalystWater.name=水源催化剂
-item.clockworkphase:catalystEarth.name=大地催化剂
-item.clockworkphase:catalystAir.name=空气催化剂
-item.clockworkphase:catalystFire.name=火焰催化剂
-item.clockworkphase:catalystLunar.name=月亮催化剂
-item.clockworkphase:catalystDeath.name=死亡催化剂
+item.clockworkphase.catalyst_life.name=催化剂-生命
+item.clockworkphase.catalyst_light.name=催化剂-光明
+item.clockworkphase.catalyst_water.name=催化剂-水源
+item.clockworkphase.catalyst_earth.name=催化剂-大地
+item.clockworkphase.catalyst_air.name=催化剂-空气
+item.clockworkphase.catalyst_fire.name=催化剂-火焰
+item.clockworkphase.catalyst_lunar.name=催化剂-月亮
+item.clockworkphase.catalyst_death.name=催化剂-死亡
 
 
-item.clockworkphase:gearBrass.name=黄铜齿轮
-item.clockworkphase:gearBronze.name=青铜齿轮
-item.clockworkphase:gearCopper.name=铜齿轮
-item.clockworkphase:gearDiamond.name=钻石齿轮
-item.clockworkphase:gearEmerald.name=绿宝石齿轮
-item.clockworkphase:gearIron.name=铁齿轮
-item.clockworkphase:gearLead.name=铅齿轮
-item.clockworkphase:gearSilver.name=银齿轮
-item.clockworkphase:gearSteel.name=钢齿轮
-item.clockworkphase:gearTemporal.name=时空齿轮
-item.clockworkphase:gearThaumium.name=神秘齿轮
-item.clockworkphase:gearTin.name=锡齿轮
-item.clockworkphase:oilBucket.name=油桶
-item.clockworkphase:framework.name=框架
+item.clockworkphase.gear_brass.name=黄铜齿轮
+item.clockworkphase.gear_bronze.name=青铜齿轮
+item.clockworkphase.gear_copper.name=铜齿轮
+item.clockworkphase.gear_diamond.name=钻石齿轮
+item.clockworkphase.gear_emerald.name=绿宝石齿轮
+item.clockworkphase.gear_iron.name=铁齿轮
+item.clockworkphase.gear_lead.name=铅齿轮
+item.clockworkphase.gear_silver.name=银齿轮
+item.clockworkphase.gear_steel.name=钢齿轮
+item.clockworkphase.gear_temporal.name=时空齿轮
+item.clockworkphase.gear_thaumium.name=神秘齿轮
+item.clockworkphase.gear_tin.name=锡齿轮
+item.clockworkphase.oil_bucket.name=油桶
+item.clockworkphase.framework.name=框架
 
-item.clockworkphase:gearRusty.name=生锈的齿轮
-item.clockworkphase:gearLegendary.name=传奇齿轮
-item.clockworkphase:noteBottle.name=瓶中笔记
-item.clockworkphase:preciousCharm.name=珍贵的魔力项链
-item.clockworkphase:oldCoin.name=古代硬币
+item.clockworkphase.gear_rusty.name=生锈的齿轮
+item.clockworkphase.gear_legendary.name=传说之齿轮
+item.clockworkphase.note_bottle.name=瓶中笔记
+item.clockworkphase.precious_charm.name=珍贵的魔力项链
+item.clockworkphase.old_coin.name=古代硬币
 
-item.clockworkphase:hourglass.name=时空沙漏
-item.clockworkphase:hourglassLife.name=时空沙漏-生命
-item.clockworkphase:hourglassLight.name=时空沙漏-光明
-item.clockworkphase:hourglassWater.name=时空沙漏-水源
-item.clockworkphase:hourglassEarth.name=时空沙漏-大地
-item.clockworkphase:hourglassAir.name=时空沙漏-疾风
-item.clockworkphase:hourglassFire.name=时空沙漏-火焰
-item.clockworkphase:hourglassLunar.name=时空沙漏-月亮
-item.clockworkphase:hourglassDeath.name=时空沙漏-死亡
+item.clockworkphase.hourglass.name=时空沙漏
+item.clockworkphase.hourglass_life.name=时空沙漏-生命
+item.clockworkphase.hourglass_light.name=时空沙漏-光明
+item.clockworkphase.hourglass_water.name=时空沙漏-水源
+item.clockworkphase.hourglass_earth.name=时空沙漏-大地
+item.clockworkphase.hourglass_air.name=时空沙漏-空气
+item.clockworkphase.hourglass_fire.name=时空沙漏-火焰
+item.clockworkphase.hourglass_lunar.name=时空沙漏-月亮
+item.clockworkphase.hourglass_death.name=时空沙漏-死亡
 
-item.clockworkphase:clockworkPickaxe.name=发条镐
-item.clockworkphase:clockworkAxe.name=发条斧
-item.clockworkphase:clockworkShovel.name=发条铲
-item.clockworkphase:clockworkSaber.name=发条剑
-item.clockworkphase:temporalClockworkSaber.name=时空发条剑
-item.clockworkphase:temporalClockworkPickaxe.name=时空发条镐
-item.clockworkphase:temporalClockworkAxe.name=时空发条斧
-item.clockworkphase:temporalClockworkShovel.name=时空发条铲
-item.clockworkphase:temporalMultitool.name=时空虚态工具
-item.clockworkphase:pocketWatch.name=怀表
+item.clockworkphase.clockwork_pickaxe.name=发条镐
+item.clockworkphase.clockwork_axe.name=发条斧
+item.clockworkphase.clockwork_shovel.name=发条铲
+item.clockworkphase.clockwork_saber.name=发条剑
+item.clockworkphase.temporal_clockwork_saber.name=时空发条剑
+item.clockworkphase.temporal_clockwork_pickaxe.name=时空发条镐
+item.clockworkphase.temporal_clockwork_Axe.name=时空发条斧
+item.clockworkphase.temporal_clockwork_shovel.name=时空发条铲
+item.clockworkphase.temporal_multitool.name=时空虚态工具
+item.clockworkphase.pocket_watch.name=怀表
 
-item.clockworkphase:clockworkHeadpiece.name=发条头盔
-item.clockworkphase:clockworkChestplate.name=发条胸甲
-item.clockworkphase:clockworkLeggings.name=发条护腿
-item.clockworkphase:clockworkBoots.name=发条靴子
+item.clockworkphase.clockwork_headpiece.name=发条头盔
+item.clockworkphase.clockwork_chestplate.name=发条胸甲
+item.clockworkphase.clockwork_leggings.name=发条护腿
+item.clockworkphase.clockwork_boots.name=发条靴子
 
-item.clockworkphase:moduleLifeWalk.name=生命行者模块
-item.clockworkphase:moduleDeathWalk.name=死亡行者模块
-item.clockworkphase:moduleFurnace.name=熔炉模块
-item.clockworkphase:moduleSilkTouch.name=精准采集模块
-item.clockworkphase:modulePartialGravity.name=区域力场模块
+item.clockworkphase.module_life_walk.name=生命行者模块
+item.clockworkphase.module_death_walk.name=死亡行者模块
+item.clockworkphase.module_furnace.name=熔炉模块
+item.clockworkphase.module_silk_touch.name=精准采集模块
+item.clockworkphase.module_partial_gravity.name=区域力场模块
 
 
 #Block Localizations
-tile.clockworkphase:brassBlock.name=黄铜块
-tile.clockworkphase:clockworkAssemblyTable.name=发条组装台
-tile.clockworkphase:windingBox.name=齿轮箱
-tile.clockworkphase:growthExtractor.name=生长萃取器
-tile.clockworkphase:timeSand.name=时之沙
-tile.clockworkphase:celestialCompass.name=时空罗盘核心
-tile.clockworkphase:celestialCompassSub.name=时空罗盘
-tile.clockworkphase:disassembler.name=拆解台
-tile.clockworkphase:hourglassLightBlock.name=沙漏之光
-tile.clockworkphase:timeWell.name=Well of Time
-tile.clockworkphase:oreTemporal.name=时空矿石
-tile.clockworkphase:sandTemporal.name=时空沙
-tile.clockworkphase:woodTemporal.name=时空原木
-tile.clockworkphase:blockTemporal.name=时空方块
+tile.clockworkphase.brass_block.name=黄铜块
+tile.clockworkphase.clockwork_assembly_table.name=发条组装台
+tile.clockworkphase.winding_box.name=齿轮箱
+tile.clockworkphase.growth_extractor.name=生长萃取器
+tile.clockworkphase.timeSand.name=时之沙
+tile.clockworkphase.celestial_compass.name=时空罗盘核心
+tile.clockworkphase.celestial_compass_sub.name=时空罗盘
+tile.clockworkphase.disassembler.name=拆解台
+tile.clockworkphase.hourglass_light_block.name=沙漏之光
+tile.clockworkphase.time_well.name=Well of Time
+tile.clockworkphase.ore_temporal.name=时空矿石
+tile.clockworkphase.sand_temporal.name=时空沙
+tile.clockworkphase.wood_temporal.name=时空原木
+tile.clockworkphase.block_temporal.name=时空方块
 
-tile.clockworkphase:clockworkphase:extractor.name=萃取器
-tile.clockworkphase:clockworkphase:extractorLife.name=生命萃取器
-tile.clockworkphase:clockworkphase:extractorLight.name=光明萃取器
-tile.clockworkphase:clockworkphase:extractorWater.name=水源萃取器
-tile.clockworkphase:clockworkphase:extractorEarth.name=大地萃取器
-tile.clockworkphase:clockworkphase:extractorAir.name=空气萃取器
-tile.clockworkphase:clockworkphase:extractorFire.name=火焰萃取器
-tile.clockworkphase:clockworkphase:extractorLunar.name=月光萃取器
-tile.clockworkphase:clockworkphase:extractorDeath.name=死亡萃取器
+tile.clockworkphase.extractor.name=萃取器
+tile.clockworkphase.extractor_life.name=生命萃取器
+tile.clockworkphase.extractor_light.name=光明萃取器
+tile.clockworkphase.extractor_water.name=水源萃取器
+tile.clockworkphase.extractor_earth.name=大地萃取器
+tile.clockworkphase.extractor_air.name=空气萃取器
+tile.clockworkphase.extractor_fire.name=火焰萃取器
+tile.clockworkphase.extractor_lunar.name=月光萃取器
+tile.clockworkphase.extractor_death.name=死亡萃取器
 
 
 
@@ -118,8 +118,8 @@ itemGroup.ClockworkPhase=时之沙
 
 
 #Phase Event Localizations
-clockworkphase:phase_event.default=Default - (This should never show up)
-clockworkphase:phase_event.healthyatmosphere=Healthy Atmosphere
+clockworkphase.phase_event.default=默认 - (正常情况下这段话不可能出现)
+clockworkphase.phase_event.healthyatmosphere=治愈之氛
 
 
 #Key Localizations
