@@ -9,7 +9,7 @@ buildscript {
 }
 apply plugin: 'net.minecraftforge.gradle.forge'
 
-version = "1.0g"
+version = "1.0.8"
 group = "lumaceon.mods.clockworkphase"
 archivesBaseName = "ClockworkPhase-1.12.2"
 
